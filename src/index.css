@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap');
+
+@font-face {
+  font-family: 'StretchPro';
+  src: url('/fonts/StretchPro.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #08080a;
+  color: #f4f4f5;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
+}
+
+.font-stretch {
+  font-family: 'StretchPro', 'Montserrat', sans-serif;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* 3D Cover Flow Elements */
+.coverflow-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.coverflow-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.coverflow-viewport:active {
+  cursor: grabbing;
+}
+
+.cv-item {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform-style: preserve-3d;
+  will-change: transform, z-index;
+  cursor: pointer;
+}
+
+.cv-front {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 22px 50px -10px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  background: #0d0d12;
+  transition: box-shadow 0.25s ease;
+}
+.cv-item:hover .cv-front {
+  box-shadow: 0 28px 65px -8px rgba(0, 0, 0, 1), 0 0 0 1.5px rgba(255, 255, 255, 0.25);
+}
+
+.cv-reflection {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin-top: 4px;
+  transform: scaleY(-1);
+  transform-origin: 50% 50%;
+  opacity: 0.38;
+  border-radius: 18px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 55%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 55%);
+}
+
+#glow {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: 110vmin;
+  height: 75vmin;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--glow, 16, 185, 129), 0.22), rgba(var(--glow, 16, 185, 129), 0.05) 55%, transparent);
+  transition: background 0.8s ease;
+  z-index: 1;
+}
