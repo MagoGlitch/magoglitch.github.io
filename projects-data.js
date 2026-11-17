@@ -554,10 +554,10 @@ window.PORTFOLIO_PROJECTS = [
     "handle": "@usecaribena",
     "type": "MODA SUSTENTÁVEL",
     "category": "Identidade Visual",
-    "cover": "Identidade Visual/ID VISUAL CARIBENA/APRESENTAÇÃO FINALIZADA copiar.jpg",
-    "presentationImage": "Identidade Visual/ID VISUAL CARIBENA/APRESENTAÇÃO FINALIZADA copiar.jpg",
+    "cover": "Identidade Visual/ID VISUAL CARIBENA/APRESENTAÇÃO FINALIZADA.webp",
+    "presentationImage": "Identidade Visual/ID VISUAL CARIBENA/APRESENTAÇÃO FINALIZADA.webp",
     "slides": [
-      "Identidade Visual/ID VISUAL CARIBENA/APRESENTAÇÃO FINALIZADA copiar.jpg"
+      "Identidade Visual/ID VISUAL CARIBENA/APRESENTAÇÃO FINALIZADA.webp"
     ],
     "slideCount": 1,
     "isContinuousBoard": true,
