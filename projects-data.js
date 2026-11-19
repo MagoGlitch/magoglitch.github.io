@@ -580,7 +580,7 @@ window.PORTFOLIO_PROJECTS = [
     "handle": "@pulpcast",
     "type": "PODCAST",
     "category": "Identidade Visual",
-    "cover": "Identidade Visual/ID VISUAL PULP CAST/APRESENTAÇÃO FINAL mesmo.webp",
+    "cover": "Identidade Visual/ID VISUAL PULP CAST/vante_cover.webp",
     "presentationImage": "Identidade Visual/ID VISUAL PULP CAST/APRESENTAÇÃO FINAL mesmo.webp",
     "slides": [
       "Identidade Visual/ID VISUAL PULP CAST/APRESENTAÇÃO FINAL mesmo.webp"
