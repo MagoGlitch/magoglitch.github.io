@@ -636,7 +636,7 @@ window.PORTFOLIO_PROJECTS = [
     "handle": "@dragontec.io",
     "type": "SOFTWARE",
     "category": "Identidade Visual",
-    "cover": "Identidade Visual/ID VISUAL DRAGON TEC/APRESENTAÇÃO ID VISUAL - DRAGON TEC.webp",
+    "cover": "Identidade Visual/ID VISUAL DRAGON TEC/vante_cover.webp",
     "presentationImage": "Identidade Visual/ID VISUAL DRAGON TEC/APRESENTAÇÃO ID VISUAL - DRAGON TEC.webp",
     "slides": [
       "Identidade Visual/ID VISUAL DRAGON TEC/APRESENTAÇÃO ID VISUAL - DRAGON TEC.webp"
