@@ -587,6 +587,10 @@ window.PORTFOLIO_PROJECTS = [
     ],
     "slideCount": 1,
     "isContinuousBoard": true,
+    "boardParts": [
+      "Identidade Visual/ID VISUAL PULP CAST/APRESENTAÇÃO - PARTE 1.webp",
+      "Identidade Visual/ID VISUAL PULP CAST/TELA-PULP-CAST.gif"
+    ],
     "vanteCover": "Identidade Visual/ID VISUAL PULP CAST/vante_cover.webp",
     "software": "Illustrator • After Effects • Photoshop",
     "colors": [
