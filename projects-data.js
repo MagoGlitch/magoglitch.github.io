@@ -688,7 +688,7 @@ window.PORTFOLIO_PROJECTS = [
     "handle": "@esneakers.oficial",
     "type": "LIFESTYLE",
     "category": "Identidade Visual",
-    "cover": "Identidade Visual/ID VISUAL ESNEAKERS/APRESENTAÇÃO ESNEAKERS final.webp",
+    "cover": "Identidade Visual/ID VISUAL ESNEAKERS/vante_cover.webp",
     "presentationImage": "Identidade Visual/ID VISUAL ESNEAKERS/APRESENTAÇÃO ESNEAKERS final.webp",
     "slides": [
       "Identidade Visual/ID VISUAL ESNEAKERS/APRESENTAÇÃO ESNEAKERS final.webp"
