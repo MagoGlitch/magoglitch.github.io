@@ -44,6 +44,10 @@
   <meta name="description" content="Portfólio Oficial de Marcos — Direção de Arte, Design Gráfico, Carrosséis e Identidade Visual.">
   <meta name="author" content="Marcos">
 
+  <!-- Preload critical Hero assets for faster LCP -->
+  <link rel="preload" as="image" href="BG HERO/bg-hero-v2.webp" type="image/webp">
+  <link rel="preload" as="image" href="BG HERO/marcos-v2-cutout.webp?v=1" type="image/webp">
+
   <!-- Google Fonts: Montserrat (Weights 300 to 900) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2364,6 +2368,7 @@
                             alt={carousel.title}
                             className="w-full h-full object-cover block pointer-events-none select-none"
                             loading={Math.abs(idx - currentFlowIndex) < 4 ? 'eager' : 'lazy'}
+                            decoding="async"
                             onError={(e) => {
                               if (e.target.src.includes('/images/')) {
                                 e.target.src = e.target.src.replace('/images/', '/');
@@ -2396,6 +2401,7 @@
                             alt=""
                             className="w-full h-full object-cover block pointer-events-none select-none"
                             loading="lazy"
+                            decoding="async"
                             onError={(e) => {
                               if (e.target.src.includes('/images/')) {
                                 e.target.src = e.target.src.replace('/images/', '/');
@@ -2728,6 +2734,7 @@
                             alt={project.title}
                             className="w-full h-full object-cover block filter contrast-[1.03]"
                             loading="lazy"
+                            decoding="async"
                           />
 
                           {/* Subtle hover indicator */}
@@ -2753,7 +2760,7 @@
                           }}
                         >
                           <div className="absolute inset-0 pointer-events-none" style={{ filter: 'blur(24px)', opacity: 0.35, transform: 'scale(1.2)' }}>
-                            <img src={project.cover} alt="" className="w-full h-full object-cover" />
+                            <img src={project.cover} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                           </div>
                           <div className="absolute inset-0 bg-black/65 pointer-events-none" />
 
