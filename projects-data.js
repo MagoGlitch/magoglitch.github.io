@@ -53,6 +53,60 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
+    "id": "carrossel-panda-english-nao-tenha-medo-de-errar",
+    "folderName": "CARROSSEL PANDA ENGLISH",
+    "title": "Panda English — Não Tenha Medo de Errar",
+    "client": "Panda English",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Educativo & Idiomas",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL PANDA ENGLISH/pag1.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL PANDA ENGLISH/pag1.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH/pag2.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH/pag3.webp"
+    ],
+    "slideCount": 3,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#0EA5E9",
+      "#EF4444",
+      "#0F172A",
+      "#FFFFFF"
+    ],
+    "description": "Carrossel motivacional e educativo desmistificando o processo de aprendizado do inglês com personagem 3D proprietário e tipografia dinâmica.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-carrossel-smart-grow-01",
+    "folderName": "CARROSSEL SMART GROW - 01",
+    "title": "Smart Grow — Alta Produtividade no Campo",
+    "client": "Smart Grow Agrotech",
+    "handle": "@smartgrow.agrotech",
+    "type": "Carrossel Agrotech & Soluções",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_01.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_01.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_02.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_03.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_04.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_05.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_06.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_07.webp"
+    ],
+    "slideCount": 7,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#22C55E",
+      "#15803D",
+      "#0B140E",
+      "#F0FDF4"
+    ],
+    "description": "Comunicação moderna para o agro contemporâneo, unindo tecnologia de ponta, sustentabilidade e ROI.",
+    "highlight": true
+  },
+  {
     "id": "carrossel-carrossel-dra-mari-02",
     "folderName": "CARROSSEL DRA. MARI 02",
     "title": "Dra. Mariana — Guia de Skincare & Rotina",
@@ -80,6 +134,61 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
+    "id": "carrossel-carrossel-01",
+    "folderName": "CARROSSEL 01",
+    "title": "Eu Passei Anos Tentando Escolher Uma Profissão",
+    "client": "Branding Autoral",
+    "handle": "@marcos.designer",
+    "type": "Storytelling & Branding Pessoal",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL 01/Sem-Título-1_06.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL 01/Sem-Título-1_06.webp",
+      "Carrosséis/CARROSSEL 01/Sem-Título-1_07.webp",
+      "Carrosséis/CARROSSEL 01/Sem-Título-1_08.webp",
+      "Carrosséis/CARROSSEL 01/Sem-Título-1_09.webp",
+      "Carrosséis/CARROSSEL 01/Sem-Título-1_10.webp",
+      "Carrosséis/CARROSSEL 01/Sem-Título-1_11.webp"
+    ],
+    "slideCount": 6,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#FF6B00",
+      "#7C3AED",
+      "#0F0E17",
+      "#FFF1E8"
+    ],
+    "description": "Narrativa autoral de forte conexão emocional e quebra de crenças sobre a percepção de valor no mercado criativo.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-carrossel-seller-chat",
+    "folderName": "CARROSSEL SELLER CHAT",
+    "title": "Seller Chat — IA para Automação de Vendas",
+    "client": "Seller Chat AI",
+    "handle": "@sellerchat.ai",
+    "type": "Carrossel SaaS & Tech",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_01.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_01.webp",
+      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_02.webp",
+      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_03.webp",
+      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_04.webp",
+      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_05.webp"
+    ],
+    "slideCount": 5,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#6366F1",
+      "#4338CA",
+      "#0B0F19",
+      "#EEF2FF"
+    ],
+    "description": "Apresentação de benefícios de software inteligente para e-commerce, gerando leads qualificados no B2B.",
+    "highlight": true
+  },
+  {
     "id": "carrossel-carrossel-dra-mari-03",
     "folderName": "CARROSSEL DRA. MARI 03",
     "title": "Dra. Mariana — Protocolos Injetáveis",
@@ -102,6 +211,61 @@ window.PORTFOLIO_PROJECTS = [
       "#FAF5FF"
     ],
     "description": "Desmistificação de procedimentos estéticos com tom sóbrio, elegante e alta credibilidade.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-ingles-oque-e",
+    "folderName": "CARROSSEL INGLÊS OQUE É",
+    "title": "Panda English — Focado em Melhorar o Seu Inglês?",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Institucional & Conteúdo",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag2.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag3.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag4.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag5.webp"
+    ],
+    "slideCount": 5,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#F97316",
+      "#047857",
+      "#0B1E19",
+      "#FFF7ED"
+    ],
+    "description": "Narrativa visual imersiva explorando a relevância global do idioma inglês, cultura e metodologia de aprendizagem acelerada com identidade editorial refinada.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-carrossel-04-26-10",
+    "folderName": "CARROSSEL 04 - 26-10",
+    "title": "A IA Executa. Você Dirige",
+    "client": "Inteligência Artificial & Design",
+    "handle": "@marcos.designer",
+    "type": "Tendências & Direção Criativa",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL 04 - 26-10/01.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL 04 - 26-10/01.webp",
+      "Carrosséis/CARROSSEL 04 - 26-10/02.webp",
+      "Carrosséis/CARROSSEL 04 - 26-10/03.webp",
+      "Carrosséis/CARROSSEL 04 - 26-10/04.webp",
+      "Carrosséis/CARROSSEL 04 - 26-10/05.webp",
+      "Carrosséis/CARROSSEL 04 - 26-10/06.webp"
+    ],
+    "slideCount": 6,
+    "software": "Photoshop • Midjourney / AI Studio",
+    "colors": [
+      "#10B981",
+      "#F59E0B",
+      "#091A14",
+      "#ECFDF5"
+    ],
+    "description": "Análise estratégica sobre o papel do designer como diretor de criação na era da inteligência artificial generativa.",
     "highlight": true
   },
   {
@@ -131,6 +295,61 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
+    "id": "carrossel-carrossel-02",
+    "folderName": "CARROSSEL 02",
+    "title": "Desaprendendo a Ser Designer",
+    "client": "Branding Autoral",
+    "handle": "@marcos.designer",
+    "type": "Carrossel Reflexivo & Autoral",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL 02/images/01.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL 02/images/01.webp",
+      "Carrosséis/CARROSSEL 02/images/02.webp",
+      "Carrosséis/CARROSSEL 02/images/03.webp",
+      "Carrosséis/CARROSSEL 02/images/04.webp",
+      "Carrosséis/CARROSSEL 02/images/05.webp",
+      "Carrosséis/CARROSSEL 02/images/06.webp",
+      "Carrosséis/CARROSSEL 02/images/07.webp"
+    ],
+    "slideCount": 7,
+    "software": "Photoshop • Procreate",
+    "colors": [
+      "#A855F7",
+      "#6B21A8",
+      "#0E0719",
+      "#FAF5FF"
+    ],
+    "description": "Reflexão estética e filosófica sobre como esquecer fórmulas pré-fabricadas para criar designs autênticos e expressivos.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-carrossel-imunofosfo",
+    "folderName": "CARROSSEL IMUNOFOSFO",
+    "title": "Imunofosfo — Estresse & Suplementação",
+    "client": "Imunofosfo Labs",
+    "handle": "@imunofosfo.oficial",
+    "type": "Carrossel Nutracêutico & Conversão",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 4  Imunidade forte - 03-03.webp",
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 5  Tratamento oncológico-03-03.webp",
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 7 Uso do Imonofosfo -03-03.webp"
+    ],
+    "slideCount": 4,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#3B82F6",
+      "#1D4ED8",
+      "#0F172A",
+      "#EFF6FF"
+    ],
+    "description": "Design farmacêutico/nutracêutico com linguagem direta focada na dor do cliente e solução do produto.",
+    "highlight": true
+  },
+  {
     "id": "carrossel-carrossel-dra-mari-05",
     "folderName": "CARROSSEL DRA. MARI 05",
     "title": "Dra. Mariana — Cuidados no Inverno",
@@ -155,6 +374,60 @@ window.PORTFOLIO_PROJECTS = [
       "#F0F9FF"
     ],
     "description": "Conteúdo sazonal direcionado que aqueceu o agendamento de consultas na clínica no período frio.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-panda-english-02-pandas-birthday",
+    "folderName": "CARROSSEL PANDA ENGLISH 02",
+    "title": "Panda English — Panda's Birthday & St. Patrick's Day",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Temático & Eventos",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 1.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 1.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 2.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 3.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 4.webp"
+    ],
+    "slideCount": 4,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#10B981",
+      "#F59E0B",
+      "#064E3B",
+      "#FFFFFF"
+    ],
+    "description": "Comunicação festiva e temática celebrando o aniversário da escola com elementos irlandeses do St. Patrick's Day, moedas douradas e mascote 3D imersivo.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-carrossel-smart-grow-02",
+    "folderName": "CARROSSEL SMART GROW - 02",
+    "title": "Smart Grow — Nutrição Vegetal Avançada",
+    "client": "Smart Grow Agrotech",
+    "handle": "@smartgrow.agrotech",
+    "type": "Carrossel Técnico & Comercial",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_02.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_03.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_04.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_05.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_06.webp"
+    ],
+    "slideCount": 6,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#84CC16",
+      "#4D7C0F",
+      "#0D1708",
+      "#F7FEE7"
+    ],
+    "description": "Explicação visual de formulações e defensivos de biofertilização para produtores de grande escala.",
     "highlight": true
   },
   {
@@ -188,141 +461,32 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
-    "id": "carrossel-carrossel-dra-mari-07",
-    "folderName": "CARROSSEL DRA.MARI 07",
-    "title": "Dra. Mariana — Beleza com Ciência",
-    "client": "Dra. Mariana Dermato",
-    "handle": "@dra.marianadermato",
-    "type": "Carrossel de Posicionamento",
+    "id": "carrossel-carrossel-03",
+    "folderName": "CARROSSEL 03",
+    "title": "Fazendo Coisas Que Eu Não Sei Fazer",
+    "client": "Branding Autoral",
+    "handle": "@marcos.designer",
+    "type": "Storytelling & Ensaio Autoral",
     "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_01.webp",
+    "cover": "Carrosséis/CARROSSEL 03/images/01.webp",
     "slides": [
-      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_01.webp",
-      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_02.webp",
-      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_03.webp",
-      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_04.webp",
-      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_05.webp",
-      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_06.webp"
-    ],
-    "slideCount": 6,
-    "software": "Photoshop • Lightroom",
-    "colors": [
-      "#E879F9",
-      "#701A75",
-      "#090A0F",
-      "#FDF4FF"
-    ],
-    "description": "Fortalecimento da marca pessoal da médica como referência regional e científica.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-imunofosfo",
-    "folderName": "CARROSSEL IMUNOFOSFO",
-    "title": "Imunofosfo — Estresse & Suplementação",
-    "client": "Imunofosfo Labs",
-    "handle": "@imunofosfo.oficial",
-    "type": "Carrossel Nutracêutico & Conversão",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 4  Imunidade forte - 03-03.webp",
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 5  Tratamento oncológico-03-03.webp",
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 7 Uso do Imonofosfo -03-03.webp"
-    ],
-    "slideCount": 4,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#3B82F6",
-      "#1D4ED8",
-      "#0F172A",
-      "#EFF6FF"
-    ],
-    "description": "Design farmacêutico/nutracêutico com linguagem direta focada na dor do cliente e solução do produto.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-seller-chat",
-    "folderName": "CARROSSEL SELLER CHAT",
-    "title": "Seller Chat — IA para Automação de Vendas",
-    "client": "Seller Chat AI",
-    "handle": "@sellerchat.ai",
-    "type": "Carrossel SaaS & Tech",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_01.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_01.webp",
-      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_02.webp",
-      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_03.webp",
-      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_04.webp",
-      "Carrosséis/CARROSSEL SELLER CHAT/SELLER-CHAT---01-04_05.webp"
-    ],
-    "slideCount": 5,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#6366F1",
-      "#4338CA",
-      "#0B0F19",
-      "#EEF2FF"
-    ],
-    "description": "Apresentação de benefícios de software inteligente para e-commerce, gerando leads qualificados no B2B.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-smart-grow-01",
-    "folderName": "CARROSSEL SMART GROW - 01",
-    "title": "Smart Grow — Alta Produtividade no Campo",
-    "client": "Smart Grow Agrotech",
-    "handle": "@smartgrow.agrotech",
-    "type": "Carrossel Agrotech & Soluções",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_01.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_01.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_02.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_03.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_04.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_05.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_06.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 01/CARROSSEL---SMART-GROW-COMPANY---07-10_07.webp"
+      "Carrosséis/CARROSSEL 03/images/01.webp",
+      "Carrosséis/CARROSSEL 03/images/02.webp",
+      "Carrosséis/CARROSSEL 03/images/03.webp",
+      "Carrosséis/CARROSSEL 03/images/04.webp",
+      "Carrosséis/CARROSSEL 03/images/05.webp",
+      "Carrosséis/CARROSSEL 03/images/06.webp",
+      "Carrosséis/CARROSSEL 03/images/07.webp"
     ],
     "slideCount": 7,
-    "software": "Photoshop • Illustrator",
+    "software": "Photoshop • Lightroom",
     "colors": [
-      "#22C55E",
-      "#15803D",
-      "#0B140E",
-      "#F0FDF4"
+      "#F59E0B",
+      "#0284C7",
+      "#081726",
+      "#FEF3C7"
     ],
-    "description": "Comunicação moderna para o agro contemporâneo, unindo tecnologia de ponta, sustentabilidade e ROI.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-smart-grow-02",
-    "folderName": "CARROSSEL SMART GROW - 02",
-    "title": "Smart Grow — Nutrição Vegetal Avançada",
-    "client": "Smart Grow Agrotech",
-    "handle": "@smartgrow.agrotech",
-    "type": "Carrossel Técnico & Comercial",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_02.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_03.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_04.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_05.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_06.webp"
-    ],
-    "slideCount": 6,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#84CC16",
-      "#4D7C0F",
-      "#0D1708",
-      "#F7FEE7"
-    ],
-    "description": "Explicação visual de formulações e defensivos de biofertilização para produtores de grande escala.",
+    "description": "Ensaio visual sobre ousadia criativa, experimentação de novas linguagens e superação de zonas de conforto.",
     "highlight": true
   },
   {
@@ -355,195 +519,31 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
-    "id": "carrossel-carrossel-01",
-    "folderName": "CARROSSEL 01",
-    "title": "Eu Passei Anos Tentando Escolher Uma Profissão",
-    "client": "Branding Autoral",
-    "handle": "@marcos.designer",
-    "type": "Storytelling & Branding Pessoal",
+    "id": "carrossel-carrossel-dra-mari-07",
+    "folderName": "CARROSSEL DRA.MARI 07",
+    "title": "Dra. Mariana — Beleza com Ciência",
+    "client": "Dra. Mariana Dermato",
+    "handle": "@dra.marianadermato",
+    "type": "Carrossel de Posicionamento",
     "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL 01/Sem-Título-1_06.webp",
+    "cover": "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_01.webp",
     "slides": [
-      "Carrosséis/CARROSSEL 01/Sem-Título-1_06.webp",
-      "Carrosséis/CARROSSEL 01/Sem-Título-1_07.webp",
-      "Carrosséis/CARROSSEL 01/Sem-Título-1_08.webp",
-      "Carrosséis/CARROSSEL 01/Sem-Título-1_09.webp",
-      "Carrosséis/CARROSSEL 01/Sem-Título-1_10.webp",
-      "Carrosséis/CARROSSEL 01/Sem-Título-1_11.webp"
+      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_01.webp",
+      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_02.webp",
+      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_03.webp",
+      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_04.webp",
+      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_05.webp",
+      "Carrosséis/CARROSSEL DRA.MARI 07/CARROSSEL-23-05_06.webp"
     ],
     "slideCount": 6,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#FF6B00",
-      "#7C3AED",
-      "#0F0E17",
-      "#FFF1E8"
-    ],
-    "description": "Narrativa autoral de forte conexão emocional e quebra de crenças sobre a percepção de valor no mercado criativo.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-02",
-    "folderName": "CARROSSEL 02",
-    "title": "Desaprendendo a Ser Designer",
-    "client": "Branding Autoral",
-    "handle": "@marcos.designer",
-    "type": "Carrossel Reflexivo & Autoral",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL 02/images/01.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL 02/images/01.webp",
-      "Carrosséis/CARROSSEL 02/images/02.webp",
-      "Carrosséis/CARROSSEL 02/images/03.webp",
-      "Carrosséis/CARROSSEL 02/images/04.webp",
-      "Carrosséis/CARROSSEL 02/images/05.webp",
-      "Carrosséis/CARROSSEL 02/images/06.webp",
-      "Carrosséis/CARROSSEL 02/images/07.webp"
-    ],
-    "slideCount": 7,
-    "software": "Photoshop • Procreate",
-    "colors": [
-      "#A855F7",
-      "#6B21A8",
-      "#0E0719",
-      "#FAF5FF"
-    ],
-    "description": "Reflexão estética e filosófica sobre como esquecer fórmulas pré-fabricadas para criar designs autênticos e expressivos.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-03",
-    "folderName": "CARROSSEL 03",
-    "title": "Fazendo Coisas Que Eu Não Sei Fazer",
-    "client": "Branding Autoral",
-    "handle": "@marcos.designer",
-    "type": "Storytelling & Ensaio Autoral",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL 03/images/01.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL 03/images/01.webp",
-      "Carrosséis/CARROSSEL 03/images/02.webp",
-      "Carrosséis/CARROSSEL 03/images/03.webp",
-      "Carrosséis/CARROSSEL 03/images/04.webp",
-      "Carrosséis/CARROSSEL 03/images/05.webp",
-      "Carrosséis/CARROSSEL 03/images/06.webp",
-      "Carrosséis/CARROSSEL 03/images/07.webp"
-    ],
-    "slideCount": 7,
     "software": "Photoshop • Lightroom",
     "colors": [
-      "#F59E0B",
-      "#0284C7",
-      "#081726",
-      "#FEF3C7"
+      "#E879F9",
+      "#701A75",
+      "#090A0F",
+      "#FDF4FF"
     ],
-    "description": "Ensaio visual sobre ousadia criativa, experimentação de novas linguagens e superação de zonas de conforto.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-04-26-10",
-    "folderName": "CARROSSEL 04 - 26-10",
-    "title": "A IA Executa. Você Dirige",
-    "client": "Inteligência Artificial & Design",
-    "handle": "@marcos.designer",
-    "type": "Tendências & Direção Criativa",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL 04 - 26-10/01.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL 04 - 26-10/01.webp",
-      "Carrosséis/CARROSSEL 04 - 26-10/02.webp",
-      "Carrosséis/CARROSSEL 04 - 26-10/03.webp",
-      "Carrosséis/CARROSSEL 04 - 26-10/04.webp",
-      "Carrosséis/CARROSSEL 04 - 26-10/05.webp",
-      "Carrosséis/CARROSSEL 04 - 26-10/06.webp"
-    ],
-    "slideCount": 6,
-    "software": "Photoshop • Midjourney / AI Studio",
-    "colors": [
-      "#10B981",
-      "#F59E0B",
-      "#091A14",
-      "#ECFDF5"
-    ],
-    "description": "Análise estratégica sobre o papel do designer como diretor de criação na era da inteligência artificial generativa.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-panda-english-nao-tenha-medo-de-errar",
-    "folderName": "CARROSSEL PANDA ENGLISH",
-    "title": "Panda English — Não Tenha Medo de Errar",
-    "client": "Panda English",
-    "handle": "@pandaenglish",
-    "type": "Carrossel Educativo & Idiomas",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL PANDA ENGLISH/pag1.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL PANDA ENGLISH/pag1.webp",
-      "Carrosséis/CARROSSEL PANDA ENGLISH/pag2.webp",
-      "Carrosséis/CARROSSEL PANDA ENGLISH/pag3.webp"
-    ],
-    "slideCount": 3,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#0EA5E9",
-      "#EF4444",
-      "#0F172A",
-      "#FFFFFF"
-    ],
-    "description": "Carrossel motivacional e educativo desmistificando o processo de aprendizado do inglês com personagem 3D proprietário e tipografia dinâmica.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-panda-english-02-pandas-birthday",
-    "folderName": "CARROSSEL PANDA ENGLISH 02",
-    "title": "Panda English — Panda's Birthday & St. Patrick's Day",
-    "client": "Panda English School",
-    "handle": "@pandaenglish",
-    "type": "Carrossel Temático & Eventos",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 1.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 1.webp",
-      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 2.webp",
-      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 3.webp",
-      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 4.webp"
-    ],
-    "slideCount": 4,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#10B981",
-      "#F59E0B",
-      "#064E3B",
-      "#FFFFFF"
-    ],
-    "description": "Comunicação festiva e temática celebrando o aniversário da escola com elementos irlandeses do St. Patrick's Day, moedas douradas e mascote 3D imersivo.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-ingles-oque-e",
-    "folderName": "CARROSSEL INGLÊS OQUE É",
-    "title": "Panda English — Focado em Melhorar o Seu Inglês?",
-    "client": "Panda English School",
-    "handle": "@pandaenglish",
-    "type": "Carrossel Institucional & Conteúdo",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag2.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag3.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag4.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag5.webp"
-    ],
-    "slideCount": 5,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#F97316",
-      "#047857",
-      "#0B1E19",
-      "#FFF7ED"
-    ],
-    "description": "Narrativa visual imersiva explorando a relevância global do idioma inglês, cultura e metodologia de aprendizagem acelerada com identidade editorial refinada.",
+    "description": "Fortalecimento da marca pessoal da médica como referência regional e científica.",
     "highlight": true
   },
   {
