@@ -469,6 +469,84 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
+    "id": "carrossel-panda-english-nao-tenha-medo-de-errar",
+    "folderName": "CARROSSEL PANDA ENGLISH",
+    "title": "Panda English — Não Tenha Medo de Errar",
+    "client": "Panda English",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Educativo & Idiomas",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL PANDA ENGLISH/pag1.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL PANDA ENGLISH/pag1.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH/pag2.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH/pag3.webp"
+    ],
+    "slideCount": 3,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#0EA5E9",
+      "#EF4444",
+      "#0F172A",
+      "#FFFFFF"
+    ],
+    "description": "Carrossel motivacional e educativo desmistificando o processo de aprendizado do inglês com personagem 3D proprietário e tipografia dinâmica.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-panda-english-02-pandas-birthday",
+    "folderName": "CARROSSEL PANDA ENGLISH 02",
+    "title": "Panda English — Panda's Birthday & St. Patrick's Day",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Temático & Eventos",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 1.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 1.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 2.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 3.webp",
+      "Carrosséis/CARROSSEL PANDA ENGLISH 02/Introdução do evento PAG 4.webp"
+    ],
+    "slideCount": 4,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#10B981",
+      "#F59E0B",
+      "#064E3B",
+      "#FFFFFF"
+    ],
+    "description": "Comunicação festiva e temática celebrando o aniversário da escola com elementos irlandeses do St. Patrick's Day, moedas douradas e mascote 3D imersivo.",
+    "highlight": true
+  },
+  {
+    "id": "carrossel-ingles-oque-e",
+    "folderName": "CARROSSEL INGLÊS OQUE É",
+    "title": "Panda English — Focado em Melhorar o Seu Inglês?",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Institucional & Conteúdo",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag2.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag3.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag4.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag5.webp"
+    ],
+    "slideCount": 5,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#F97316",
+      "#047857",
+      "#0B1E19",
+      "#FFF7ED"
+    ],
+    "description": "Narrativa visual imersiva explorando a relevância global do idioma inglês, cultura e metodologia de aprendizagem acelerada com identidade editorial refinada.",
+    "highlight": true
+  },
+  {
     "id": "id-visual-id-visual-codigo-hop",
     "folderName": "ID VISUAL CODIGO HOP",
     "title": "CÓDIGO HOP - ROGÉRIO GRECO",
@@ -1430,6 +1508,72 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Fotografia gastronômica autoral com enquadramento zenital de alta precisão e iluminação direcionada.",
+    "highlight": true
+  },
+  {
+    "id": "static-forro-piro-atracao-pedro-sampaio",
+    "title": "Forró Piro 23° — 1ª Atração Confirmada: Pedro Sampaio",
+    "client": "Forró Piro / Dimensão Eventos",
+    "handle": "@forropiro",
+    "type": "Flyer Promocional & Eventos",
+    "category": "Estáticos",
+    "cover": "Estáticos/ATRAÇÃO PEDRO SAMPAIO.webp",
+    "slides": [
+      "Estáticos/ATRAÇÃO PEDRO SAMPAIO.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop",
+    "colors": [
+      "#8B5CF6",
+      "#EC4899",
+      "#FACC15",
+      "#0B0314"
+    ],
+    "description": "Peça oficial de lançamento para feed do festival Forró Piro com Pedro Sampaio, integrando atmosfera neon ultravioleta, tipografia de show e iluminação cênica de palco.",
+    "highlight": true
+  },
+  {
+    "id": "static-forro-piro-1-atracao-confirmada2-story",
+    "title": "Forró Piro 23° — Pedro Sampaio: Prontos Para Tremer?",
+    "client": "Forró Piro / Dimensão Eventos",
+    "handle": "@forropiro",
+    "type": "Story Vertical & Divulgação",
+    "category": "Estáticos",
+    "cover": "Estáticos/1 ATRAÇÃO CONFIRMADA2.webp",
+    "slides": [
+      "Estáticos/1 ATRAÇÃO CONFIRMADA2.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop",
+    "colors": [
+      "#7C3AED",
+      "#EF4444",
+      "#FACC15",
+      "#080310"
+    ],
+    "description": "Story promocional em formato vertical 9:16 para ativação de público e engajamento no Instagram com contorno neon e chamada de alto impacto.",
+    "highlight": true
+  },
+  {
+    "id": "static-forro-piro-segundo-lote-disponivel-story",
+    "title": "Forró Piro 23° — Vendas Segundo Lote Disponível",
+    "client": "Forró Piro / Dimensão Eventos",
+    "handle": "@forropiro",
+    "type": "Story Promocional & Vendas",
+    "category": "Estáticos",
+    "cover": "Estáticos/SEGUNDO LOTE DISPONIVEL.webp",
+    "slides": [
+      "Estáticos/SEGUNDO LOTE DISPONIVEL.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop",
+    "colors": [
+      "#6366F1",
+      "#F43F5E",
+      "#FACC15",
+      "#0A0416"
+    ],
+    "description": "Criativo vertical de conversão para venda de ingressos do festival com condições de parcelamento, gatilho de urgência de lote e visual de festival noturno.",
     "highlight": true
   }
 ];
