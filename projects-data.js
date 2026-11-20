@@ -785,47 +785,25 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
-    "id": "static-cor-de-ingrediente-27-10-feed-png",
-    "title": "Clique & Poesia — A Cor Também é um Ingrediente",
-    "client": "Clique & Poesia Fotografia",
-    "handle": "@cliqueeposia",
-    "type": "Direção de Arte & Food Styling",
+    "id": "static-ronan-pedroza-criativo-01-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 01",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
     "category": "Estáticos",
-    "cover": "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO 01.webp",
     "slides": [
-      "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp"
+      "Estáticos/RONAN-PEDROZA-CRIATIVO 01.webp"
     ],
     "slideCount": 1,
-    "software": "Photoshop • Lightroom",
+    "software": "Photoshop • Figma",
     "colors": [
-      "#EF4444",
-      "#15803D",
-      "#18181B",
-      "#FFFBEB"
+      "#FF9500",
+      "#C2410C",
+      "#0C0A09",
+      "#FAFAF9"
     ],
-    "description": "Composição com recorte e desaturação seletiva evidenciando a cor como vetor primário de apetite appeal e sofisticação gastronômica.",
-    "highlight": true
-  },
-  {
-    "id": "static-smart-grow-est-tico-png",
-    "title": "Smart Grow — Soluções para Produtividade Agro",
-    "client": "Smart Grow Agrotech",
-    "handle": "@smartgrow.agrotech",
-    "type": "Post Feed Estático",
-    "category": "Estáticos",
-    "cover": "Estáticos/SMART GROW ESTÁTICO.webp",
-    "slides": [
-      "Estáticos/SMART GROW ESTÁTICO.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#22C55E",
-      "#15803D",
-      "#0B140E",
-      "#F0FDF4"
-    ],
-    "description": "Design de alta densidade visual com iluminação dramática e destaque para a tecnologia do insumo agrícola.",
+    "description": "Composição de alto contraste para infoproduto e mentoria de negócios.",
     "highlight": true
   },
   {
@@ -851,81 +829,81 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": false
   },
   {
-    "id": "static-11-04-dra-mari-png",
-    "title": "Dra. Mariana — Harmonização Facial & Confiança",
-    "client": "Dra. Mariana Dermato",
-    "handle": "@dra.marianadermato",
-    "type": "Post Feed Autoral & Branding",
+    "id": "static-forro-piro-atracao-pedro-sampaio",
+    "title": "Forró Piro 23° — 1ª Atração Confirmada: Pedro Sampaio",
+    "client": "Forró Piro / Dimensão Eventos",
+    "handle": "@forropiro",
+    "type": "Flyer Promocional & Eventos",
     "category": "Estáticos",
-    "cover": "Estáticos/11-04---DRA.MARI.webp",
+    "cover": "Estáticos/ATRAÇÃO PEDRO SAMPAIO.webp",
     "slides": [
-      "Estáticos/11-04---DRA.MARI.webp"
+      "Estáticos/ATRAÇÃO PEDRO SAMPAIO.webp"
     ],
     "slideCount": 1,
-    "software": "Photoshop • Lightroom",
+    "software": "Photoshop",
     "colors": [
-      "#AF52DE",
-      "#701A75",
-      "#18181B",
-      "#FDF4FF"
+      "#8B5CF6",
+      "#EC4899",
+      "#FACC15",
+      "#0B0314"
     ],
-    "description": "Composição editorial sofisticada que transmite elegância, segurança e técnica refinada.",
+    "description": "Peça oficial de lançamento para feed do festival Forró Piro com Pedro Sampaio, integrando atmosfera neon ultravioleta, tipografia de show e iluminação cênica de palco.",
     "highlight": true
   },
   {
-    "id": "static-11-06-dra-png",
-    "title": "Dra. Mariana — Estética com Naturalidade",
-    "client": "Dra. Mariana Dermato",
-    "handle": "@dra.marianadermato",
-    "type": "Post Feed Estético",
+    "id": "static-smart-grow-est-tico-png",
+    "title": "Smart Grow — Soluções para Produtividade Agro",
+    "client": "Smart Grow Agrotech",
+    "handle": "@smartgrow.agrotech",
+    "type": "Post Feed Estático",
     "category": "Estáticos",
-    "cover": "Estáticos/11-06-DRA.webp",
+    "cover": "Estáticos/SMART GROW ESTÁTICO.webp",
     "slides": [
-      "Estáticos/11-06-DRA.webp"
+      "Estáticos/SMART GROW ESTÁTICO.webp"
     ],
     "slideCount": 1,
-    "software": "Photoshop • Lightroom",
+    "software": "Photoshop • Illustrator",
     "colors": [
-      "#E879F9",
-      "#86198F",
-      "#18181B",
-      "#FDF4FF"
+      "#22C55E",
+      "#15803D",
+      "#0B140E",
+      "#F0FDF4"
     ],
-    "description": "Design minimalista focado na expressão e bem-estar da paciente.",
+    "description": "Design de alta densidade visual com iluminação dramática e destaque para a tecnologia do insumo agrícola.",
+    "highlight": true
+  },
+  {
+    "id": "static-ronan-pedroza-criativo-02-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 02",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
+    "category": "Estáticos",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-02.webp",
+    "slides": [
+      "Estáticos/RONAN-PEDROZA-CRIATIVO-02.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
     "highlight": false
   },
   {
-    "id": "static-20-10-erp-smart-grow-png",
-    "title": "Smart Grow ERP — Plataforma de Gestão Agrícola",
-    "client": "Smart Grow Tech",
-    "handle": "@smartgrow.tech",
-    "type": "Interface UI & Apresentação de Produto",
+    "id": "static-post-1-mudan-a-de-esta-o-03-03-png",
+    "title": "POST 1  Mudança de estação   03 03",
+    "client": "Imunofosfo Labs",
+    "handle": "@imunofosfo.labs",
+    "type": "Design Farmacêutico & Suplementação",
     "category": "Estáticos",
-    "cover": "Estáticos/20-10 - ERP - SMART GROW.webp",
+    "cover": "Estáticos/POST 1  Mudança de estação - 03-03.webp",
     "slides": [
-      "Estáticos/20-10 - ERP - SMART GROW.webp"
-    ],
-    "slideCount": 1,
-    "software": "Figma • Photoshop",
-    "colors": [
-      "#00C7BE",
-      "#0E7490",
-      "#0B132B",
-      "#ECFEFF"
-    ],
-    "description": "Mockup 3D em perspectiva para apresentação de software SaaS corporativo com painéis e métricas.",
-    "highlight": true
-  },
-  {
-    "id": "static-criativo-01-03-11-png",
-    "title": "CRIATIVO 01   03 11",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/CRIATIVO 01 - 03-11.webp",
-    "slides": [
-      "Estáticos/CRIATIVO 01 - 03-11.webp"
+      "Estáticos/POST 1  Mudança de estação - 03-03.webp"
     ],
     "slideCount": 1,
     "software": "Photoshop • Figma",
@@ -961,47 +939,69 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
-    "id": "static-criativo-01-png",
-    "title": "Criativo Comercial — Lançamento & Vendas",
-    "client": "Campanha Digital",
-    "handle": "@performance.ads",
-    "type": "Criativo Publicitário",
+    "id": "static-11-04-dra-mari-png",
+    "title": "Dra. Mariana — Harmonização Facial & Confiança",
+    "client": "Dra. Mariana Dermato",
+    "handle": "@dra.marianadermato",
+    "type": "Post Feed Autoral & Branding",
     "category": "Estáticos",
-    "cover": "Estáticos/CRIATIVO 01.webp",
+    "cover": "Estáticos/11-04---DRA.MARI.webp",
     "slides": [
-      "Estáticos/CRIATIVO 01.webp"
+      "Estáticos/11-04---DRA.MARI.webp"
     ],
     "slideCount": 1,
-    "software": "Photoshop • Illustrator",
+    "software": "Photoshop • Lightroom",
     "colors": [
-      "#EF4444",
-      "#B91C1C",
-      "#090A0F",
-      "#FEF2F2"
+      "#AF52DE",
+      "#701A75",
+      "#18181B",
+      "#FDF4FF"
     ],
-    "description": "Peça publicitária criada para maximizar taxa de cliques em canais de mídia paga.",
-    "highlight": false
+    "description": "Composição editorial sofisticada que transmite elegância, segurança e técnica refinada.",
+    "highlight": true
   },
   {
-    "id": "static-criativo-02-boarding-group-09-01-png",
-    "title": "Boarding Group — Fretamento de Jatos Privados",
-    "client": "Boarding Group Aero",
-    "handle": "@boardinggroup.aero",
-    "type": "Criativo de Tráfego Pago",
+    "id": "static-criativo-01-03-11-png",
+    "title": "CRIATIVO 01   03 11",
+    "client": "Design Autoral",
+    "handle": "@design.portfolio",
+    "type": "Criativo & Post Social Media",
     "category": "Estáticos",
-    "cover": "Estáticos/CRIATIVO 02 - BOARDING GROUP - 09-01.webp",
+    "cover": "Estáticos/CRIATIVO 01 - 03-11.webp",
     "slides": [
-      "Estáticos/CRIATIVO 02 - BOARDING GROUP - 09-01.webp"
+      "Estáticos/CRIATIVO 01 - 03-11.webp"
     ],
     "slideCount": 1,
     "software": "Photoshop • Figma",
     "colors": [
-      "#38BDF8",
-      "#0284C7",
-      "#0A0E17",
-      "#F0F9FF"
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
     ],
-    "description": "Anúncio voltado para conversão direta de reservas com estética de luxo e tipografia imponente.",
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-ronan-pedroza-criativo-03-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 03",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
+    "category": "Estáticos",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-03.webp",
+    "slides": [
+      "Estáticos/RONAN-PEDROZA-CRIATIVO-03.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
     "highlight": false
   },
   {
@@ -1014,6 +1014,72 @@ window.PORTFOLIO_PROJECTS = [
     "cover": "Estáticos/CRIATIVO 02 STORIES - 23-05.webp",
     "slides": [
       "Estáticos/CRIATIVO 02 STORIES - 23-05.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-cor-de-ingrediente-27-10-feed-png",
+    "title": "Clique & Poesia — A Cor Também é um Ingrediente",
+    "client": "Clique & Poesia Fotografia",
+    "handle": "@cliqueeposia",
+    "type": "Direção de Arte & Food Styling",
+    "category": "Estáticos",
+    "cover": "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp",
+    "slides": [
+      "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Lightroom",
+    "colors": [
+      "#EF4444",
+      "#15803D",
+      "#18181B",
+      "#FFFBEB"
+    ],
+    "description": "Composição com recorte e desaturação seletiva evidenciando a cor como vetor primário de apetite appeal e sofisticação gastronômica.",
+    "highlight": true
+  },
+  {
+    "id": "static-criativo-03-png",
+    "title": "CRIATIVO 03",
+    "client": "Design Autoral",
+    "handle": "@design.portfolio",
+    "type": "Criativo & Post Social Media",
+    "category": "Estáticos",
+    "cover": "Estáticos/CRIATIVO 03.webp",
+    "slides": [
+      "Estáticos/CRIATIVO 03.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-ronan-pedroza-criativo-04-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 04",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
+    "category": "Estáticos",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-04.webp",
+    "slides": [
+      "Estáticos/RONAN-PEDROZA-CRIATIVO-04.webp"
     ],
     "slideCount": 1,
     "software": "Photoshop • Figma",
@@ -1049,37 +1115,37 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
-    "id": "static-criativo-03-boarding-group-09-01-png",
-    "title": "Boarding Group — Experiência de Voo Exclusiva",
-    "client": "Boarding Group Aero",
-    "handle": "@boardinggroup.aero",
-    "type": "Criativo de Performance",
+    "id": "static-forro-piro-1-atracao-confirmada2-story",
+    "title": "Forró Piro 23° — Pedro Sampaio: Prontos Para Tremer?",
+    "client": "Forró Piro / Dimensão Eventos",
+    "handle": "@forropiro",
+    "type": "Story Vertical & Divulgação",
     "category": "Estáticos",
-    "cover": "Estáticos/CRIATIVO 03 - BOARDING GROUP - 09-01.webp",
+    "cover": "Estáticos/1 ATRAÇÃO CONFIRMADA2.webp",
     "slides": [
-      "Estáticos/CRIATIVO 03 - BOARDING GROUP - 09-01.webp"
+      "Estáticos/1 ATRAÇÃO CONFIRMADA2.webp"
     ],
     "slideCount": 1,
-    "software": "Photoshop • Figma",
+    "software": "Photoshop",
     "colors": [
-      "#60A5FA",
-      "#1D4ED8",
-      "#090A0F",
-      "#EFF6FF"
+      "#7C3AED",
+      "#EF4444",
+      "#FACC15",
+      "#080310"
     ],
-    "description": "Destaque para o cockpit e cabine premium com composição fotográfica de impacto.",
-    "highlight": false
+    "description": "Story promocional em formato vertical 9:16 para ativação de público e engajamento no Instagram com contorno neon e chamada de alto impacto.",
+    "highlight": true
   },
   {
-    "id": "static-criativo-03-png",
-    "title": "CRIATIVO 03",
+    "id": "static-criativo-04-png",
+    "title": "CRIATIVO 04",
     "client": "Design Autoral",
     "handle": "@design.portfolio",
     "type": "Criativo & Post Social Media",
     "category": "Estáticos",
-    "cover": "Estáticos/CRIATIVO 03.webp",
+    "cover": "Estáticos/CRIATIVO 04.webp",
     "slides": [
-      "Estáticos/CRIATIVO 03.webp"
+      "Estáticos/CRIATIVO 04.webp"
     ],
     "slideCount": 1,
     "software": "Photoshop • Figma",
@@ -1093,15 +1159,37 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": false
   },
   {
-    "id": "static-criativo-04-png",
-    "title": "CRIATIVO 04",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
+    "id": "static-20-10-erp-smart-grow-png",
+    "title": "Smart Grow ERP — Plataforma de Gestão Agrícola",
+    "client": "Smart Grow Tech",
+    "handle": "@smartgrow.tech",
+    "type": "Interface UI & Apresentação de Produto",
     "category": "Estáticos",
-    "cover": "Estáticos/CRIATIVO 04.webp",
+    "cover": "Estáticos/20-10 - ERP - SMART GROW.webp",
     "slides": [
-      "Estáticos/CRIATIVO 04.webp"
+      "Estáticos/20-10 - ERP - SMART GROW.webp"
+    ],
+    "slideCount": 1,
+    "software": "Figma • Photoshop",
+    "colors": [
+      "#00C7BE",
+      "#0E7490",
+      "#0B132B",
+      "#ECFEFF"
+    ],
+    "description": "Mockup 3D em perspectiva para apresentação de software SaaS corporativo com painéis e métricas.",
+    "highlight": true
+  },
+  {
+    "id": "static-ronan-pedroza-criativo-05-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 05",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
+    "category": "Estáticos",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-05.webp",
+    "slides": [
+      "Estáticos/RONAN-PEDROZA-CRIATIVO-05.webp"
     ],
     "slideCount": 1,
     "software": "Photoshop • Figma",
@@ -1137,6 +1225,72 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": false
   },
   {
+    "id": "static-criativo-02-boarding-group-09-01-png",
+    "title": "Boarding Group — Fretamento de Jatos Privados",
+    "client": "Boarding Group Aero",
+    "handle": "@boardinggroup.aero",
+    "type": "Criativo de Tráfego Pago",
+    "category": "Estáticos",
+    "cover": "Estáticos/CRIATIVO 02 - BOARDING GROUP - 09-01.webp",
+    "slides": [
+      "Estáticos/CRIATIVO 02 - BOARDING GROUP - 09-01.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#38BDF8",
+      "#0284C7",
+      "#0A0E17",
+      "#F0F9FF"
+    ],
+    "description": "Anúncio voltado para conversão direta de reservas com estética de luxo e tipografia imponente.",
+    "highlight": false
+  },
+  {
+    "id": "static-post-2-inspiracional-03-03-png",
+    "title": "POST 2   Inspiracional   03 03",
+    "client": "Imunofosfo Labs",
+    "handle": "@imunofosfo.labs",
+    "type": "Design Farmacêutico & Suplementação",
+    "category": "Estáticos",
+    "cover": "Estáticos/POST 2   Inspiracional - 03-03.webp",
+    "slides": [
+      "Estáticos/POST 2   Inspiracional - 03-03.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-ronan-pedroza-criativo-06-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 06",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
+    "category": "Estáticos",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-06.webp",
+    "slides": [
+      "Estáticos/RONAN-PEDROZA-CRIATIVO-06.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
     "id": "static-est-tico-02-feed-png",
     "title": "ESTÁTICO 02 FEED",
     "client": "Design Autoral",
@@ -1156,6 +1310,28 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-11-06-dra-png",
+    "title": "Dra. Mariana — Estética com Naturalidade",
+    "client": "Dra. Mariana Dermato",
+    "handle": "@dra.marianadermato",
+    "type": "Post Feed Estético",
+    "category": "Estáticos",
+    "cover": "Estáticos/11-06-DRA.webp",
+    "slides": [
+      "Estáticos/11-06-DRA.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Lightroom",
+    "colors": [
+      "#E879F9",
+      "#86198F",
+      "#18181B",
+      "#FDF4FF"
+    ],
+    "description": "Design minimalista focado na expressão e bem-estar da paciente.",
     "highlight": false
   },
   {
@@ -1181,6 +1357,94 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": false
   },
   {
+    "id": "static-pratos-zenital-01-png",
+    "title": "Clique & Poesia — O que é Foto Zenital?",
+    "client": "Clique & Poesia Fotografia",
+    "handle": "@cliqueeposia",
+    "type": "Post Educativo Gastronômico",
+    "category": "Estáticos",
+    "cover": "Estáticos/PRATOS-ZENITAL_01.webp",
+    "slides": [
+      "Estáticos/PRATOS-ZENITAL_01.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Lightroom",
+    "colors": [
+      "#84CC16",
+      "#D97706",
+      "#0A0A0A",
+      "#FFFFFF"
+    ],
+    "description": "Fotografia gastronômica autoral com enquadramento zenital de alta precisão e iluminação direcionada.",
+    "highlight": true
+  },
+  {
+    "id": "static-ronan-pedroza-criativo-07-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 07",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
+    "category": "Estáticos",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-07.webp",
+    "slides": [
+      "Estáticos/RONAN-PEDROZA-CRIATIVO-07.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-forro-piro-segundo-lote-disponivel-story",
+    "title": "Forró Piro 23° — Vendas Segundo Lote Disponível",
+    "client": "Forró Piro / Dimensão Eventos",
+    "handle": "@forropiro",
+    "type": "Story Promocional & Vendas",
+    "category": "Estáticos",
+    "cover": "Estáticos/SEGUNDO LOTE DISPONIVEL.webp",
+    "slides": [
+      "Estáticos/SEGUNDO LOTE DISPONIVEL.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop",
+    "colors": [
+      "#6366F1",
+      "#F43F5E",
+      "#FACC15",
+      "#0A0416"
+    ],
+    "description": "Criativo vertical de conversão para venda de ingressos do festival com condições de parcelamento, gatilho de urgência de lote e visual de festival noturno.",
+    "highlight": true
+  },
+  {
+    "id": "static-smart-grow-company-28-10-png",
+    "title": "Smart Grow — Inovação Contínua no Campo",
+    "client": "Smart Grow Agrotech",
+    "handle": "@smartgrow.agrotech",
+    "type": "Post Institucional Feed",
+    "category": "Estáticos",
+    "cover": "Estáticos/SMART GROW COMPANY - 28-10.webp",
+    "slides": [
+      "Estáticos/SMART GROW COMPANY - 28-10.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#16A34A",
+      "#14532D",
+      "#0A120B",
+      "#DCFCE7"
+    ],
+    "description": "Material institucional comemorativo e reforço de branding do ecossistema Smart Grow.",
+    "highlight": false
+  },
+  {
     "id": "static-est-ticos-3-31-01-png",
     "title": "ESTÁTICOS (3) 31 01",
     "client": "Design Autoral",
@@ -1200,6 +1464,72 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-ronan-pedroza-criativo-08-png",
+    "title": "Ronan Pedroza — Posicionamento de Negócios 08",
+    "client": "Ronan Pedroza Oficial",
+    "handle": "@ronanpedroza.oficial",
+    "type": "Criativo de Conteúdo & Conversão",
+    "category": "Estáticos",
+    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-08.webp",
+    "slides": [
+      "Estáticos/RONAN-PEDROZA-CRIATIVO-08.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#007AFF",
+      "#1E40AF",
+      "#090A0F",
+      "#FFFFFF"
+    ],
+    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
+    "highlight": false
+  },
+  {
+    "id": "static-criativo-01-png",
+    "title": "Criativo Comercial — Lançamento & Vendas",
+    "client": "Campanha Digital",
+    "handle": "@performance.ads",
+    "type": "Criativo Publicitário",
+    "category": "Estáticos",
+    "cover": "Estáticos/CRIATIVO 01.webp",
+    "slides": [
+      "Estáticos/CRIATIVO 01.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#EF4444",
+      "#B91C1C",
+      "#090A0F",
+      "#FEF2F2"
+    ],
+    "description": "Peça publicitária criada para maximizar taxa de cliques em canais de mídia paga.",
+    "highlight": false
+  },
+  {
+    "id": "static-criativo-03-boarding-group-09-01-png",
+    "title": "Boarding Group — Experiência de Voo Exclusiva",
+    "client": "Boarding Group Aero",
+    "handle": "@boardinggroup.aero",
+    "type": "Criativo de Performance",
+    "category": "Estáticos",
+    "cover": "Estáticos/CRIATIVO 03 - BOARDING GROUP - 09-01.webp",
+    "slides": [
+      "Estáticos/CRIATIVO 03 - BOARDING GROUP - 09-01.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Figma",
+    "colors": [
+      "#60A5FA",
+      "#1D4ED8",
+      "#090A0F",
+      "#EFF6FF"
+    ],
+    "description": "Destaque para o cockpit e cabine premium com composição fotográfica de impacto.",
     "highlight": false
   },
   {
@@ -1245,336 +1575,6 @@ window.PORTFOLIO_PROJECTS = [
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
     "highlight": false
-  },
-  {
-    "id": "static-post-1-mudan-a-de-esta-o-03-03-png",
-    "title": "POST 1  Mudança de estação   03 03",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/POST 1  Mudança de estação - 03-03.webp",
-    "slides": [
-      "Estáticos/POST 1  Mudança de estação - 03-03.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-post-2-inspiracional-03-03-png",
-    "title": "POST 2   Inspiracional   03 03",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/POST 2   Inspiracional - 03-03.webp",
-    "slides": [
-      "Estáticos/POST 2   Inspiracional - 03-03.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-01-png",
-    "title": "Ronan Pedroza — Posicionamento de Negócios 01",
-    "client": "Ronan Pedroza Oficial",
-    "handle": "@ronanpedroza.oficial",
-    "type": "Criativo de Conteúdo & Conversão",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO 01.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO 01.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#FF9500",
-      "#C2410C",
-      "#0C0A09",
-      "#FAFAF9"
-    ],
-    "description": "Composição de alto contraste para infoproduto e mentoria de negócios.",
-    "highlight": true
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-02-png",
-    "title": "RONAN PEDROZA CRIATIVO 02",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-02.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO-02.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-03-png",
-    "title": "RONAN PEDROZA CRIATIVO 03",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-03.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO-03.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-04-png",
-    "title": "RONAN PEDROZA CRIATIVO 04",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-04.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO-04.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-05-png",
-    "title": "RONAN PEDROZA CRIATIVO 05",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-05.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO-05.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-06-png",
-    "title": "RONAN PEDROZA CRIATIVO 06",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-06.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO-06.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-07-png",
-    "title": "RONAN PEDROZA CRIATIVO 07",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-07.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO-07.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-ronan-pedroza-criativo-08-png",
-    "title": "RONAN PEDROZA CRIATIVO 08",
-    "client": "Design Autoral",
-    "handle": "@design.portfolio",
-    "type": "Criativo & Post Social Media",
-    "category": "Estáticos",
-    "cover": "Estáticos/RONAN-PEDROZA-CRIATIVO-08.webp",
-    "slides": [
-      "Estáticos/RONAN-PEDROZA-CRIATIVO-08.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#007AFF",
-      "#1E40AF",
-      "#090A0F",
-      "#FFFFFF"
-    ],
-    "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
-  },
-  {
-    "id": "static-smart-grow-company-28-10-png",
-    "title": "Smart Grow — Inovação Contínua no Campo",
-    "client": "Smart Grow Agrotech",
-    "handle": "@smartgrow.agrotech",
-    "type": "Post Institucional Feed",
-    "category": "Estáticos",
-    "cover": "Estáticos/SMART GROW COMPANY - 28-10.webp",
-    "slides": [
-      "Estáticos/SMART GROW COMPANY - 28-10.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#16A34A",
-      "#14532D",
-      "#0A120B",
-      "#DCFCE7"
-    ],
-    "description": "Material institucional comemorativo e reforço de branding do ecossistema Smart Grow.",
-    "highlight": false
-  },
-  {
-    "id": "static-pratos-zenital-01-png",
-    "title": "Clique & Poesia — O que é Foto Zenital?",
-    "client": "Clique & Poesia Fotografia",
-    "handle": "@cliqueeposia",
-    "type": "Post Educativo Gastronômico",
-    "category": "Estáticos",
-    "cover": "Estáticos/PRATOS-ZENITAL_01.webp",
-    "slides": [
-      "Estáticos/PRATOS-ZENITAL_01.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Lightroom",
-    "colors": [
-      "#84CC16",
-      "#D97706",
-      "#0A0A0A",
-      "#FFFFFF"
-    ],
-    "description": "Fotografia gastronômica autoral com enquadramento zenital de alta precisão e iluminação direcionada.",
-    "highlight": true
-  },
-  {
-    "id": "static-forro-piro-atracao-pedro-sampaio",
-    "title": "Forró Piro 23° — 1ª Atração Confirmada: Pedro Sampaio",
-    "client": "Forró Piro / Dimensão Eventos",
-    "handle": "@forropiro",
-    "type": "Flyer Promocional & Eventos",
-    "category": "Estáticos",
-    "cover": "Estáticos/ATRAÇÃO PEDRO SAMPAIO.webp",
-    "slides": [
-      "Estáticos/ATRAÇÃO PEDRO SAMPAIO.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop",
-    "colors": [
-      "#8B5CF6",
-      "#EC4899",
-      "#FACC15",
-      "#0B0314"
-    ],
-    "description": "Peça oficial de lançamento para feed do festival Forró Piro com Pedro Sampaio, integrando atmosfera neon ultravioleta, tipografia de show e iluminação cênica de palco.",
-    "highlight": true
-  },
-  {
-    "id": "static-forro-piro-1-atracao-confirmada2-story",
-    "title": "Forró Piro 23° — Pedro Sampaio: Prontos Para Tremer?",
-    "client": "Forró Piro / Dimensão Eventos",
-    "handle": "@forropiro",
-    "type": "Story Vertical & Divulgação",
-    "category": "Estáticos",
-    "cover": "Estáticos/1 ATRAÇÃO CONFIRMADA2.webp",
-    "slides": [
-      "Estáticos/1 ATRAÇÃO CONFIRMADA2.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop",
-    "colors": [
-      "#7C3AED",
-      "#EF4444",
-      "#FACC15",
-      "#080310"
-    ],
-    "description": "Story promocional em formato vertical 9:16 para ativação de público e engajamento no Instagram com contorno neon e chamada de alto impacto.",
-    "highlight": true
-  },
-  {
-    "id": "static-forro-piro-segundo-lote-disponivel-story",
-    "title": "Forró Piro 23° — Vendas Segundo Lote Disponível",
-    "client": "Forró Piro / Dimensão Eventos",
-    "handle": "@forropiro",
-    "type": "Story Promocional & Vendas",
-    "category": "Estáticos",
-    "cover": "Estáticos/SEGUNDO LOTE DISPONIVEL.webp",
-    "slides": [
-      "Estáticos/SEGUNDO LOTE DISPONIVEL.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop",
-    "colors": [
-      "#6366F1",
-      "#F43F5E",
-      "#FACC15",
-      "#0A0416"
-    ],
-    "description": "Criativo vertical de conversão para venda de ingressos do festival com condições de parcelamento, gatilho de urgência de lote e visual de festival noturno.",
-    "highlight": true
   }
 ];
 var PORTFOLIO_PROJECTS = window.PORTFOLIO_PROJECTS;
