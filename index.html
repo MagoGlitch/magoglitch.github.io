@@ -1099,14 +1099,14 @@
           function grid(i) {
             const vh = 2 * GZ * tanH;
             const vw = vh * asp;
-            const targetGW = vw * (cols === 3 ? 0.68 : 0.86);
+            const targetGW = vw * (cols === 3 ? 0.84 : 0.90);
             const gap = targetGW * 0.016;
             let cw = (targetGW - gap * (cols - 1)) / cols;
             let ch = cw / (CARD_W / CARD_H);
             let gh = ch * rows + gap * 1.5 * (rows - 1);
 
-            // Cap grid height to 62% of viewport height to guarantee spacious clearance above the footer
-            const maxGH = vh * (cols === 3 ? 0.62 : 0.74);
+            // Cap grid height to 76% of viewport height to allow larger covers while preserving footer & top header margins
+            const maxGH = vh * (cols === 3 ? 0.76 : 0.82);
             if (gh > maxGH) {
               const scale = maxGH / gh;
               cw *= scale;
@@ -1115,8 +1115,8 @@
             }
             const gw = cw * cols + gap * (cols - 1);
 
-            // Equalize vertical margins so space above and below the grid are identical
-            const yOffset = vh * 0.055;
+            // Balanced vertical margin between top title and bottom footer
+            const yOffset = vh * 0.015;
 
             const c = i % cols;
             const r = Math.floor(i / cols);
