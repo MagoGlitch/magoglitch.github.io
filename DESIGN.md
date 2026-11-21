@@ -99,6 +99,15 @@
   7. Refined active category tabs to high-contrast designer pills
   8. Humanized all microcopy and project descriptions, eliminating robotic marketing jargon
 
+## Doodles do Mago (padrão entre seções)
+
+- Tinta: laranja `#ff7500` e branco. Esmeralda fica só para a interface (status, setas, foco).
+- Sombra: `.doodle` (drop-shadow com deslocamento, sem brilho neon). Nada de `animate-pulse` ou blobs com blur.
+- Cada seção segue o mesmo cabeçalho: título em Stretch Pro, risco laranja embaixo e no máximo um doodle ao lado.
+- Títulos em texto sólido (sem gradiente). Atenção: a Stretch Pro não tem `Á`; evite essa letra nos títulos.
+- CTA primário único: pill off-white (`bg-[#f4f4f5] text-zinc-950`). Secundário: pill translúcida.
+
 ## Changelog
 
 - 2026-11-16: Initialized DESIGN.md and executed complete anti-AI de-slop overhaul.
+- 2026-11-21: Revisão Impeccable (critique 12/32). WhatsApp real, navegação flutuante, seção de contato, metadados reais dos projetos, padrão único de doodles e CTA, acessibilidade de teclado/modais, retrato em WebP.
