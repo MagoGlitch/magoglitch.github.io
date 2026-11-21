@@ -2023,13 +2023,14 @@
             el.style.zIndex = zIndex;
           }
 
-          // Smoothly hide left editorial title as carousels move forward / approach the text
+          // Smoothly hide left editorial title as carousels get close to the text
           if (editorialTitleRef.current) {
-            // When flowPos <= 0.1: fully visible. Fades cleanly between 0.1 and 0.6 so it is 100% hidden before index 1
-            const p = Math.max(0, Math.min(1, (flowPos.current - 0.1) / 0.5));
+            // Stays 100% visible while cards are away (flowPos <= 0.7).
+            // Fades smoothly between 0.7 and 1.4 as the cards arrive close to the writing.
+            const p = Math.max(0, Math.min(1, (flowPos.current - 0.7) / 0.7));
             const op = 1 - p;
             editorialTitleRef.current.style.opacity = op.toFixed(3);
-            editorialTitleRef.current.style.transform = `translate3d(${-p * 28}px, 0, 0)`;
+            editorialTitleRef.current.style.transform = `translate3d(${-p * 24}px, 0, 0)`;
             editorialTitleRef.current.style.pointerEvents = op < 0.05 ? 'none' : 'auto';
             editorialTitleRef.current.style.visibility = op < 0.01 ? 'hidden' : 'visible';
           }
