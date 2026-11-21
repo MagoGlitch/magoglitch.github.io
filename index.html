@@ -2111,14 +2111,25 @@
       };
 
       // =========================================================================
-      // VERTICAL 3D CYLINDER FOR ESTÁTICOS ("MANTENHA COMO ESTÁ, CARDS MAIORES")
+      // VERTICAL 3D CYLINDER FOR ESTÁTICOS (3 FILEIRAS 3D COM FORMATOS 4:5 & 9:16)
       // =========================================================================
       const [staticMetrics, setStaticMetrics] = useState({
-        cardW: 390,
-        cardH: 488, // 4:5 vertical post standard
+        cardW: 245,
+        colSpacing: 280,
+        numCols: 3,
+        stepY: 410,
       });
 
-      const staticCardsRefs = useRef([]);
+      // Split estáticos into 3 fileiras (columns)
+      const staticColumns = useMemo(() => {
+        const cols = [[], [], []];
+        estaticos.forEach((item, idx) => {
+          cols[idx % 3].push({ ...item, origIdx: idx });
+        });
+        return cols;
+      }, [estaticos]);
+
+      const staticCardsRefs = useRef([[], [], []]);
       const staticFrameId = useRef(0);
       const staticProgress = useRef(0);
       const staticTargetProgress = useRef(0);
@@ -2128,18 +2139,38 @@
       const staticDragDist = useRef(0);
       const mouse = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
 
-      // Resize listener for Estáticos larger cards
+      // Resize listener for Estáticos 3 Fileiras
       useEffect(() => {
         const handleResize = () => {
           const w = window.innerWidth;
           const h = window.innerHeight;
 
-          // Make cards significantly larger in Estáticos view
-          const heightFactor = Math.min(1.0, Math.max(0.72, h / 880));
-          let cardW = Math.round(Math.min(430, Math.max(260, w * 0.32)) * heightFactor);
-          const cardH = Math.round(cardW * 1.25); // 4:5 vertical post ratio
+          let cardW = 245;
+          let colSpacing = 280;
 
-          setStaticMetrics({ cardW, cardH });
+          if (w < 480) {
+            // Mobile P: 3 colunas compactas
+            cardW = Math.round((w - 28) / 3.15);
+            colSpacing = cardW + 8;
+          } else if (w < 768) {
+            // Mobile M/G: 3 colunas proporcionais
+            cardW = Math.round((w - 44) / 3.25);
+            colSpacing = cardW + 16;
+          } else if (w < 1200) {
+            // Tablet / Laptop
+            cardW = Math.round(Math.min(220, (w - 72) / 3.4));
+            colSpacing = cardW + 28;
+          } else {
+            // Desktop / Wide Screen
+            const heightFactor = Math.min(1.0, Math.max(0.78, h / 880));
+            cardW = Math.round(Math.min(265, Math.max(225, w * 0.165)) * heightFactor);
+            colSpacing = cardW + 36;
+          }
+
+          // Distância vertical entre centros ao longo do cilindro 3D
+          const stepY = Math.round(cardW * 1.52 + 20);
+
+          setStaticMetrics({ cardW, colSpacing, numCols: 3, stepY });
         };
 
         handleResize();
@@ -2158,7 +2189,7 @@
           if (staticIsDragging.current) {
             const diffY = e.clientY - staticDragStartY.current;
             staticDragDist.current += Math.abs(diffY);
-            const sensitivity = staticMetrics.cardH * 0.9;
+            const sensitivity = staticMetrics.stepY * 0.9;
             staticTargetProgress.current = staticDragStartProgress.current - (diffY / sensitivity);
           }
         };
@@ -2204,82 +2235,91 @@
         return () => window.removeEventListener('wheel', handleStaticWheel);
       }, [activeTab, selectedProject]);
 
-      // 60FPS Render loop for Estáticos
+      // 60FPS Render loop for Estáticos (3 Fileiras 3D em cascata orgânica)
       const renderStaticLoop = () => {
         if (activeTab !== 'estaticos' && activeTab !== 'home') return;
 
         mouse.current.x += (mouse.current.targetX - mouse.current.x) * 0.08;
         mouse.current.y += (mouse.current.targetY - mouse.current.y) * 0.08;
 
-        const count = estaticos.length;
-        if (count === 0) return;
-
-        // Subtle ambient idle drift
+        // Suave deslocamento ocioso (idle drift)
         if (!staticIsDragging.current) {
-          staticTargetProgress.current += 0.0008;
+          staticTargetProgress.current += 0.0006;
         }
 
         staticProgress.current += (staticTargetProgress.current - staticProgress.current) * 0.12;
 
         const continuousProgress = staticProgress.current;
-        const cards = staticCardsRefs.current;
-        const { cardH } = staticMetrics;
+        const { numCols, stepY } = staticMetrics;
 
-        for (let i = 0; i < count; i++) {
-          const card = cards[i];
-          if (!card) continue;
+        // Defasagem de fase entre as 3 fileiras para efeito de cascata visual
+        const colPhases = numCols === 3 ? [0.38, 0, 0.76] : [0];
+        const colRotY = numCols === 3 ? [4.5, 0, -4.5] : [0]; // Leve curvatura côncava voltada ao usuário
 
-          let offset = i - continuousProgress;
-          const halfCount = count / 2;
-          while (offset > halfCount) offset -= count;
-          while (offset < -halfCount) offset += count;
+        for (let c = 0; c < numCols; c++) {
+          const colItems = staticColumns[c];
+          if (!colItems) continue;
+          const count = colItems.length;
+          if (count === 0) continue;
 
-          const absOffset = Math.abs(offset);
-          const sign = Math.sign(offset);
+          const colProg = continuousProgress + (colPhases[c] || 0);
 
-          if (absOffset > 2.8) {
-            card.style.visibility = 'hidden';
-            continue;
-          } else {
-            card.style.visibility = 'visible';
+          for (let k = 0; k < count; k++) {
+            const card = staticCardsRefs.current[c] && staticCardsRefs.current[c][k];
+            if (!card) continue;
+
+            let offset = k - colProg;
+            const halfCount = count / 2;
+            while (offset > halfCount) offset -= count;
+            while (offset < -halfCount) offset += count;
+
+            const absOffset = Math.abs(offset);
+            const sign = Math.sign(offset);
+
+            if (absOffset > 2.5) {
+              card.style.visibility = 'hidden';
+              continue;
+            } else {
+              card.style.visibility = 'visible';
+            }
+
+            const targetY = stepY;
+            let y = 0;
+            let z = 0;
+            let rotX = 0;
+
+            if (absOffset <= 1) {
+              const t = absOffset;
+              const easedT = t * t * (3 - 2 * t);
+              y = -sign * (easedT * targetY);
+              z = 240 + easedT * (70 - 240);
+              rotX = -sign * (easedT * 24);
+            } else if (absOffset <= 2) {
+              const t = absOffset - 1;
+              const easedT = t * t * (3 - 2 * t);
+              y = -sign * (targetY + easedT * targetY);
+              z = 70 + easedT * (-130 - 70);
+              rotX = -sign * (24 + easedT * 28);
+            } else {
+              const t = Math.min(absOffset - 2, 1);
+              const easedT = t * t * (3 - 2 * t);
+              y = -sign * (targetY * 2 + easedT * targetY);
+              z = -130 + easedT * (-260 - -130);
+              rotX = -sign * (52 + easedT * 30);
+            }
+
+            const centerFactor = Math.max(0, 1 - absOffset * 0.7);
+            const activeTiltX = -mouse.current.y * 7 * centerFactor;
+            const activeTiltY = mouse.current.x * 9 * centerFactor;
+
+            const totalRotX = rotX + activeTiltX;
+            const totalRotY = activeTiltY + (colRotY[c] || 0);
+            const opacity = Math.max(0.18, 1 - absOffset * 0.35);
+
+            card.style.zIndex = Math.round(z + 500).toString();
+            card.style.opacity = opacity.toString();
+            card.style.transform = `translateY(${y.toFixed(1)}px) translateZ(${z.toFixed(1)}px) rotateX(${totalRotX.toFixed(1)}deg) rotateY(${totalRotY.toFixed(1)}deg)`;
           }
-
-          const targetY = cardH + 28;
-          let y = 0;
-          let z = 0;
-          let rotX = 0;
-
-          if (absOffset <= 1) {
-            const t = absOffset;
-            const easedT = t * t * (3 - 2 * t);
-            y = -sign * (easedT * targetY);
-            z = 260 + easedT * (80 - 260);
-            rotX = -sign * (easedT * 26);
-          } else if (absOffset <= 2) {
-            const t = absOffset - 1;
-            const easedT = t * t * (3 - 2 * t);
-            y = -sign * (targetY + easedT * targetY);
-            z = 80 + easedT * (-120 - 80);
-            rotX = -sign * (26 + easedT * 32);
-          } else {
-            const t = Math.min(absOffset - 2, 1);
-            const easedT = t * t * (3 - 2 * t);
-            y = -sign * (targetY * 2 + easedT * targetY);
-            z = -120 + easedT * (-260 - -120);
-            rotX = -sign * (58 + easedT * 35);
-          }
-
-          const centerFactor = Math.max(0, 1 - absOffset * 0.7);
-          const activeTiltX = -mouse.current.y * 11 * centerFactor;
-          const activeTiltY = mouse.current.x * 13 * centerFactor;
-
-          const totalRotX = rotX + activeTiltX;
-          const totalRotY = activeTiltY;
-          const opacity = Math.max(0.25, 1 - absOffset * 0.35);
-
-          card.style.zIndex = Math.round(z + 500).toString();
-          card.style.opacity = opacity.toString();
-          card.style.transform = `translateY(${y.toFixed(2)}px) translateZ(${z.toFixed(2)}px) rotateX(${totalRotX.toFixed(2)}deg) rotateY(${totalRotY.toFixed(2)}deg)`;
         }
       };
 
@@ -2714,166 +2754,218 @@
         return content;
       };
 
-      // Helper to render Estáticos 3D Cylinder View
+      // Helper to render Estáticos 3D Cylinder View (3 Fileiras 3D com formatos 4:5 e 9:16)
       const renderEstaticosBlock = (isEmbedded = false) => (
         <div
           id={isEmbedded ? "estaticos-section" : undefined}
           onWheel={handleStaticWheel}
-          className={`relative w-full ${isEmbedded ? (HEADER_H > 0 ? 'h-[calc(100vh-68px)]' : 'h-screen') + ' min-h-[580px] border-t border-white/[0.08] bg-[#08080a]' : 'flex-1'} flex items-center justify-center overflow-hidden animate-fadeIn select-none`}
+          onMouseDown={(e) => {
+            staticIsDragging.current = true;
+            staticDragStartY.current = e.clientY;
+            staticDragStartProgress.current = staticTargetProgress.current;
+            staticDragDist.current = 0;
+          }}
+          className={`relative w-full ${isEmbedded ? (HEADER_H > 0 ? 'h-[calc(100vh-68px)]' : 'h-screen') + ' min-h-[580px] border-t border-white/[0.08] bg-[#08080a]' : 'flex-1'} flex items-center justify-center overflow-hidden animate-fadeIn select-none cursor-grab active:cursor-grabbing`}
         >
+          {/* Subtle Ambient Vignette & Emerald Glow */}
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.035)_0%,transparent_75%)]" />
+
           {/* 3D Camera Scene */}
           <div
             className="relative w-full h-full flex items-center justify-center pointer-events-none"
-            style={{ perspective: '1350px' }}
+            style={{ perspective: '1400px' }}
           >
-            <div
-              className="absolute"
-              style={{
-                width: `${staticMetrics.cardW}px`,
-                height: `${staticMetrics.cardH}px`,
-                transformStyle: 'preserve-3d',
-              }}
-            >
-              {estaticos.map((project, i) => (
+            {/* 3 Fileiras (Columns) */}
+            {staticColumns.slice(0, staticMetrics.numCols).map((colItems, cIdx) => {
+              const colX = staticMetrics.numCols === 3 
+                ? (cIdx - 1) * staticMetrics.colSpacing 
+                : 0;
+
+              return (
                 <div
-                  key={project.id}
-                  ref={(el) => { staticCardsRefs.current[i] = el; }}
-                  className="absolute inset-0 cursor-pointer pointer-events-auto group"
-                  onMouseDown={(e) => {
-                    staticIsDragging.current = true;
-                    staticDragStartY.current = e.clientY;
-                    staticDragStartProgress.current = staticTargetProgress.current;
-                    staticDragDist.current = 0;
-                  }}
-                  onClick={() => {
-                    if (staticDragDist.current < 8) {
-                      setSelectedProject(project);
-                    }
-                  }}
+                  key={cIdx}
+                  className="absolute pointer-events-auto"
                   style={{
                     width: `${staticMetrics.cardW}px`,
-                    height: `${staticMetrics.cardH}px`,
+                    height: '0px',
+                    transform: `translateX(${colX}px)`,
                     transformStyle: 'preserve-3d',
-                    backfaceVisibility: 'visible',
                   }}
                 >
-                  {thicknessLayers.map((zOffset, layerIdx) => {
-                    const isFrontFace = layerIdx === thicknessLayers.length - 1;
-                    const isBackFace = layerIdx === 0;
+                  {colItems.map((project, k) => {
+                    const isStory = project.format === '1080x1920';
+                    const isSquare = project.format === '1080x1080';
+                    const cardH = isStory 
+                      ? Math.round(staticMetrics.cardW * (16 / 9)) 
+                      : isSquare 
+                        ? staticMetrics.cardW 
+                        : Math.round(staticMetrics.cardW * 1.25);
 
-                    if (!isFrontFace && !isBackFace) {
-                      return (
-                        <div
-                          key={layerIdx}
-                          className="absolute inset-0 rounded-[22px] border border-[#232328] pointer-events-none overflow-hidden"
-                          style={{
-                            backgroundColor: '#121215',
-                            transform: `translateZ(${zOffset}px)`,
-                          }}
-                        />
-                      );
-                    }
+                    return (
+                      <div
+                        key={project.id}
+                        ref={(el) => {
+                          if (!staticCardsRefs.current[cIdx]) staticCardsRefs.current[cIdx] = [];
+                          staticCardsRefs.current[cIdx][k] = el;
+                        }}
+                        className="absolute cursor-pointer pointer-events-auto group"
+                        onClick={() => {
+                          if (staticDragDist.current < 8) {
+                            setSelectedProject(project);
+                          }
+                        }}
+                        style={{
+                          width: `${staticMetrics.cardW}px`,
+                          height: `${cardH}px`,
+                          top: `-${cardH / 2}px`,
+                          left: `0px`,
+                          transformStyle: 'preserve-3d',
+                          backfaceVisibility: 'visible',
+                        }}
+                      >
+                        {thicknessLayers.map((zOffset, layerIdx) => {
+                          const isFrontFace = layerIdx === thicknessLayers.length - 1;
+                          const isBackFace = layerIdx === 0;
 
-                    if (isFrontFace) {
-                      return (
-                        <div
-                          key={layerIdx}
-                          className="absolute inset-0 rounded-[22px] border border-white/20 pointer-events-none overflow-hidden shadow-2xl"
-                          style={{
-                            backgroundColor: '#09090b',
-                            transform: `translateZ(${zOffset}px)`,
-                            backfaceVisibility: 'hidden',
-                            boxShadow: 'inset 0 1px 1.5px rgba(255,255,255,0.25), 0 25px 50px -12px rgba(0,0,0,0.95)',
-                          }}
-                        >
-                          <img
-                            src={project.cover}
-                            alt={project.title}
-                            className="w-full h-full object-cover block filter contrast-[1.03]"
-                            loading="lazy"
-                            decoding="async"
-                          />
+                          if (!isFrontFace && !isBackFace) {
+                            return (
+                              <div
+                                key={layerIdx}
+                                className="absolute inset-0 rounded-[18px] sm:rounded-[20px] border border-[#232328] pointer-events-none overflow-hidden"
+                                style={{
+                                  backgroundColor: '#121215',
+                                  transform: `translateZ(${zOffset}px)`,
+                                }}
+                              />
+                            );
+                          }
 
-                          {/* Subtle hover indicator */}
-                          <div className="absolute inset-0 bg-white/[0.04] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                            <span className="text-[11px] bg-black/85 text-white px-3.5 py-1.5 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium">
-                              <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">DETALHES</span> ↗
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    }
+                          if (isFrontFace) {
+                            return (
+                              <div
+                                key={layerIdx}
+                                className="absolute inset-0 rounded-[18px] sm:rounded-[20px] border border-white/20 pointer-events-none overflow-hidden shadow-2xl transition-all group-hover:border-emerald-500/50 group-hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
+                                style={{
+                                  backgroundColor: '#09090b',
+                                  transform: `translateZ(${zOffset}px)`,
+                                  backfaceVisibility: 'hidden',
+                                  boxShadow: 'inset 0 1px 1.5px rgba(255,255,255,0.25), 0 25px 50px -12px rgba(0,0,0,0.95)',
+                                }}
+                              >
+                                <img
+                                  src={project.cover}
+                                  alt={project.title}
+                                  className="w-full h-full object-cover block filter contrast-[1.03]"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
 
-                    if (isBackFace) {
-                      return (
-                        <div
-                          key={layerIdx}
-                          className="absolute inset-0 rounded-[22px] border border-white/15 pointer-events-none overflow-hidden p-6 flex flex-col justify-between text-left"
-                          style={{
-                            backgroundColor: '#0c0c10',
-                            transform: `translateZ(${zOffset}px) rotateX(180deg)`,
-                            backfaceVisibility: 'hidden',
-                            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.15)',
-                          }}
-                        >
-                          <div className="absolute inset-0 pointer-events-none" style={{ filter: 'blur(24px)', opacity: 0.35, transform: 'scale(1.2)' }}>
-                            <img src={project.cover} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                          </div>
-                          <div className="absolute inset-0 bg-black/65 pointer-events-none" />
+                                {/* Format Badge (Story 9:16 vs Feed 4:5 vs Post 1:1) */}
+                                <div className="absolute top-2.5 left-2.5 z-10 pointer-events-none">
+                                  {isStory ? (
+                                    <span className="text-[9px] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-full text-white/95 border border-purple-500/40 font-medium flex items-center gap-1 shadow-lg">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+                                      <span className="font-stretch font-bold text-purple-300">STORY</span>
+                                      <span className="text-white/60 text-[8px] font-mono">9:16</span>
+                                    </span>
+                                  ) : isSquare ? (
+                                    <span className="text-[9px] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-full text-white/95 border border-blue-500/40 font-medium flex items-center gap-1 shadow-lg">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                      <span className="font-stretch font-bold text-blue-300">POST</span>
+                                      <span className="text-white/60 text-[8px] font-mono">1:1</span>
+                                    </span>
+                                  ) : (
+                                    <span className="text-[9px] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-full text-white/95 border border-emerald-500/40 font-medium flex items-center gap-1 shadow-lg">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                      <span className="font-stretch font-bold text-emerald-300">FEED</span>
+                                      <span className="text-white/60 text-[8px] font-mono">4:5</span>
+                                    </span>
+                                  )}
+                                </div>
 
-                          <div className="relative z-10 flex flex-col gap-3">
-                            <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                              <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-bold">
-                                FICHA <span className="font-stretch font-bold text-white">TÉCNICA</span>
-                              </span>
-                              <span className="text-[10px] font-light text-white/50">Post de Feed</span>
-                            </div>
-
-                            <div>
-                              <div className="text-[10px] font-light text-white/50">Cliente:</div>
-                              <div className="text-sm font-bold text-white">{project.client}</div>
-                            </div>
-
-                            <div>
-                              <div className="text-[10px] font-light text-white/50">Finalidade:</div>
-                              <div className="text-xs font-medium text-white/90">{project.type}</div>
-                            </div>
-
-                            <div>
-                              <div className="text-[10px] font-light text-white/50">Softwares:</div>
-                              <div className="text-xs font-medium text-white/80">{project.software}</div>
-                            </div>
-
-                            <div>
-                              <div className="text-[10px] font-light text-white/50 mb-1">Paleta de Cores:</div>
-                              <div className="flex gap-1.5">
-                                {project.colors.map((c, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="w-4 h-4 rounded-full border border-white/20 shadow-sm"
-                                    style={{ backgroundColor: c }}
-                                    title={c}
-                                  />
-                                ))}
+                                {/* Subtle hover indicator */}
+                                <div className="absolute inset-0 bg-white/[0.04] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                  <span className="text-[10px] bg-black/90 text-white px-3 py-1.5 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium tracking-wide">
+                                    <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">DETALHES</span> ↗
+                                  </span>
+                                </div>
                               </div>
-                            </div>
-                          </div>
+                            );
+                          }
 
-                          <div className="relative z-10 pt-2 border-t border-white/10 flex items-center justify-between">
-                            <span className="text-[10px] font-light text-white/60">CLIQUE PARA <span className="font-stretch font-bold text-white">EXPANDIR</span></span>
-                            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white/80 text-xs">
-                              ↗
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    }
+                          if (isBackFace) {
+                            return (
+                              <div
+                                key={layerIdx}
+                                className="absolute inset-0 rounded-[18px] sm:rounded-[20px] border border-white/15 pointer-events-none overflow-hidden p-4 sm:p-5 flex flex-col justify-between text-left"
+                                style={{
+                                  backgroundColor: '#0c0c10',
+                                  transform: `translateZ(${zOffset}px) rotateX(180deg)`,
+                                  backfaceVisibility: 'hidden',
+                                  boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.15)',
+                                }}
+                              >
+                                <div className="absolute inset-0 pointer-events-none" style={{ filter: 'blur(20px)', opacity: 0.35, transform: 'scale(1.2)' }}>
+                                  <img src={project.cover} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                                </div>
+                                <div className="absolute inset-0 bg-black/70 pointer-events-none" />
 
-                    return null;
+                                <div className="relative z-10 flex flex-col gap-2">
+                                  <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+                                    <span className="text-[9px] uppercase tracking-wider text-emerald-400 font-bold">
+                                      FICHA <span className="font-stretch font-bold text-white">TÉCNICA</span>
+                                    </span>
+                                    <span className="text-[9px] font-mono text-white/50">{project.format || '1080×1350'}</span>
+                                  </div>
+
+                                  <div>
+                                    <div className="text-[9px] font-light text-white/50">Cliente:</div>
+                                    <div className="text-xs font-bold text-white truncate">{project.client}</div>
+                                  </div>
+
+                                  <div>
+                                    <div className="text-[9px] font-light text-white/50">Finalidade:</div>
+                                    <div className="text-[11px] font-medium text-white/90 truncate">{project.type}</div>
+                                  </div>
+
+                                  <div>
+                                    <div className="text-[9px] font-light text-white/50">Softwares:</div>
+                                    <div className="text-[11px] font-medium text-white/80 truncate">{project.software}</div>
+                                  </div>
+
+                                  <div>
+                                    <div className="text-[9px] font-light text-white/50 mb-1">Paleta de Cores:</div>
+                                    <div className="flex gap-1.5">
+                                      {project.colors.slice(0, 4).map((c, idx) => (
+                                        <div
+                                          key={idx}
+                                          className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-sm"
+                                          style={{ backgroundColor: c }}
+                                          title={c}
+                                        />
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="relative z-10 pt-1.5 border-t border-white/10 flex items-center justify-between">
+                                  <span className="text-[9px] font-light text-white/60">CLIQUE PARA <span className="font-stretch font-bold text-white">EXPANDIR</span></span>
+                                  <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-white/80 text-[10px]">
+                                    ↗
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          }
+
+                          return null;
+                        })}
+                      </div>
+                    );
                   })}
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
 
           {/* Guidance Footer */}
@@ -2881,7 +2973,7 @@
             <div className="flex items-center gap-2.5 bg-[#0e0e13]/90 border border-white/10 px-4 py-1.5 rounded-full backdrop-blur-md shadow-xl">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
               <p className="text-[11px] text-zinc-400 tracking-wide font-normal">
-                ROLE OU ARRASTE NA VERTICAL • <span className="font-stretch font-bold text-emerald-400">{estaticos.length}</span> <span className="font-stretch font-bold text-zinc-200">PEÇAS</span> SELECIONADAS • FEED & SOCIAL
+                ROLE OU ARRASTE NA VERTICAL • <span className="font-stretch font-bold text-emerald-400">36 PEÇAS</span> EM <span className="font-stretch font-bold text-white">3 FILEIRAS 3D</span> • FEED (1080×1350) & STORIES (1080×1920)
               </p>
             </div>
           </footer>
@@ -3298,10 +3390,15 @@
                 <div className="w-full md:w-2/5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
                   <div className="space-y-4">
                     <div>
-                      <div className="flex items-center gap-2 mb-1.5">
+                      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                         <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
                           {selectedProject.category}
                         </span>
+                        {selectedProject.format && (
+                          <span className="text-[10px] font-mono text-purple-300 bg-purple-500/10 border border-purple-500/20 px-2.5 py-0.5 rounded-full">
+                            {selectedProject.formatLabel || selectedProject.format}
+                          </span>
+                        )}
                         <span className="text-white/40">•</span>
                         <span className="text-[11px] font-light text-white/60">
                           {selectedProject.type}

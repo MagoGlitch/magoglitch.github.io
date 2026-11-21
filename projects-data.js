@@ -804,7 +804,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FAFAF9"
     ],
     "description": "Composição de alto contraste para infoproduto e mentoria de negócios.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static--sp-perp-e-01-banner-geral-story-jpg",
@@ -826,7 +829,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-forro-piro-atracao-pedro-sampaio",
@@ -848,7 +854,10 @@ window.PORTFOLIO_PROJECTS = [
       "#0B0314"
     ],
     "description": "Peça oficial de lançamento para feed do festival Forró Piro com Pedro Sampaio, integrando atmosfera neon ultravioleta, tipografia de show e iluminação cênica de palco.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-smart-grow-est-tico-png",
@@ -870,7 +879,10 @@ window.PORTFOLIO_PROJECTS = [
       "#F0FDF4"
     ],
     "description": "Design de alta densidade visual com iluminação dramática e destaque para a tecnologia do insumo agrícola.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-ronan-pedroza-criativo-02-png",
@@ -892,7 +904,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-post-1-mudan-a-de-esta-o-03-03-png",
@@ -914,7 +929,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-01-boarding-group-09-01-png",
@@ -936,7 +954,10 @@ window.PORTFOLIO_PROJECTS = [
       "#E2E8F0"
     ],
     "description": "Criativo para tráfego pago focado em empresários e executivos com alto CTR e taxa de clique.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-11-04-dra-mari-png",
@@ -958,7 +979,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FDF4FF"
     ],
     "description": "Composição editorial sofisticada que transmite elegância, segurança e técnica refinada.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-criativo-01-03-11-png",
@@ -980,7 +1004,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-ronan-pedroza-criativo-03-png",
@@ -1002,7 +1029,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-02-stories-23-05-png",
@@ -1024,7 +1054,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-cor-de-ingrediente-27-10-feed-png",
@@ -1046,7 +1079,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFBEB"
     ],
     "description": "Composição com recorte e desaturação seletiva evidenciando a cor como vetor primário de apetite appeal e sofisticação gastronômica.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-03-png",
@@ -1068,7 +1104,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-ronan-pedroza-criativo-04-png",
@@ -1090,7 +1129,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-02-png",
@@ -1112,7 +1154,10 @@ window.PORTFOLIO_PROJECTS = [
       "#EEF2FF"
     ],
     "description": "Visual moderno com elementos de inteligência artificial e interface conversacional.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-forro-piro-1-atracao-confirmada2-story",
@@ -1134,7 +1179,10 @@ window.PORTFOLIO_PROJECTS = [
       "#080310"
     ],
     "description": "Story promocional em formato vertical 9:16 para ativação de público e engajamento no Instagram com contorno neon e chamada de alto impacto.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-criativo-04-png",
@@ -1156,7 +1204,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-20-10-erp-smart-grow-png",
@@ -1178,7 +1229,10 @@ window.PORTFOLIO_PROJECTS = [
       "#ECFEFF"
     ],
     "description": "Mockup 3D em perspectiva para apresentação de software SaaS corporativo com painéis e métricas.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-ronan-pedroza-criativo-05-png",
@@ -1200,7 +1254,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-05-png",
@@ -1222,7 +1279,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-02-boarding-group-09-01-png",
@@ -1244,7 +1304,10 @@ window.PORTFOLIO_PROJECTS = [
       "#F0F9FF"
     ],
     "description": "Anúncio voltado para conversão direta de reservas com estética de luxo e tipografia imponente.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-post-2-inspiracional-03-03-png",
@@ -1266,7 +1329,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-ronan-pedroza-criativo-06-png",
@@ -1288,7 +1354,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-est-tico-02-feed-png",
@@ -1310,7 +1379,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1080",
+    "aspectRatio": "1/1",
+    "formatLabel": "Post • 1:1"
   },
   {
     "id": "static-11-06-dra-png",
@@ -1332,7 +1404,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FDF4FF"
     ],
     "description": "Design minimalista focado na expressão e bem-estar da paciente.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-est-tico-04-feed-png",
@@ -1354,7 +1429,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1080",
+    "aspectRatio": "1/1",
+    "formatLabel": "Post • 1:1"
   },
   {
     "id": "static-pratos-zenital-01-png",
@@ -1376,7 +1454,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Fotografia gastronômica autoral com enquadramento zenital de alta precisão e iluminação direcionada.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-ronan-pedroza-criativo-07-png",
@@ -1398,7 +1479,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-forro-piro-segundo-lote-disponivel-story",
@@ -1420,7 +1504,10 @@ window.PORTFOLIO_PROJECTS = [
       "#0A0416"
     ],
     "description": "Criativo vertical de conversão para venda de ingressos do festival com condições de parcelamento, gatilho de urgência de lote e visual de festival noturno.",
-    "highlight": true
+    "highlight": true,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-smart-grow-company-28-10-png",
@@ -1442,7 +1529,10 @@ window.PORTFOLIO_PROJECTS = [
       "#DCFCE7"
     ],
     "description": "Material institucional comemorativo e reforço de branding do ecossistema Smart Grow.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-est-ticos-3-31-01-png",
@@ -1464,7 +1554,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-ronan-pedroza-criativo-08-png",
@@ -1486,7 +1579,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-01-png",
@@ -1508,7 +1604,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FEF2F2"
     ],
     "description": "Peça publicitária criada para maximizar taxa de cliques em canais de mídia paga.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-criativo-03-boarding-group-09-01-png",
@@ -1530,7 +1629,10 @@ window.PORTFOLIO_PROJECTS = [
       "#EFF6FF"
     ],
     "description": "Destaque para o cockpit e cabine premium com composição fotográfica de impacto.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
   },
   {
     "id": "static-est-ticos-4-31-01-png",
@@ -1552,7 +1654,10 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   },
   {
     "id": "static-est-ticos-07-02-1-png",
@@ -1574,7 +1679,9 @@ window.PORTFOLIO_PROJECTS = [
       "#FFFFFF"
     ],
     "description": "Peça gráfica desenvolvida com foco em identidade visual marcante e engajamento.",
-    "highlight": false
+    "highlight": false,
+    "format": "1080x1920",
+    "aspectRatio": "9/16",
+    "formatLabel": "Story • 9:16"
   }
 ];
-var PORTFOLIO_PROJECTS = window.PORTFOLIO_PROJECTS;
