@@ -45,8 +45,8 @@
   <meta name="author" content="Marcos">
 
   <!-- Preload critical Hero assets for faster LCP -->
-  <link rel="preload" as="image" href="BG HERO/bg-hero-v2.webp" type="image/webp">
-  <link rel="preload" as="image" href="BG HERO/marcos-v2-cutout.webp?v=1" type="image/webp">
+  <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/bg-hero-v2.webp" type="image/webp">
+  <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-v2-cutout.webp?v=1" type="image/webp">
 
   <!-- Google Fonts: Montserrat (Weights 300 to 900) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -85,7 +85,7 @@
   <style>
     @font-face {
       font-family: 'StretchPro';
-      src: url('fonts/StretchPro.otf') format('opentype');
+      src: url('https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/fonts/StretchPro.otf') format('opentype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -280,7 +280,7 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(to bottom, rgba(8, 8, 10, 0.12) 0%, transparent 20%, transparent 70%, rgba(8, 8, 10, 0.65) 100%),
-                  url('BG HERO/bg-hero.webp') center center / cover no-repeat;
+                  url('https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/bg-hero.webp') center center / cover no-repeat;
       pointer-events: none;
       z-index: 1;
       will-change: transform, opacity;
@@ -288,7 +288,7 @@
     }
     .vante-bg-photo-v2 {
       background: linear-gradient(to bottom, rgba(8, 8, 10, 0.22) 0%, transparent 20%, transparent 68%, rgba(8, 8, 10, 0.85) 100%),
-                  url('BG HERO/bg-hero-v2.webp') center center / cover no-repeat !important;
+                  url('https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/bg-hero-v2.webp') center center / cover no-repeat !important;
     }
 
     /* Character Cutout placed in front of PORTFÓLIO (z-index: 3) but behind Cards & Dock (z-index: 8) */
@@ -297,14 +297,14 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      background: url('BG HERO/marcos-cutout.webp?v=2') center center / cover no-repeat;
+      background: url('https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-cutout.webp?v=2') center center / cover no-repeat;
       pointer-events: none;
       z-index: 3;
       will-change: transform, opacity;
       transform-origin: center center;
     }
     .vante-char-cutout-v2 {
-      background: url('BG HERO/marcos-v2-cutout.webp?v=1') center center / cover no-repeat !important;
+      background: url('https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-v2-cutout.webp?v=1') center center / cover no-repeat !important;
     }
 
     /* =========================================================================
@@ -1072,8 +1072,8 @@
           scene.add(charMesh);
 
           const cutoutSrc = heroVersion === 'v2'
-            ? 'BG HERO/marcos-v2-cutout.webp?v=1'
-            : 'BG HERO/marcos-cutout.webp?v=2';
+            ? 'https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-v2-cutout.webp?v=1'
+            : 'https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-cutout.webp?v=2';
 
           textureLoader.load(cutoutSrc, (tex) => {
             if (isDisposed) return;
@@ -1673,27 +1673,7 @@
 
             <footer className="vante-bot" ref={botRef} style={{ opacity: 0 }}>
               <p>Sistemas de identidade visual e pranchas contínuas desenvolvidos com alta precisão estética e estratégia.</p>
-              <div
-                className="vante-mid pointer-events-auto cursor-pointer hover:text-white transition-colors flex items-center justify-center gap-1.5"
-                onClick={() => {
-                  const track = document.getElementById('carrosseis-track');
-                  if (track) {
-                    const rect = track.getBoundingClientRect();
-                    const targetY = rect.top + window.scrollY - HEADER_H;
-                    window.scrollTo({ top: targetY, behavior: 'smooth' });
-                  } else {
-                    const el = document.getElementById('carrosseis-section');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
-                <span className="text-[11px] text-zinc-400 bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-1 rounded-full transition-all flex items-center gap-1.5 shadow-md backdrop-blur-md">
-                  <span>9 MARCAS EXPOSTAS</span>
-                  <span className="text-white/30">•</span>
-                  <span className="text-emerald-400 font-medium">ROLE PARA CARROSSÉIS</span>
-                  <span className="text-emerald-400 font-bold">↓</span>
-                </span>
-              </div>
+              <div className="vante-mid"></div>
               <div
                 className="vante-r pointer-events-auto cursor-pointer hover:opacity-100 transition-opacity flex items-center gap-1"
                 onClick={() => {
@@ -2485,10 +2465,7 @@
 
                   {/* LEFT EDITORIAL TITLE: GALERIA DE CRIAÇÃO */}
                   <div className="absolute left-6 sm:left-10 lg:left-14 xl:left-20 top-6 sm:top-[38%] sm:-translate-y-1/2 z-25 pointer-events-none select-none max-w-[280px] sm:max-w-[320px] lg:max-w-[360px] flex flex-col">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md text-[10px] sm:text-[11px] font-mono tracking-[0.22em] text-zinc-400 uppercase w-fit mb-3 sm:mb-4 shadow-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
-                      <span>CARROSSÉIS 3D</span>
-                    </div>
+
 
                     <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tighter leading-[0.92] uppercase font-['Montserrat']">
                       Galeria de<br />
@@ -3106,15 +3083,7 @@
             })}
           </div>
 
-          {/* Guidance Footer */}
-          <footer className="absolute bottom-5 left-0 right-0 z-40 flex flex-col items-center justify-center pointer-events-none text-center px-4">
-            <div className="flex items-center gap-2.5 bg-[#0e0e13]/90 border border-white/10 px-4 py-1.5 rounded-full backdrop-blur-md shadow-xl">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              <p className="text-[11px] text-zinc-400 tracking-wide font-normal">
-                ROLE OU ARRASTE NA VERTICAL • <span className="font-stretch font-bold text-emerald-400">36 PEÇAS</span> EM <span className="font-stretch font-bold text-white">3 FILEIRAS 3D</span> • FEED (1080×1350) & STORIES (1080×1920)
-              </p>
-            </div>
-          </footer>
+
         </div>
       );
 
@@ -3134,7 +3103,7 @@
               {/* Logo */}
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/15 to-white/5 border border-white/20 flex items-center justify-center p-1.5 shadow-lg backdrop-blur-md overflow-hidden">
-                  <img src="assets/logo.png" alt="Marcos Logo" className="w-full h-full object-contain filter brightness-110 drop-shadow" />
+                  <img src="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/assets/logo.png" alt="Marcos Logo" className="w-full h-full object-contain filter brightness-110 drop-shadow" />
                 </div>
                 <div className="flex flex-col text-left">
                   <div className="text-sm font-black tracking-wide text-white">
@@ -3240,50 +3209,7 @@
             </header>
           )}
 
-          {/* ========================================================================= */}
-          {/* Floating Hero Version Switcher Pill */}
-          {activeTab === 'home' && (
-            <div className="fixed top-5 right-5 z-[9999] flex items-center bg-[#0e0e13]/85 backdrop-blur-xl border border-white/15 p-1 rounded-full shadow-2xl transition-all">
-              <button
-                onClick={() => {
-                  setHeroVersion('v1');
-                  const url = new URL(window.location);
-                  url.searchParams.set('v', 'hero_v1');
-                  window.history.replaceState({}, '', url);
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  heroVersion === 'v1'
-                    ? 'bg-white text-zinc-950 shadow-md font-bold'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Hero Versão 01 (Cadeira / Recortes 3D)"
-              >
-                <span>Hero V1</span>
-                <span className={`text-[9px] px-1 py-0.2 rounded font-mono ${
-                  heroVersion === 'v1' ? 'bg-black/10 text-zinc-900 font-bold' : 'bg-white/10 text-zinc-400'
-                }`}>Locked</span>
-              </button>
-              <button
-                onClick={() => {
-                  setHeroVersion('v2');
-                  const url = new URL(window.location);
-                  url.searchParams.set('v', 'hero_v2');
-                  window.history.replaceState({}, '', url);
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  heroVersion === 'v2'
-                    ? 'bg-emerald-400 text-zinc-950 shadow-md font-bold'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Hero Versão 02 (Cinematic Bokeh Portrait)"
-              >
-                <span>Hero V2</span>
-                <span className={`text-[9px] uppercase px-1 py-0.2 rounded font-bold ${
-                  heroVersion === 'v2' ? 'bg-black/20 text-black' : 'bg-emerald-400/20 text-emerald-300'
-                }`}>NOVO</span>
-              </button>
-            </div>
-          )}
+
 
           {/* ========================================================================= */}
           {/* CATEGORY 0: INÍCIO / HOME (VANTE 3D RIBBON SCROLL HERO)                   */}
