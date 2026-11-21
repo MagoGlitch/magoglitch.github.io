@@ -3740,11 +3740,12 @@
             const nextIdProject = currentIdIdx >= 0 && currentIdIdx < idVisual.length - 1 ? idVisual[currentIdIdx + 1] : null;
 
             return (
-              <div 
-                id="idvisual-modal-scroll"
-                className="fixed inset-0 z-50 bg-[#08080a] overflow-y-auto animate-fadeIn select-auto"
-                style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
-              >
+              <div className="fixed inset-0 z-50 pointer-events-none animate-fadeIn">
+                <div 
+                  id="idvisual-modal-scroll"
+                  className="absolute inset-0 bg-[#08080a] overflow-y-auto select-auto pointer-events-auto"
+                  style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
+                >
                 {/* Minimal Top Header with Close and Quick Switch */}
                 <header className="sticky top-0 z-50 px-4 sm:px-8 py-3.5 bg-[#08080a]/92 backdrop-blur-xl border-b border-white/[0.08] flex items-center justify-between shadow-2xl relative">
                   <div className="flex items-center gap-3">
@@ -3912,25 +3913,26 @@
                     </a>
                   </div>
                 </main>
-
-                {/* Floating Back to Top Pill for seamless fluid navigation */}
-                <button
-                  id="idvisual-back-to-top"
-                  onClick={() => {
-                    if (window.presentationLenis) {
-                      window.presentationLenis.scrollTo(0, { duration: 1.6 });
-                    } else {
-                      const modal = document.getElementById('idvisual-modal-scroll');
-                      if (modal) modal.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                  }}
-                  className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#121217]/90 hover:bg-black border border-white/20 text-white text-xs font-semibold shadow-2xl backdrop-blur-md opacity-0 pointer-events-none translate-y-4 transition-all duration-300 ease-out hover:border-emerald-500/50 hover:text-emerald-300 cursor-pointer group active:scale-95"
-                  title="Voltar ao início da apresentação"
-                >
-                  <span className="text-emerald-400 group-hover:-translate-y-0.5 transition-transform font-bold">↑</span>
-                  <span className="hidden sm:inline">Voltar ao topo</span>
-                </button>
               </div>
+
+              {/* Floating Back to Top Pill for seamless fluid navigation */}
+              <button
+                id="idvisual-back-to-top"
+                onClick={() => {
+                  if (window.presentationLenis) {
+                    window.presentationLenis.scrollTo(0, { duration: 1.6 });
+                  } else {
+                    const modal = document.getElementById('idvisual-modal-scroll');
+                    if (modal) modal.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#121217]/90 hover:bg-black border border-white/20 text-white text-xs font-semibold shadow-2xl backdrop-blur-md opacity-0 pointer-events-none translate-y-4 transition-all duration-300 ease-out hover:border-emerald-500/50 hover:text-emerald-300 cursor-pointer group active:scale-95"
+                title="Voltar ao início da apresentação"
+              >
+                <span className="text-emerald-400 group-hover:-translate-y-0.5 transition-transform font-bold">↑</span>
+                <span className="hidden sm:inline">Voltar ao topo</span>
+              </button>
+            </div>
             );
           })()}
 
