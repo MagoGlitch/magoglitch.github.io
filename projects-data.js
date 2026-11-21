@@ -1058,7 +1058,7 @@ window.PORTFOLIO_PROJECTS = [
   {
     "id": "static-cor-de-ingrediente-27-10-feed-png",
     "title": "Clique & Poesia — A Cor Também É um Ingrediente",
-    "client": "Clique & Poesia",
+    "client": "Clique & Poesia (projeto próprio)",
     "handle": "@cliqueepoesia",
     "type": "Direção de Arte Gastronômica",
     "category": "Estáticos",
@@ -1078,7 +1078,9 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true,
     "format": "1080x1350",
     "aspectRatio": "4/5",
-    "formatLabel": "Feed • 4:5"
+    "formatLabel": "Feed • 4:5",
+    "externalUrl": "https://www.cliqueepoesia.com.br/#portfolio",
+    "externalLabel": "Ver o portfólio de fotografia da Clique & Poesia"
   },
   {
     "id": "static-criativo-03-png",
@@ -1433,7 +1435,7 @@ window.PORTFOLIO_PROJECTS = [
   {
     "id": "static-pratos-zenital-01-png",
     "title": "Clique & Poesia — O Que É Foto Zenital?",
-    "client": "Clique & Poesia",
+    "client": "Clique & Poesia (projeto próprio)",
     "handle": "@cliqueepoesia",
     "type": "Post Educativo",
     "category": "Estáticos",
@@ -1453,7 +1455,9 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true,
     "format": "1080x1350",
     "aspectRatio": "4/5",
-    "formatLabel": "Feed • 4:5"
+    "formatLabel": "Feed • 4:5",
+    "externalUrl": "https://www.cliqueepoesia.com.br/#portfolio",
+    "externalLabel": "Ver o portfólio de fotografia da Clique & Poesia"
   },
   {
     "id": "static-ronan-pedroza-criativo-07-png",
