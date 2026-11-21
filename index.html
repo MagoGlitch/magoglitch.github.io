@@ -349,7 +349,7 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      margin-top: 6px;
+      margin-top: 2px;
       padding: 0 clamp(6px, 1.2vw, 20px);
       box-sizing: border-box;
     }
@@ -1099,14 +1099,14 @@
           function grid(i) {
             const vh = 2 * GZ * tanH;
             const vw = vh * asp;
-            const targetGW = vw * (cols === 3 ? 0.84 : 0.90);
+            const targetGW = vw * (cols === 3 ? 0.78 : 0.86);
             const gap = targetGW * 0.016;
             let cw = (targetGW - gap * (cols - 1)) / cols;
             let ch = cw / (CARD_W / CARD_H);
             let gh = ch * rows + gap * 1.5 * (rows - 1);
 
-            // Cap grid height to 76% of viewport height to allow larger covers while preserving footer & top header margins
-            const maxGH = vh * (cols === 3 ? 0.76 : 0.82);
+            // Cap grid height to 70% of viewport height so covers are large and immersive while 2026 and footer remain completely clear
+            const maxGH = vh * (cols === 3 ? 0.70 : 0.78);
             if (gh > maxGH) {
               const scale = maxGH / gh;
               cw *= scale;
@@ -1115,8 +1115,8 @@
             }
             const gw = cw * cols + gap * (cols - 1);
 
-            // Balanced vertical margin between top title and bottom footer
-            const yOffset = vh * 0.015;
+            // Balanced vertical margin leaving clear headroom for PORTFÓLIO and 2026 at the top
+            const yOffset = -vh * 0.01;
 
             const c = i % cols;
             const r = Math.floor(i / cols);
