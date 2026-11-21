@@ -48,10 +48,10 @@
   <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/bg-hero-v2.webp" type="image/webp">
   <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-v2-cutout.webp?v=1" type="image/webp">
 
-  <!-- Google Fonts: Montserrat (Weights 300 to 900) -->
+  <!-- Google Fonts: Montserrat, Anton & Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -65,6 +65,8 @@
             mono: ['"Montserrat"', 'monospace'],
             stretch: ['"StretchPro"', '"Montserrat"', 'sans-serif'],
             display: ['"StretchPro"', '"Montserrat"', 'sans-serif'],
+            anton: ['"Anton"', 'sans-serif'],
+            caveat: ['"Caveat"', 'cursive'],
           },
           screens: {
             'xs': '480px',
@@ -112,6 +114,12 @@
     }
     .font-montserrat {
       font-family: 'Montserrat', sans-serif;
+    }
+    .font-anton {
+      font-family: 'Anton', sans-serif;
+    }
+    .font-caveat {
+      font-family: 'Caveat', cursive;
     }
 
     /* Tactile film grain overlay for physical print authenticity */
@@ -2476,18 +2484,21 @@
                   {/* Ambient Dynamic Glow Tinted by Center Album Colors */}
                   <div id="glow" />
 
-                  {/* LEFT EDITORIAL TITLE: GALERIA DE CRIAÇÃO (STRETCH PRO OPTION 4) */}
-                  <div className="absolute left-6 sm:left-8 lg:left-10 xl:left-14 top-6 sm:top-[38%] sm:-translate-y-1/2 z-25 pointer-events-none select-none max-w-[320px] sm:max-w-[400px] lg:max-w-[480px]">
+                  {/* LEFT EDITORIAL TITLE: MANIFESTO & TIPOGRAFIA DA REFERÊNCIA */}
+                  <div className="absolute left-6 sm:left-8 lg:left-10 xl:left-14 top-6 sm:top-[38%] sm:-translate-y-1/2 z-25 pointer-events-none select-none max-w-[340px] sm:max-w-[420px] lg:max-w-[490px]">
                     <div
                       ref={editorialTitleRef}
                       className="flex flex-col will-change-transform"
                       style={{ transition: 'opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)' }}
                     >
-                      <h2 className="font-stretch text-2xl sm:text-3xl lg:text-[40px] xl:text-[45px] text-white leading-[1.08] tracking-normal uppercase">
-                        GALERIA DE<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-zinc-400">
-                          CRIAAACAO
-                        </span>
+                      <div className="text-[10px] sm:text-[11px] font-mono tracking-[0.24em] text-[#FF1E66] uppercase font-bold mb-2 sm:mb-2.5">
+                        PORTFÓLIO / PROJETOS AUTORAIS
+                      </div>
+
+                      <h2 className="font-anton text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] text-white leading-[0.94] tracking-tight uppercase">
+                        IDEIAS SÃO <span className="font-caveat font-bold text-[#FF1E66] text-4xl sm:text-5xl lg:text-[54px] -rotate-6 inline-block lowercase tracking-normal translate-y-1">ótimas.</span><br />
+                        MELHOR AINDA É SABER<br />
+                        O QUE FAZER COM ELAS.
                       </h2>
 
                       <p className="hidden sm:block text-xs sm:text-sm lg:text-[15px] text-zinc-400 max-w-[280px] sm:max-w-[340px] lg:max-w-[390px] leading-relaxed mt-3.5 sm:mt-4 font-light">
