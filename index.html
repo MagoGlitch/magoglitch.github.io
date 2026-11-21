@@ -1747,6 +1747,7 @@
       const [viewingCarousel, setViewingCarousel] = useState(null);
       const [currentFlowIndex, setCurrentFlowIndex] = useState(0);
       const [coverMetrics, setCoverMetrics] = useState({ w: 320, h: 400 });
+      const [ribbonFitMode, setRibbonFitMode] = useState('fit'); // 'fit' (todos na tela) or 'scroll' (ampliado com rolagem)
 
       const flowViewportRef = useRef(null);
       const flowPos = useRef(0);
@@ -2017,6 +2018,7 @@
         if (flowHasDragged.current) return;
         const currentTarget = Math.round(flowTarget.current);
         if (idx === currentTarget) {
+          setRibbonFitMode('fit');
           setViewingCarousel(carrosseis[idx]);
         } else {
           if (activeTab === 'home' && carrosseisTrackRef.current) {
@@ -2063,7 +2065,10 @@
             } else if (e.key === 'Enter') {
               e.preventDefault();
               const curr = carrosseis[Math.round(flowTarget.current)];
-              if (curr) setViewingCarousel(curr);
+              if (curr) {
+                setRibbonFitMode('fit');
+                setViewingCarousel(curr);
+              }
             }
           }
         };
@@ -2432,7 +2437,10 @@
 
                       <div className="flex items-center gap-3 mt-0.5">
                         <button
-                          onClick={() => setViewingCarousel(carrosseis[currentFlowIndex])}
+                          onClick={() => {
+                            setRibbonFitMode('fit');
+                            setViewingCarousel(carrosseis[currentFlowIndex]);
+                          }}
                           className="px-5 py-2 rounded-full bg-white text-zinc-950 hover:bg-zinc-100 text-xs sm:text-sm font-semibold transition-all shadow-xl shadow-black/40 flex items-center gap-2 cursor-pointer border border-white/20 group"
                         >
                           <span>Ver Carrossel Completo</span>
@@ -2526,35 +2534,61 @@
                 <div className="relative flex-1 flex flex-col justify-between overflow-hidden animate-fadeIn">
                   
                   {/* Panoramic Viewer Header */}
-                  <div className="px-6 sm:px-10 py-3.5 border-b border-white/[0.08] bg-[#08080a]/90 backdrop-blur-md flex items-center justify-between z-20 flex-shrink-0">
-                    <div className="flex items-center gap-3">
+                  <div className="px-4 sm:px-8 py-3 border-b border-white/[0.08] bg-[#08080a]/90 backdrop-blur-md flex items-center justify-between z-20 flex-shrink-0 gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                       <button
                         onClick={() => setViewingCarousel(null)}
-                        className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer"
+                        className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer flex-shrink-0"
                         title="Voltar ao Cover Flow (Esc)"
                       >
                         <span>←</span>
-                        <span>Voltar ao Cover Flow</span>
+                        <span className="hidden sm:inline">Voltar ao Cover Flow</span>
+                        <span className="sm:hidden">Voltar</span>
                       </button>
-                      <span className="text-white/30">|</span>
-                      <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+                      <span className="text-white/30 hidden sm:inline">|</span>
+                      <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full flex-shrink-0">
                         {viewingCarousel.client}
                       </span>
-                      <h3 className="text-sm sm:text-base font-bold text-white tracking-wide truncate max-w-[280px] sm:max-w-md">
+                      <h3 className="text-sm sm:text-base font-bold text-white tracking-wide truncate max-w-[180px] sm:max-w-md">
                         {viewingCarousel.title}
                       </h3>
-                      <span className="text-[11px] font-light text-white/50 hidden md:inline">
-                        ({viewingCarousel.slideCount} SLIDES <span className="font-stretch font-bold text-white/80">CONTÍNUOS UNIDOS</span>)
+                      <span className="text-[11px] font-light text-white/50 hidden lg:inline">
+                        ({viewingCarousel.slideCount} SLIDES <span className="font-stretch font-bold text-white/80">COMPLETOS</span>)
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {/* Toggle: Ver Todos na Tela vs Modo Ampliado */}
+                      <button
+                        onClick={() => setRibbonFitMode(prev => prev === 'fit' ? 'scroll' : 'fit')}
+                        className={`text-xs px-3 py-1.5 rounded-full border transition-all cursor-pointer flex items-center gap-1.5 font-medium ${
+                          ribbonFitMode === 'fit'
+                            ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30'
+                            : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                        }`}
+                        title={ribbonFitMode === 'fit' ? 'Alternar para Modo Ampliado com rolagem lateral' : 'Ajustar todos os slides completos à tela'}
+                      >
+                        {ribbonFitMode === 'fit' ? (
+                          <>
+                            <span>↔️</span>
+                            <span className="font-semibold">Todos na Tela</span>
+                            <span className="text-emerald-400/60 hidden md:inline text-[10px]">• Ajustado</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>🔍</span>
+                            <span className="font-semibold">Modo Ampliado</span>
+                            <span className="text-white/50 hidden md:inline text-[10px]">• Rolagem</span>
+                          </>
+                        )}
+                      </button>
+
                       <button
                         onClick={() => setSelectedProject(viewingCarousel)}
-                        className="text-xs text-white/70 hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1.5 font-medium"
+                        className="text-xs text-white/70 hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 px-3 py-1.5 rounded-full transition-all cursor-pointer hidden sm:flex items-center gap-1.5 font-medium"
                       >
-                        <span className="font-light">Ficha Técnica</span>
-                        <strong className="font-bold text-emerald-400">& Orçamento</strong>
+                        <span className="font-light">Ficha</span>
+                        <strong className="font-bold text-emerald-400">Técnica</strong>
                         <span>↗</span>
                       </button>
 
@@ -2572,9 +2606,18 @@
                   <div
                     ref={ribbonRef}
                     onWheel={handleRibbonWheel}
-                    className="flex-1 flex items-center overflow-x-auto overflow-y-hidden px-8 sm:px-14 py-6 cursor-grab active:cursor-grabbing no-scrollbar select-none"
+                    className="flex-1 flex items-center justify-center overflow-x-auto overflow-y-hidden px-4 sm:px-8 py-3 sm:py-6 cursor-grab active:cursor-grabbing no-scrollbar select-none"
                   >
-                    <div className="flex items-center gap-0 p-0 overflow-hidden rounded-2xl border border-white/20 shadow-2xl bg-black backdrop-blur-md mx-auto">
+                    <div
+                      className="flex items-center gap-0 p-0 overflow-hidden rounded-2xl border border-white/20 shadow-2xl bg-black backdrop-blur-md mx-auto transition-all duration-300"
+                      style={ribbonFitMode === 'fit' ? {
+                        width: `min(calc(100vw - 48px), calc((100vh - 165px) * ${0.8 * (viewingCarousel.slides.length || 1)}))`,
+                        maxWidth: '100%',
+                        maxHeight: 'min(calc(100vh - 165px), 560px)',
+                      } : {
+                        width: 'max-content',
+                      }}
+                    >
                       {viewingCarousel.slides.map((slideImg, sIdx) => (
                         <div
                           key={sIdx}
@@ -2582,8 +2625,13 @@
                             setSelectedProject(viewingCarousel);
                             setCurrentSlideIndex(sIdx);
                           }}
-                          className="relative group cursor-pointer flex-shrink-0 overflow-hidden"
-                          style={{
+                          className="relative group cursor-pointer overflow-hidden transition-all min-w-[150px] sm:min-w-0"
+                          style={ribbonFitMode === 'fit' ? {
+                            flex: '1 1 0',
+                            aspectRatio: '4/5',
+                            maxHeight: 'min(calc(100vh - 165px), 560px)',
+                          } : {
+                            flexShrink: 0,
                             height: 'min(68vh, 560px)',
                             aspectRatio: '4/5',
                           }}
@@ -2593,17 +2641,18 @@
                             alt={`${viewingCarousel.title} - Slide ${sIdx + 1}`}
                             className="w-full h-full object-cover block select-none pointer-events-none"
                             loading="eager"
+                            decoding="async"
                           />
 
                           {/* Slide Number Indicator */}
-                          <div className="absolute top-3 left-3 text-[10px] bg-black/60 backdrop-blur-md px-2 py-0.5 rounded text-white/80 border border-white/10 opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center gap-0.5">
-                            <span className="font-stretch font-bold text-white">{sIdx + 1}</span>
-                            <span className="font-light text-white/40">/{viewingCarousel.slideCount}</span>
+                          <div className="absolute top-2.5 left-2.5 text-[9px] sm:text-[10px] bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-white/90 border border-white/10 opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center gap-0.5 shadow-lg">
+                            <span className="font-stretch font-bold text-emerald-400">{sIdx + 1}</span>
+                            <span className="font-light text-white/50">/{viewingCarousel.slideCount}</span>
                           </div>
 
                           {/* Hover Zoom Overlay */}
-                          <div className="absolute inset-0 bg-white/[0.04] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                            <span className="text-[11px] bg-black/85 text-white px-3.5 py-1.5 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium">
+                          <div className="absolute inset-0 bg-white/[0.05] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                            <span className="text-[10px] sm:text-[11px] bg-black/90 text-white px-3 py-1.5 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium tracking-wide">
                               <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">AMPLIAR</span> ↗
                             </span>
                           </div>
@@ -2617,12 +2666,20 @@
                     <div className="flex items-center gap-2.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
                       <span className="font-light tracking-wide text-zinc-400">
-                        ARRASTE NA HORIZONTAL PARA VER TODAS AS LÂMINAS • PRESSIONE <span className="font-stretch font-bold text-white">ESC</span> OU CLIQUE EM VOLTAR PARA O <span className="font-stretch font-bold text-zinc-200 tracking-wider">COVER FLOW</span>
+                        {ribbonFitMode === 'fit' ? (
+                          <>
+                            EXIBINDO TODOS OS <span className="font-stretch font-bold text-emerald-400">{viewingCarousel.slideCount} SLIDES</span> LADO A LADO • CLIQUE EM QUALQUER LÂMINA PARA AMPLIAR OU ALTERNE PARA O MODO EXPANDIDO
+                          </>
+                        ) : (
+                          <>
+                            MODO EXPANDIDO • ARRASTE NA HORIZONTAL OU USE A RODA DO MOUSE • CLIQUE EM <span className="font-stretch font-bold text-emerald-400">TODOS NA TELA</span> PARA AJUSTAR
+                          </>
+                        )}
                       </span>
                     </div>
                     <button
                       onClick={() => setViewingCarousel(null)}
-                      className="text-zinc-400 hover:text-white cursor-pointer text-[11px] font-medium"
+                      className="text-zinc-400 hover:text-white cursor-pointer text-[11px] font-medium transition-colors"
                     >
                       ← Voltar ao Cover Flow
                     </button>
