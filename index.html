@@ -48,10 +48,10 @@
   <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/bg-hero-v2.webp" type="image/webp">
   <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-v2-cutout.webp?v=1" type="image/webp">
 
-  <!-- Google Fonts: Montserrat (Weights 300 to 900) -->
+  <!-- Google Fonts: Montserrat, Anton, Permanent Marker & Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Permanent+Marker&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -65,6 +65,9 @@
             mono: ['"Montserrat"', 'monospace'],
             stretch: ['"StretchPro"', '"Montserrat"', 'sans-serif'],
             display: ['"StretchPro"', '"Montserrat"', 'sans-serif'],
+            anton: ['"Anton"', 'sans-serif'],
+            marker: ['"Permanent Marker"', 'cursive'],
+            caveat: ['"Caveat"', 'cursive'],
           },
           screens: {
             'xs': '480px',
@@ -112,6 +115,21 @@
     }
     .font-montserrat {
       font-family: 'Montserrat', sans-serif;
+    }
+    .font-anton {
+      font-family: 'Anton', sans-serif;
+    }
+    .font-marker {
+      font-family: 'Permanent Marker', cursive;
+    }
+    .font-caveat {
+      font-family: 'Caveat', cursive;
+    }
+    .torn-edge {
+      clip-path: polygon(
+        0% 4px, 4% 0px, 8% 5px, 15% 1px, 22% 4px, 30% 0px, 38% 5px, 46% 1px, 55% 4px, 63% 0px, 72% 5px, 80% 1px, 90% 4px, 96% 1px, 100% 5px,
+        100% calc(100% - 4px), 96% 100%, 91% calc(100% - 3px), 82% 100%, 74% calc(100% - 5px), 65% 100%, 56% calc(100% - 2px), 48% 100%, 39% calc(100% - 4px), 30% 100%, 21% calc(100% - 3px), 12% 100%, 5% calc(100% - 4px), 0% 100%
+      );
     }
 
     /* Tactile film grain overlay for physical print authenticity */
@@ -2448,6 +2466,167 @@
         return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
       };
 
+      // =========================================================================
+      // SEÇÃO "SOBRE MIM" (ESTILO EDITORIAL / NIKO KANE STREET-ART COLLAGE)
+      // =========================================================================
+      const renderSobreMimBlock = () => {
+        return (
+          <section
+            id="sobre-mim-section"
+            className="w-full bg-[#08080a] py-14 sm:py-20 lg:py-28 px-4 sm:px-8 lg:px-12 flex justify-center items-center relative z-20 border-t border-white/[0.08]"
+          >
+            {/* Outer Editorial Canvas Card (Warm Paper / Collage) */}
+            <div className="w-full max-w-6xl bg-[#F6F1E7] text-[#111111] rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl relative border border-[#E2D8C7]">
+              
+              {/* Fine Paper Texture Overlay */}
+              <div
+                className="absolute inset-0 opacity-[0.035] pointer-events-none mix-blend-multiply"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+                }}
+              />
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center px-6 sm:px-12 lg:px-16 py-10 sm:py-14 lg:py-16 relative z-10">
+                
+                {/* COLUNA ESQUERDA: TIPOGRAFIA & CTAS */}
+                <div className="lg:col-span-7 flex flex-col items-start z-10 pr-0 lg:pr-4">
+                  
+                  {/* Tag Pincelada Amarela */}
+                  <div className="relative inline-block mb-3 sm:mb-5">
+                    <span className="absolute inset-0 bg-[#F5B800] -rotate-1 rounded-sm scale-110 -z-10 translate-y-0.5" />
+                    <span className="relative text-xs sm:text-sm font-black tracking-wider uppercase text-black px-3.5 py-1 font-montserrat">
+                      BRAND DESIGNER
+                    </span>
+                  </div>
+
+                  {/* Título Principal Editorial */}
+                  <h2 className="text-5xl sm:text-6xl lg:text-7xl xl:text-[82px] font-black uppercase leading-[0.88] tracking-tight font-anton text-[#111111] mb-5 sm:mb-6">
+                    DESIGN<br />
+                    QUE VAI<br />
+                    <span className="font-marker text-[#F24E1E] inline-block -rotate-2 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl tracking-normal mt-1.5">
+                      ALÉM.
+                    </span>
+                  </h2>
+
+                  {/* Bio Descritiva */}
+                  <p className="text-[#3a3a3a] text-sm sm:text-base lg:text-lg font-medium leading-relaxed max-w-xl mb-7 sm:mb-9 font-montserrat">
+                    Gosto de criar, testar e explorar ideias criativas, unindo design, conteúdo, identidade visual e arte. Ajudo marcas e empresas a transformarem grandes ideias em identidades inesquecíveis que conectam, inspiram e geram valor.
+                  </p>
+
+                  {/* Ações / Botões */}
+                  <div className="flex flex-wrap items-center gap-5 sm:gap-8">
+                    <button
+                      onClick={() => {
+                        const track = document.getElementById('carrosseis-track');
+                        if (track) {
+                          track.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                      className="group inline-flex items-center gap-3.5 bg-[#111111] text-white pl-6 sm:pl-7 pr-2.5 sm:pr-3 py-3 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm lg:text-base hover:bg-black transition-all duration-200 hover:scale-105 shadow-xl font-montserrat cursor-pointer"
+                    >
+                      <span>VER MEU TRABALHO</span>
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F24E1E] flex items-center justify-center text-white text-base sm:text-lg font-bold transition-transform group-hover:translate-x-1">
+                        →
+                      </div>
+                    </button>
+
+                    <div className="relative inline-block">
+                      <a
+                        href={getWhatsAppLink()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#141414] font-black text-xs sm:text-sm lg:text-base tracking-wider uppercase font-montserrat hover:text-black transition-colors"
+                      >
+                        FALAR COMIGO
+                      </a>
+                      <svg className="absolute -bottom-2.5 left-0 w-full h-3 text-[#F5B800] overflow-visible pointer-events-none" viewBox="0 0 100 12" preserveAspectRatio="none">
+                        <path d="M2,7 Q30,12 60,6 T98,5" fill="none" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* COLUNA DIREITA: RETRATO HERO MARCOS + GRAFISMO NIKO KANE */}
+                <div className="lg:col-span-5 relative flex items-center justify-center min-h-[420px] sm:min-h-[500px]">
+                  <div className="relative w-full max-w-[360px] sm:max-w-[420px] aspect-[4/5] flex items-end justify-center">
+
+                    {/* 1. Mancha de Tinta Amarela Orgânica (Grafite / Brush Splatter) */}
+                    <svg className="absolute top-[48%] left-[54%] -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] text-[#F5B800] -z-0 pointer-events-none overflow-visible" viewBox="0 0 400 400" fill="currentColor">
+                      <path d="M150,45 C240,15 340,55 375,145 C410,235 365,325 285,365 C195,405 75,355 45,265 C15,175 55,75 150,45 Z" opacity="0.97" />
+                      <path d="M290,25 C340,5 390,35 380,85 C370,125 310,115 290,75 Z" opacity="0.92" />
+                      <circle cx="375" cy="180" r="18" />
+                      <circle cx="395" cy="225" r="11" />
+                      <circle cx="35" cy="285" r="15" />
+                      <circle cx="55" cy="340" r="9" />
+                    </svg>
+
+                    {/* 2. Retrato Busto de Marcos Recortado em Alto Contraste */}
+                    <div className="relative z-10 w-full h-[92%] flex items-end justify-center overflow-visible">
+                      <img 
+                        src="assets/marcos-portrait.png" 
+                        alt="Marcos - Brand Designer"
+                        className="w-full h-full object-contain object-bottom select-none pointer-events-none drop-shadow-2xl filter contrast-115 brightness-95"
+                      />
+                    </div>
+
+                    {/* 3. Doodle Coroa Preta sobre a cabeça de Marcos */}
+                    <div className="absolute top-1 left-[28%] -translate-x-1/2 z-20 pointer-events-none -rotate-12">
+                      <svg className="w-16 h-14 sm:w-20 sm:h-16 text-[#111111]" viewBox="0 0 80 60" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12,48 L16,16 L36,34 L56,12 L66,48 Z" />
+                        <path d="M14,48 L64,48" strokeWidth="4.5" />
+                      </svg>
+                    </div>
+
+                    {/* 4. Sticker Carinha Feliz Laranja (Smiley) */}
+                    <div className="absolute -right-2 sm:-right-6 top-[28%] z-20 w-20 h-20 sm:w-24 sm:h-24 bg-[#F24E1E] rounded-full flex items-center justify-center shadow-2xl border-2 border-black/10 rotate-6 transform hover:rotate-12 transition-transform cursor-pointer">
+                      <svg className="w-11 h-11 sm:w-13 sm:h-13 text-[#111111]" viewBox="0 0 100 100" fill="currentColor">
+                        <ellipse cx="32" cy="38" rx="6" ry="11" />
+                        <ellipse cx="68" cy="38" rx="6" ry="11" />
+                        <path d="M22,54 Q50,92 78,54 Q50,80 22,54 Z" fill="currentColor" />
+                      </svg>
+                    </div>
+
+                    {/* 5. Doodle Faíscas / Speed lines no canto superior direito */}
+                    <div className="absolute right-4 top-2 z-20 pointer-events-none text-[#111111]">
+                      <svg className="w-11 h-11" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round">
+                        <path d="M14,10 L6,3" />
+                        <path d="M24,8 L28,0" />
+                        <path d="M32,16 L40,11" />
+                      </svg>
+                    </div>
+
+                    {/* 6. Badge Papel Rasgado Preto com Nome e Cargo */}
+                    <div className="absolute bottom-6 -left-2 sm:-left-8 z-30 bg-[#111111] text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-sm shadow-2xl -rotate-3 border border-white/10 torn-edge max-w-[230px]">
+                      <div className="font-caveat text-3xl sm:text-4xl text-white font-bold leading-none tracking-wide">
+                        Marcos
+                      </div>
+                      <div className="relative inline-block mt-1">
+                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#F5B800] font-montserrat">
+                          BRAND DESIGNER
+                        </span>
+                        <div className="w-full h-0.5 bg-[#F5B800] mt-0.5 rounded-full" />
+                      </div>
+                    </div>
+
+                    {/* 7. Pinceladas Pretas no Canto Inferior Direito */}
+                    <div className="absolute -bottom-1 -right-3 z-20 pointer-events-none text-[#111111]">
+                      <svg className="w-16 h-12" viewBox="0 0 60 40" fill="currentColor">
+                        <path d="M10,25 C25,22 45,28 55,24 C58,23 55,32 40,31 C25,30 5,35 10,25 Z" opacity="0.9" />
+                        <path d="M20,12 C35,10 50,15 58,11 C60,10 57,18 45,17 C32,16 15,20 20,12 Z" opacity="0.8" />
+                      </svg>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+        );
+      };
+
       
       // Helper to render the Carrosséis 3D Cover Flow & Panoramic Viewer
       const renderCarrosseisBlock = (isEmbedded = false) => {
@@ -3200,6 +3379,7 @@
                 onNavigate={setActiveTab}
                 heroVersion={heroVersion}
               />
+              {renderSobreMimBlock()}
               {renderCarrosseisBlock(true)}
               {renderEstaticosBlock(true)}
             </div>
