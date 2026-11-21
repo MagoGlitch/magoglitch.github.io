@@ -475,50 +475,112 @@
     .vante-ui-card-right {
       right: max(3.5vw, calc(50% - 660px));
       top: clamp(210px, 36vh, 440px);
-      width: clamp(250px, 19vw, 290px);
-      padding: 20px 18px;
+      width: clamp(255px, 19.5vw, 295px);
+      padding: 18px 16px 20px;
       box-sizing: border-box;
     }
     .vante-skills-title {
       text-align: center;
       font-family: 'Montserrat', system-ui, sans-serif;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       color: #0f172a;
-      margin: 0 0 13px 0;
+      margin: 0 0 12px 0;
       letter-spacing: -0.01em;
     }
     .vante-skills-list {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 7.5px;
       list-style: none;
       padding: 0;
       margin: 0;
     }
     .vante-skill-item {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 7.5px 12px;
-      border-radius: 9999px;
-      background: rgba(0, 0, 0, 0.05);
-      font-family: 'Montserrat', system-ui, sans-serif;
-      font-size: 12.2px;
-      font-weight: 600;
-      color: #334155;
-      transition: all 0.2s ease;
+      flex-direction: column;
+      gap: 5px;
+      padding: 7px 11px 7.5px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .vante-skill-item.active {
-      background: rgba(255, 59, 48, 0.12);
-      color: #ea3829;
-      font-weight: 700;
+    .vante-skill-item:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.16);
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+    .vante-skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .vante-skill-name {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #1e293b;
     }
     .vante-skill-star {
-      font-size: 12px;
-      color: #ea3829;
+      font-size: 10px;
+      color: #0284c7;
       line-height: 1;
+      text-shadow: 0 0 6px rgba(14, 165, 233, 0.45);
+    }
+    .vante-skill-pct {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #0284c7;
+      letter-spacing: -0.02em;
+    }
+    .vante-skill-track {
+      position: relative;
+      width: 100%;
+      height: 4.5px;
+      border-radius: 9999px;
+      background: #090e1d;
+      overflow: visible;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+    }
+    .vante-skill-fill {
+      position: relative;
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #1e3a8a 0%, #0284c7 40%, #00d2ff 90%, #ffffff 100%);
+      box-shadow: 0 0 8px rgba(0, 210, 255, 0.7), 0 0 16px rgba(2, 132, 199, 0.4);
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .vante-skill-light {
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5.5px;
+      height: 5.5px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 
+        0 0 4px #ffffff,
+        0 0 9px #00e5ff,
+        0 0 16px #0284c7,
+        0 0 24px rgba(0, 229, 255, 0.7);
+      transition: all 0.25s ease;
+    }
+    .vante-skill-item:hover .vante-skill-light {
+      box-shadow: 
+        0 0 5px #ffffff,
+        0 0 12px #00e5ff,
+        0 0 20px #0284c7,
+        0 0 30px rgba(0, 229, 255, 0.9);
+      transform: translateY(-50%) scale(1.2);
     }
 
     /* macOS Dock */
@@ -1440,29 +1502,79 @@
               <div className="vante-ui-card vante-ui-card-right" ref={uiRightCardRef}>
                 <h3 className="vante-skills-title">Habilidades</h3>
                 <ul className="vante-skills-list">
-                  <li className="vante-skill-item active">
-                    <span className="vante-skill-star">★</span>
-                    <span>Design Gráfico</span>
-                  </li>
+                  {/* 1. Design Gráfico */}
                   <li className="vante-skill-item">
-                    <span className="vante-skill-star">★</span>
-                    <span>Identidade Visual</span>
+                    <div className="vante-skill-header">
+                      <span className="vante-skill-name">
+                        <span className="vante-skill-star">★</span> Design Gráfico
+                      </span>
+                      <span className="vante-skill-pct">98%</span>
+                    </div>
+                    <div className="vante-skill-track">
+                      <div className="vante-skill-fill" style={{ width: '98%' }}>
+                        <span className="vante-skill-light"></span>
+                      </div>
+                    </div>
                   </li>
+
+                  {/* 2. Identidade Visual */}
                   <li className="vante-skill-item">
-                    <span className="vante-skill-star">★</span>
-                    <span>Social Media</span>
+                    <div className="vante-skill-header">
+                      <span className="vante-skill-name">
+                        <span className="vante-skill-star">★</span> Identidade Visual
+                      </span>
+                      <span className="vante-skill-pct">95%</span>
+                    </div>
+                    <div className="vante-skill-track">
+                      <div className="vante-skill-fill" style={{ width: '95%' }}>
+                        <span className="vante-skill-light"></span>
+                      </div>
+                    </div>
                   </li>
+
+                  {/* 3. Social Media */}
                   <li className="vante-skill-item">
-                    <span className="vante-skill-star">★</span>
-                    <span>Fotografia</span>
+                    <div className="vante-skill-header">
+                      <span className="vante-skill-name">
+                        <span className="vante-skill-star">★</span> Social Media
+                      </span>
+                      <span className="vante-skill-pct">92%</span>
+                    </div>
+                    <div className="vante-skill-track">
+                      <div className="vante-skill-fill" style={{ width: '92%' }}>
+                        <span className="vante-skill-light"></span>
+                      </div>
+                    </div>
                   </li>
+
+                  {/* 4. Fotografia */}
                   <li className="vante-skill-item">
-                    <span className="vante-skill-star">★</span>
-                    <span>Edição de vídeo</span>
+                    <div className="vante-skill-header">
+                      <span className="vante-skill-name">
+                        <span className="vante-skill-star">★</span> Fotografia
+                      </span>
+                      <span className="vante-skill-pct">85%</span>
+                    </div>
+                    <div className="vante-skill-track">
+                      <div className="vante-skill-fill" style={{ width: '85%' }}>
+                        <span className="vante-skill-light"></span>
+                      </div>
+                    </div>
                   </li>
+
+                  {/* 5. Edição de vídeo */}
                   <li className="vante-skill-item">
-                    <span className="vante-skill-star">★</span>
-                    <span>Figma</span>
+                    <div className="vante-skill-header">
+                      <span className="vante-skill-name">
+                        <span className="vante-skill-star">★</span> Edição de vídeo
+                      </span>
+                      <span className="vante-skill-pct">88%</span>
+                    </div>
+                    <div className="vante-skill-track">
+                      <div className="vante-skill-fill" style={{ width: '88%' }}>
+                        <span className="vante-skill-light"></span>
+                      </div>
+                    </div>
                   </li>
                 </ul>
               </div>
