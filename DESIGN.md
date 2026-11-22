@@ -31,7 +31,7 @@
 - Body: Montserrat (weights 300, 400, 500, 600)
 - Hero (fita 3D): Inter Tight e IBM Plex Mono apenas nos rótulos da animação da fita
 - Persona: Permanent Marker só nos doodles e rabiscos
-- Stretch Pro sempre sem ligaduras (`.font-stretch` desliga liga/calt), senão letras repetidas se fundem
+- Stretch Pro com as ligaduras ativadas: letras repetidas se fundem (ex.: MAAAGO, CRIAAAÇÃO, FEED) e isso é intencional, faz parte da persona
 - Scale: 1.25 Major Third, base 16px
   - display: 32px - 48px | 1.1 | Hero titles
   - h1: 24px - 32px | 1.2 | Modal & project titles
@@ -116,4 +116,4 @@
 
 - 2026-11-16: Initialized DESIGN.md and executed complete anti-AI de-slop overhaul.
 - 2026-11-21: Revisão Impeccable (critique 12/32). WhatsApp real, navegação flutuante, seção de contato, metadados reais dos projetos, padrão único de doodles e CTA, acessibilidade de teclado/modais, retrato em WebP.
-- 2026-11-21: Revisão Impeccable rodada 2 (19/32). Obras antes do Sobre, Estáticos fixo e girado pela rolagem, Stretch sem ligaduras, hero mobile com retrato visível, CTAs unificados, ferramentas não verificadas ocultas.
+- 2026-11-21: Revisão Impeccable rodada 2 (19/32). Obras antes do Sobre, Estáticos fixo e girado pela rolagem, hero mobile com retrato visível, CTAs unificados, ferramentas não verificadas ocultas.
