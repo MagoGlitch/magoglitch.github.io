@@ -3,8 +3,8 @@
 ## Context (from discovery)
 
 - Artifact type: portfolio
-- Positioning: creative / luxury / senior art director
-- Audience: Marketing leaders, enterprise clients, brand founders seeking high-ticket branding, visual identity, and social media carousels
+- Positioning: persona autoral "Mago" + entrega de nível sênior em direção de arte
+- Audience: agências e recrutadores avaliando rápido (ver PRODUCT.md); clientes diretos em segundo plano
 - Primary action: Iniciar contato via WhatsApp para contratação / proposta comercial
 - Adjectives: Architectural, Editorial, Tangible, Restrained, High-Contrast
 - Visual word translations:
@@ -29,7 +29,9 @@
 
 - Display: Stretch Pro (surgical display accent for key action words) + Montserrat (900/800/700 for main headlines)
 - Body: Montserrat (weights 300, 400, 500, 600)
-- Mono: Montserrat Monospace
+- Hero (fita 3D): Inter Tight e IBM Plex Mono apenas nos rótulos da animação da fita
+- Persona: Permanent Marker só nos doodles e rabiscos
+- Stretch Pro sempre sem ligaduras (`.font-stretch` desliga liga/calt), senão letras repetidas se fundem
 - Scale: 1.25 Major Third, base 16px
   - display: 32px - 48px | 1.1 | Hero titles
   - h1: 24px - 32px | 1.2 | Modal & project titles
@@ -62,7 +64,8 @@
 
 ## Layout and composition
 
-- Grid: Continuous horizontal showcase for Carrosséis and Identidade Visual; 3D perspective cylinder for Estáticos
+- Ordem da Home: hero com a fita 3D que vira a grade de Identidade Visual → Carrosséis (cover flow fixo) → Estáticos (cilindro fixo, girado pela rolagem) → Sobre → Contato
+- Grid: grade 3×3 em WebGL para Identidade Visual (nomes em botões abaixo); cover flow para Carrosséis; cilindro 3D para Estáticos
 - Spacing rhythm: Tight grouping inside card headers, expansive breathing room between projects
 - Signature layout move: Edge-to-edge seamless continuous panoramas (0 gap) for carousels, allowing pure artwork immersion
 
@@ -71,12 +74,11 @@
 - Button hierarchy:
   - Primary: Architectural solid off-white pill (`bg-[#f4f4f5] text-zinc-950 font-bold hover:bg-white`)
   - Secondary: Translucent dark glass pill (`bg-white/5 border border-white/10 text-white/80 hover:text-white hover:bg-white/10`)
-  - Status Indicator: Minimal calm indicator with solid emerald status dot (`DISPONÍVEL PARA PROJETOS SELECIONADOS • 2026`)
 - Overlays & Modals: Deep blurred backdrop (`bg-black/92 backdrop-blur-2xl`) with clear Esc keyboard handler
 
 ## Motion
 
-- Duration scale: 200ms-300ms
+- Duration scale: 200ms-300ms para interface; a rolagem suave (Lenis) e a animação da fita seguem a rolagem e ficam fora dessa escala
 - Easing: cubic-bezier(0.16, 1, 0.3, 1) (authentic natural ease-out)
 - What animates: Transform and opacity only. Zero bouncy elastic animations.
 
@@ -104,6 +106,9 @@
 - Tinta: laranja `#ff7500` e branco. Esmeralda fica só para a interface (status, setas, foco).
 - Sombra: `.doodle` (drop-shadow com deslocamento, sem brilho neon). Nada de `animate-pulse` ou blobs com blur.
 - Cada seção segue o mesmo cabeçalho: título em Stretch Pro, risco laranja embaixo e no máximo um doodle ao lado.
+- Exceção assumida: a moldura do retrato no Sobre leva o conjunto completo de doodles (decisão do Marcos).
+- Exceção assumida: a citação do Sobre fica em verde esmeralda com traço laranja (decisão do Marcos).
+- Todos os CTAs de contato dizem "Conversar…" (no WhatsApp / sobre este projeto). Sem "orçamento", que fala só com cliente.
 - Títulos em texto sólido (sem gradiente). Atenção: a Stretch Pro não tem `Á`; evite essa letra nos títulos.
 - CTA primário único: pill off-white (`bg-[#f4f4f5] text-zinc-950`). Secundário: pill translúcida.
 
@@ -111,3 +116,4 @@
 
 - 2026-11-16: Initialized DESIGN.md and executed complete anti-AI de-slop overhaul.
 - 2026-11-21: Revisão Impeccable (critique 12/32). WhatsApp real, navegação flutuante, seção de contato, metadados reais dos projetos, padrão único de doodles e CTA, acessibilidade de teclado/modais, retrato em WebP.
+- 2026-11-21: Revisão Impeccable rodada 2 (19/32). Obras antes do Sobre, Estáticos fixo e girado pela rolagem, Stretch sem ligaduras, hero mobile com retrato visível, CTAs unificados, ferramentas não verificadas ocultas.
