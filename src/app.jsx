@@ -1626,7 +1626,7 @@
       // Estáticos na Home: seção fixa (sticky) e a rolagem da página gira o cilindro
       const STATIC_STEP_PX = 150;
       const staticTrackTravel = isFreeMobile() ? 0 : Math.ceil(estaticos.length / 3) * STATIC_STEP_PX;
-      const staticTouchStart = useRef(null);
+      const staticAutoLastT = useRef(0);
       const staticScrollProg = useRef(0);
       useEffect(() => {
         if (activeTab !== 'home') return;
@@ -1681,7 +1681,15 @@
 
         // Suave deslocamento ocioso (idle drift)
         if (!staticIsDragging.current) {
-          staticTargetProgress.current += 0.0006;
+          if (isFreeMobile()) {
+            // Mobile: os criativos passam sozinhos numa velocidade de leitura (~1 peça a cada 3 s por coluna)
+            const now = performance.now();
+            const dt = Math.min(0.05, (now - (staticAutoLastT.current || now)) / 1000);
+            staticAutoLastT.current = now;
+            staticTargetProgress.current += dt * 0.35;
+          } else {
+            staticTargetProgress.current += 0.0006;
+          }
         }
 
         staticProgress.current += (staticTargetProgress.current - staticProgress.current) * 0.12;
@@ -2605,22 +2613,6 @@
             staticDragStartProgress.current = staticTargetProgress.current;
             staticDragDist.current = 0;
           }}
-          onTouchStart={(e) => {
-            if (!isFreeMobile()) return;
-            const t = e.touches[0];
-            staticTouchStart.current = { x: t.clientX, y: t.clientY, p: staticTargetProgress.current };
-            staticDragDist.current = 0;
-          }}
-          onTouchMove={(e) => {
-            if (!isFreeMobile() || !staticTouchStart.current) return;
-            const t = e.touches[0];
-            const dx = t.clientX - staticTouchStart.current.x;
-            const dy = t.clientY - staticTouchStart.current.y;
-            if (Math.abs(dx) < Math.abs(dy)) return; // gesto vertical: deixa a página rolar
-            staticDragDist.current = Math.abs(dx);
-            staticTargetProgress.current = staticTouchStart.current.p - dx / (staticMetrics.stepY * 0.6);
-          }}
-          onTouchEnd={() => { staticTouchStart.current = null; }}
           className={`relative w-full ${isEmbedded ? (HEADER_H > 0 ? 'h-[calc(100vh-68px)]' : 'h-[100svh]') + ' min-h-[580px] border-t border-white/[0.08] bg-[#08080a]' : 'flex-1'} flex items-center justify-center overflow-hidden animate-fadeIn select-none cursor-grab active:cursor-grabbing`}
         >
           {/* Cabeçalho da seção (mesmo padrão: título Stretch + risco laranja + um doodle) */}
