@@ -4035,7 +4035,7 @@
                 {/* Pure Continuous Presentation Content */}
                 <main className="w-full max-w-5xl xl:max-w-6xl mx-auto py-6 sm:py-10 px-2 sm:px-6 flex flex-col items-center">
                   {selectedProject.boardParts && selectedProject.boardParts.length > 0 ? (
-                    <div className="w-full flex flex-col items-center rounded-2xl overflow-hidden shadow-[0_25px_100px_rgba(0,0,0,0.95)] border border-white/10">
+                    <div className="w-full max-w-[860px] mx-auto flex flex-col items-center rounded-2xl overflow-hidden shadow-[0_25px_100px_rgba(0,0,0,0.95)] border border-white/10">
                       {selectedProject.boardParts.map((part, idx) => (
                         part.toLowerCase().endsWith('.gif') ? (
                           <picture key={idx} className="w-full block leading-none">
@@ -4060,9 +4060,16 @@
                     </div>
                   ) : (
                     <img 
+                      key={selectedProject.id}
                       src={selectedProject.presentationImage || selectedProject.cover} 
                       alt={selectedProject.title}
-                      className="w-full h-auto object-contain block rounded-2xl shadow-[0_25px_100px_rgba(0,0,0,0.95)] border border-white/10"
+                      style={{ maxWidth: 860 }}
+                      onLoad={(e) => {
+                        // nunca amplia além do tamanho real do arquivo (evita pixelar)
+                        const nw = e.currentTarget.naturalWidth;
+                        if (nw && nw < 860) e.currentTarget.style.maxWidth = nw + 'px';
+                      }}
+                      className="w-full h-auto object-contain block mx-auto rounded-2xl shadow-[0_25px_100px_rgba(0,0,0,0.95)] border border-white/10"
                       loading="eager"
                       decoding="sync"
                     />
