@@ -117,3 +117,4 @@
 - 2026-11-16: Initialized DESIGN.md and executed complete anti-AI de-slop overhaul.
 - 2026-11-21: Revisão Impeccable (critique 12/32). WhatsApp real, navegação flutuante, seção de contato, metadados reais dos projetos, padrão único de doodles e CTA, acessibilidade de teclado/modais, retrato em WebP.
 - 2026-11-21: Revisão Impeccable rodada 2 (19/32). Obras antes do Sobre, Estáticos fixo e girado pela rolagem, hero mobile com retrato visível, CTAs unificados, ferramentas não verificadas ocultas.
+- 2026-11-22: Otimização mobile. JSX pré-compilado (src/app.jsx → app.js) e Tailwind estático (styles.css) via `npm run build`; rolagem nativa no toque; WebGL só redesenha quando muda; slides de carrossel no celular abrem no modo ampliado com encaixe; cabeçalho da apresentação de identidade compacto no celular. Ver AGENTS.md.
