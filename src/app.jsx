@@ -16,6 +16,9 @@
       },
     });
     const shortTitle = (t = '') => t.split(/ [—-] /)[0];
+    // Versão mobile (< 768px): Carrosséis e Estáticos não prendem a rolagem da página (navegação livre por arraste).
+    // Acima disso (desktop/tablet largo) nada muda.
+    const isFreeMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
     // No celular os slides "todos na tela" ficam minúsculos: abre já no modo ampliado (arrastar para o lado)
     const defaultRibbonMode = () => (typeof window !== 'undefined' && window.innerWidth < 640 ? 'scroll' : 'fit');
 
@@ -306,14 +309,14 @@
           function grid(i) {
             const vh = 2 * GZ * tanH;
             const vw = vh * asp;
-            const targetGW = vw * (cols === 3 ? 0.78 : 0.86);
+            const targetGW = vw * (cols === 3 ? 0.78 : 0.95);
             const gap = targetGW * 0.016;
             let cw = (targetGW - gap * (cols - 1)) / cols;
             let ch = cw / (CARD_W / CARD_H);
             let gh = ch * rows + gap * 1.5 * (rows - 1);
 
             // Cap grid height to 70% of viewport height so covers are large and immersive while 2026 and footer remain completely clear
-            const maxGH = vh * (cols === 3 ? 0.70 : 0.78);
+            const maxGH = vh * (cols === 3 ? 0.70 : 0.84);
             if (gh > maxGH) {
               const scale = maxGH / gh;
               cw *= scale;
@@ -1129,6 +1132,17 @@
           const section = carrosseisSectionRef.current;
           if (!track || !section) return;
 
+          if (isFreeMobile()) {
+            // Mobile: seção normal na página; as capas andam só com o arraste lateral
+            section.style.position = 'absolute';
+            section.style.top = '0px';
+            section.style.bottom = 'auto';
+            section.style.left = '0px';
+            section.style.right = '0px';
+            section.style.width = '100%';
+            return;
+          }
+
           const rect = track.getBoundingClientRect();
           const stageH = window.innerHeight - HEADER_H;
           const travel = track.offsetHeight - stageH;
@@ -1349,7 +1363,7 @@
         flowIsDragging.current = false;
         if (flowHasDragged.current) {
           const target = Math.max(0, Math.min(carrosseis.length - 1, Math.round(flowPos.current - flowVelocity.current * 70)));
-          if (activeTab === 'home' && carrosseisTrackRef.current) {
+          if (activeTab === 'home' && carrosseisTrackRef.current && !isFreeMobile()) {
             const track = carrosseisTrackRef.current;
             const rect = track.getBoundingClientRect();
             const trackTop = rect.top + window.scrollY;
@@ -1371,7 +1385,7 @@
           setRibbonFitMode(defaultRibbonMode());
           setViewingCarousel(carrosseis[idx]);
         } else {
-          if (activeTab === 'home' && carrosseisTrackRef.current) {
+          if (activeTab === 'home' && carrosseisTrackRef.current && !isFreeMobile()) {
             const track = carrosseisTrackRef.current;
             const rect = track.getBoundingClientRect();
             const trackTop = rect.top + window.scrollY;
@@ -1387,7 +1401,7 @@
 
       const goToFlowIndex = (idx) => {
         const target = Math.max(0, Math.min(carrosseis.length - 1, idx));
-        if (activeTab === 'home' && carrosseisTrackRef.current) {
+        if (activeTab === 'home' && carrosseisTrackRef.current && !isFreeMobile()) {
           const track = carrosseisTrackRef.current;
           const rect = track.getBoundingClientRect();
           const trackTop = rect.top + window.scrollY;
@@ -1584,7 +1598,8 @@
 
       // Estáticos na Home: seção fixa (sticky) e a rolagem da página gira o cilindro
       const STATIC_STEP_PX = 150;
-      const staticTrackTravel = Math.ceil(estaticos.length / 3) * STATIC_STEP_PX;
+      const staticTrackTravel = isFreeMobile() ? 0 : Math.ceil(estaticos.length / 3) * STATIC_STEP_PX;
+      const staticTouchStart = useRef(null);
       const staticScrollProg = useRef(0);
       useEffect(() => {
         if (activeTab !== 'home') return;
@@ -2185,7 +2200,7 @@
                       ref={el => flowHintRefs.current[1] = el}
                       aria-hidden="true"
                       style={{ fontFamily: "'Permanent Marker', cursive" }}
-                      className="relative z-30 text-center text-white text-sm tracking-wide pointer-events-none select-none mt-2 px-4 doodle"
+                      className="relative z-30 text-center text-white text-sm tracking-wide pointer-events-none select-none mt-3 mb-5 px-4 doodle"
                     >
                       Psiu! Isso é só a capa… <span className="doodle-ink">{IS_TOUCH ? 'toca' : 'clica'}</span> pra ver o resto! <span className="doodle-ink">↓</span>
                     </p>
@@ -2313,7 +2328,7 @@
                       <span className="font-light tracking-wide text-zinc-400">
                         {isEmbedded ? (
                           <>
-                            {IS_TOUCH ? 'DESLIZE A PÁGINA PARA NAVEGAR • TOQUE NA CAPA' : 'ROLE A PÁGINA PARA NAVEGAR • CLIQUE NA CAPA'} PARA VER O CARROSSEL <span className="font-bold text-zinc-200 tracking-wider">COMPLETO</span>
+                            {isFreeMobile() ? 'ARRASTE AS CAPAS PARA O LADO • TOQUE NA CAPA' : IS_TOUCH ? 'DESLIZE A PÁGINA PARA NAVEGAR • TOQUE NA CAPA' : 'ROLE A PÁGINA PARA NAVEGAR • CLIQUE NA CAPA'} PARA VER O CARROSSEL <span className="font-bold text-zinc-200 tracking-wider">COMPLETO</span>
                           </>
                         ) : (
                           <>
@@ -2537,7 +2552,7 @@
         if (isEmbedded) {
           const stepPx = 220;
           const stageH = typeof window !== 'undefined' ? (window.innerHeight - HEADER_H) : 832;
-          const trackHeight = (carrosseis.length - 1) * stepPx + stageH;
+          const trackHeight = isFreeMobile() ? stageH : (carrosseis.length - 1) * stepPx + stageH;
           return (
             <div
               id="carrosseis-track"
@@ -2567,6 +2582,22 @@
             staticDragStartProgress.current = staticTargetProgress.current;
             staticDragDist.current = 0;
           }}
+          onTouchStart={(e) => {
+            if (!isFreeMobile()) return;
+            const t = e.touches[0];
+            staticTouchStart.current = { x: t.clientX, y: t.clientY, p: staticTargetProgress.current };
+            staticDragDist.current = 0;
+          }}
+          onTouchMove={(e) => {
+            if (!isFreeMobile() || !staticTouchStart.current) return;
+            const t = e.touches[0];
+            const dx = t.clientX - staticTouchStart.current.x;
+            const dy = t.clientY - staticTouchStart.current.y;
+            if (Math.abs(dx) < Math.abs(dy)) return; // gesto vertical: deixa a página rolar
+            staticDragDist.current = Math.abs(dx);
+            staticTargetProgress.current = staticTouchStart.current.p - dx / (staticMetrics.stepY * 0.6);
+          }}
+          onTouchEnd={() => { staticTouchStart.current = null; }}
           className={`relative w-full ${isEmbedded ? (HEADER_H > 0 ? 'h-[calc(100vh-68px)]' : 'h-[100svh]') + ' min-h-[580px] border-t border-white/[0.08] bg-[#08080a]' : 'flex-1'} flex items-center justify-center overflow-hidden animate-fadeIn select-none cursor-grab active:cursor-grabbing`}
         >
           {/* Cabeçalho da seção (mesmo padrão: título Stretch + risco laranja + um doodle) */}
