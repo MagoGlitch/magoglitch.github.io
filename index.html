@@ -1461,15 +1461,9 @@
                     <path d="M25,2 Q25,25 48,25 Q25,25 25,48 Q25,25 2,25 Q25,25 25,2 Z" />
                   </svg>
                 </div>
-                <div className="flex items-center gap-2 mb-3 pointer-events-none" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 30 30" fill="none" stroke="#ff7500" strokeWidth="3" strokeLinecap="round">
-                    <line x1="15" y1="4" x2="15" y2="26" />
-                    <line x1="4" y1="15" x2="26" y2="15" />
-                    <line x1="7" y1="7" x2="23" y2="23" />
-                    <line x1="7" y1="23" x2="23" y2="7" />
-                  </svg>
+                <div className="mb-3 pointer-events-none" aria-hidden="true">
                   <span style={{ fontFamily: "'Permanent Marker', cursive" }} className="text-xs tracking-wider uppercase doodle-ink">
-                    // DESIGNER &amp; CRIADOR
+                    DESIGNER &amp; CRIADOR
                   </span>
                 </div>
                 <p className="vante-ui-desc">
@@ -2631,16 +2625,9 @@
             {/* COLUNA DA ESQUERDA: TEXTO EDITORIAL (7 cols) */}
             <div className="lg:col-span-7 flex flex-col justify-center">
               
-              {/* Doodle Spark Accent de Risco */}
-              <div className="flex items-center gap-2 mb-2 pointer-events-none" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 30 30" fill="none" stroke="#ff7500" strokeWidth="3" strokeLinecap="round">
-                  <line x1="15" y1="4" x2="15" y2="26" />
-                  <line x1="4" y1="15" x2="26" y2="15" />
-                  <line x1="7" y1="7" x2="23" y2="23" />
-                  <line x1="7" y1="23" x2="23" y2="7" />
-                </svg>
+              <div className="mb-2 pointer-events-none" aria-hidden="true">
                 <span style={{ fontFamily: "'Permanent Marker', cursive" }} className="text-xs tracking-widest uppercase doodle-ink">
-                  // ARTE & ALMA
+                  ARTE &amp; ALMA
                 </span>
               </div>
 
@@ -3383,9 +3370,7 @@
                 <path d="M 5,6 Q 45,10 90,5 Q 135,1 175,7" />
               </svg>
             </div>
-            <p className="text-[11px] sm:text-xs text-zinc-400 mt-1.5 font-light bg-[#08080a]/70 px-2 rounded">
-              Estáticos: posts, stories e anúncios • {estaticos.length} peças • {IS_TOUCH ? 'deslize' : 'role'} para ver todas
-            </p>
+
           </div>
 
           {/* 3D Camera Scene */}
@@ -3620,9 +3605,9 @@
               <nav className="flex items-center gap-1 p-1 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl shadow-2xl">
                 {[
                   { id: 'home', label: 'Início', badge: null },
-                  { id: 'carrosseis', label: 'Carrosséis', badge: carrosseis.length },
-                  { id: 'estaticos', label: 'Estáticos', badge: estaticos.length },
-                  { id: 'identidade-visual', label: 'Identidade Visual', badge: idVisual.length }
+                  { id: 'carrosseis', label: 'Carrosséis', badge: null },
+                  { id: 'estaticos', label: 'Estáticos', badge: null },
+                  { id: 'identidade-visual', label: 'Identidade Visual', badge: null }
                 ].map(tab => (
                   <button
                     key={tab.id}
@@ -3742,10 +3727,10 @@
               style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
             >
               {[
-                { key: 'identidade', label: 'Identidades', count: idVisual.length },
-                { key: 'sobre', label: 'Sobre', count: null },
-                { key: 'carrosseis', label: 'Carrosséis', count: carrosseis.length },
-                { key: 'estaticos', label: 'Estáticos', count: estaticos.length },
+                { key: 'identidade', label: 'Identidades' },
+                { key: 'sobre', label: 'Sobre' },
+                { key: 'carrosseis', label: 'Carrosséis' },
+                { key: 'estaticos', label: 'Estáticos' },
               ].map(item => (
                 <button
                   key={item.key}
@@ -3754,7 +3739,6 @@
                   className="px-2 sm:px-3.5 min-h-[44px] sm:min-h-[36px] rounded-full text-[11px] sm:text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
                 >
                   {item.label}
-                  {item.count !== null && <span className="hidden sm:inline text-zinc-400 tabular-nums ml-1">{item.count}</span>}
                 </button>
               ))}
               <a
