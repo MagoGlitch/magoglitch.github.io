@@ -2248,6 +2248,8 @@
         const handleKeyDown = (e) => {
           if (selectedProject) {
             if (e.key === 'Escape') setSelectedProject(null);
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); lightboxNav(-1); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); lightboxNav(1); }
             return;
           }
 
@@ -2565,10 +2567,27 @@
 
       const thicknessLayers = [-1, 0, 1];
 
-      // Reset slide on modal open
+      // Reset slide on modal open (ou abre no slide clicado)
+      const slideOverride = useRef(null);
       useEffect(() => {
-        setCurrentSlideIndex(0);
+        setCurrentSlideIndex(slideOverride.current ?? 0);
+        slideOverride.current = null;
       }, [selectedProject]);
+
+      // Lightbox: navegação entre artes (slides do carrossel ou peças dos Estáticos)
+      const lightboxNav = (dir) => {
+        if (!selectedProject || selectedProject.category === 'Identidade Visual') return;
+        if (selectedProject.category === 'Carrosséis') {
+          const n = selectedProject.slides.length;
+          setCurrentSlideIndex(i => (i + dir + n) % n);
+          return;
+        }
+        const list = estaticos;
+        const idx = list.findIndex(p => p.id === selectedProject.id);
+        if (idx < 0) return;
+        setSelectedProject(list[(idx + dir + list.length) % list.length]);
+      };
+      const lightboxTouch = useRef(null);
 
       // Foco dos modais: leva o foco para dentro ao abrir e devolve ao elemento de origem ao fechar
       const lastFocusRef = useRef(null);
@@ -3204,13 +3223,6 @@
                         )}
                       </button>
 
-                      <button
-                        onClick={() => setSelectedProject(viewingCarousel)}
-                        className="text-xs text-zinc-950 bg-[#f4f4f5] hover:bg-white px-3 py-1.5 rounded-full transition-colors cursor-pointer flex items-center gap-1.5 font-bold"
-                      >
-                        <span className="sm:hidden">Detalhes</span>
-                        <span className="hidden sm:inline">Detalhes do projeto</span>
-                      </button>
 
                       <button
                         onClick={() => setViewingCarousel(null)}
@@ -3243,10 +3255,10 @@
                         <div
                           key={sIdx}
                           onClick={() => {
+                            slideOverride.current = sIdx;
                             setSelectedProject(viewingCarousel);
-                            setCurrentSlideIndex(sIdx);
                           }}
-                          {...pressable(() => { setSelectedProject(viewingCarousel); setCurrentSlideIndex(sIdx); }, `Ampliar slide ${sIdx + 1} de ${viewingCarousel.slideCount}`)}
+                          {...pressable(() => { slideOverride.current = sIdx; setSelectedProject(viewingCarousel); }, `Ampliar slide ${sIdx + 1} de ${viewingCarousel.slideCount}`)}
                           className="relative group cursor-pointer overflow-hidden transition-all min-w-[150px] sm:min-w-0"
                           style={ribbonFitMode === 'fit' ? {
                             flex: '1 1 0',
@@ -4078,188 +4090,90 @@
           {/* ======================================================== */}
           {/* SHARED LIGHTBOX / DETAILS MODAL FOR OTHER PROJECTS (ESTÁTICOS) */}
           {/* ======================================================== */}
-          {selectedProject && selectedProject.category !== 'Identidade Visual' && (
-            <div 
-              className="fixed inset-0 z-50 bg-black/92 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
-              onClick={() => setSelectedProject(null)}
-            >
-              <div 
+          {selectedProject && selectedProject.category !== 'Identidade Visual' && (() => {
+            const isCarousel = selectedProject.category === 'Carrosséis';
+            const total = isCarousel ? selectedProject.slides.length : estaticos.length;
+            const position = isCarousel ? currentSlideIndex + 1 : estaticos.findIndex(p => p.id === selectedProject.id) + 1;
+            const src = selectedProject.slides[isCarousel ? currentSlideIndex : 0];
+            const navBtn = "w-11 h-11 rounded-full bg-black/60 hover:bg-black border border-white/15 text-white flex items-center justify-center transition-colors cursor-pointer";
+            return (
+              <div
                 role="dialog"
                 aria-modal="true"
-                aria-labelledby="project-modal-title"
-                className="relative max-w-5xl w-full max-h-[92vh] bg-[#0e0e12] border border-white/15 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl"
-                onClick={(e) => e.stopPropagation()}
+                aria-label={`${selectedProject.title} — arte ${position} de ${total}`}
+                className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col animate-fadeIn select-none"
+                onClick={() => setSelectedProject(null)}
+                onTouchStart={(e) => { lightboxTouch.current = e.touches[0].clientX; }}
+                onTouchEnd={(e) => {
+                  if (lightboxTouch.current === null) return;
+                  const dx = e.changedTouches[0].clientX - lightboxTouch.current;
+                  lightboxTouch.current = null;
+                  if (Math.abs(dx) > 50) lightboxNav(dx < 0 ? 1 : -1);
+                }}
               >
                 <button
-                  onClick={() => setSelectedProject(null)}
+                  onClick={(e) => { e.stopPropagation(); setSelectedProject(null); }}
                   data-autofocus
-                  aria-label="Fechar detalhes do projeto"
-                  className="absolute top-4 right-4 z-20 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white flex items-center justify-center font-bold text-sm transition-all cursor-pointer"
+                  aria-label="Fechar"
                   title="Fechar (Esc)"
+                  className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white flex items-center justify-center text-sm font-bold transition-colors cursor-pointer"
                 >
                   ✕
                 </button>
 
-                {/* Left Column: Visual Showcase */}
-                <div className="w-full md:w-3/5 bg-black/60 flex flex-col items-center justify-between p-4 sm:p-6 border-b md:border-b-0 md:border-r border-white/10 relative">
-                  <div className="relative w-full flex-1 flex items-center justify-center min-h-[300px] sm:min-h-[420px]">
-                    {selectedProject.slides && selectedProject.slides.length > 0 && (
-                      <img 
-                        src={selectedProject.slides[currentSlideIndex]} 
-                        alt={`${selectedProject.title} - Slide ${currentSlideIndex + 1}`}
-                        className="max-h-[55vh] md:max-h-[62vh] max-w-full object-contain rounded-xl shadow-2xl border border-white/10"
-                      />
-                    )}
-
-                    {selectedProject.slides && selectedProject.slides.length > 1 && currentSlideIndex > 0 && (
+                <div className="relative flex-1 min-h-0 flex items-center justify-center px-3 sm:px-20 pt-16 pb-3">
+                  <img
+                    key={src}
+                    src={src}
+                    alt={`${selectedProject.title} — arte ${position} de ${total}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="max-h-full max-w-full object-contain rounded-lg shadow-[0_25px_60px_rgba(0,0,0,0.85)] animate-fadeIn"
+                  />
+                  {total > 1 && (
+                    <>
                       <button
-                        onClick={() => setCurrentSlideIndex(prev => prev - 1)}
+                        onClick={(e) => { e.stopPropagation(); lightboxNav(-1); }}
                         aria-label="Arte anterior"
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                        className={`${navBtn} absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 hidden sm:flex`}
                       >
-                        ←
+                        <span aria-hidden="true">←</span>
                       </button>
-                    )}
-
-                    {selectedProject.slides && selectedProject.slides.length > 1 && currentSlideIndex < selectedProject.slides.length - 1 && (
                       <button
-                        onClick={() => setCurrentSlideIndex(prev => prev + 1)}
+                        onClick={(e) => { e.stopPropagation(); lightboxNav(1); }}
                         aria-label="Próxima arte"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                        className={`${navBtn} absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 hidden sm:flex`}
                       >
-                        →
+                        <span aria-hidden="true">→</span>
                       </button>
-                    )}
-                  </div>
-
-                  {selectedProject.slides && selectedProject.slides.length > 1 && (
-                    <div className="w-full mt-4 pt-3 border-t border-white/10 flex items-center justify-between gap-3">
-                      <div className="text-[11px] font-mono text-white/60">
-                        Slide {currentSlideIndex + 1} de {selectedProject.slides.length}
-                      </div>
-
-                      <div className="flex items-center gap-1.5 overflow-x-auto max-w-[70%] py-1">
-                        {selectedProject.slides.map((s, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setCurrentSlideIndex(idx)}
-                            className={`w-8 h-10 rounded-md overflow-hidden border transition-all cursor-pointer flex-shrink-0 ${
-                              currentSlideIndex === idx 
-                                ? 'border-white scale-105 shadow-md shadow-white/20' 
-                                : 'border-white/20 opacity-50 hover:opacity-100'
-                            }`}
-                          >
-                            <img src={s} alt="" className="w-full h-full object-cover" />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                    </>
                   )}
                 </div>
 
-                {/* Right Column: Project Context & WhatsApp Quote */}
-                <div className="w-full md:w-2/5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                        <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
-                          {selectedProject.category}
-                        </span>
-                        {selectedProject.format && (
-                          <span className="text-[10px] font-mono text-white/80 bg-white/5 border border-white/15 px-2.5 py-0.5 rounded-full">
-                            {selectedProject.formatLabel || selectedProject.format}
-                          </span>
-                        )}
-                        <span className="text-white/40">•</span>
-                        <span className="text-[11px] font-light text-white/60">
-                          {selectedProject.type}
-                        </span>
-                      </div>
-
-                      <h2 id="project-modal-title" className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                        {selectedProject.title}
-                      </h2>
-                      {selectedProject.handle && (
-                        <p className="text-xs text-white/50 font-light mt-0.5">
-                          {selectedProject.handle}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-3.5">
-                      <div className="text-[10px] font-light text-white/40 uppercase tracking-wider mb-1">
-                        Sobre a peça
-                      </div>
-                      <p className="text-xs text-white/85 leading-relaxed font-normal">
-                        {selectedProject.description}
-                      </p>
-                    </div>
-
-                    <div className="space-y-2.5 text-xs text-white/80 border-t border-white/10 pt-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-white/50 font-light">Cliente</span>
-                        <span className="font-bold text-white">{selectedProject.client}</span>
-                      </div>
-
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-white/50 font-light">Peças</span>
-                        <span className="font-medium text-white/90">
-                          <span className="font-bold text-emerald-400 tabular-nums">{selectedProject.slideCount}</span> <span className="font-light text-white/60">{selectedProject.slideCount > 1 ? 'artes' : 'arte'}</span>
-                        </span>
-                      </div>
-
-                      <div>
-                        <span className="text-white/50 font-light block mb-1.5">Cores da peça</span>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          {selectedProject.colors.map((c, idx) => (
-                            <div key={idx} className="flex items-center gap-1.5 bg-black/40 border border-white/10 px-2 py-0.5 rounded-md">
-                              <div className="w-3.5 h-3.5 rounded-full border border-white/20" style={{ backgroundColor: c }} />
-                              <span className="text-[10px] font-light text-white/70">{c}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-6 space-y-2.5 border-t border-white/10 mt-6">
-                    <a
-                      href={getWhatsAppLink(selectedProject.title)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3.5 px-4 rounded-full bg-[#f4f4f5] hover:bg-white text-zinc-950 text-xs sm:text-sm transition-colors shadow-lg shadow-black/30 flex items-center justify-center gap-2.5 cursor-pointer border border-white/20 group"
-                    >
-                      <svg className="w-4 h-4 text-[#25D366] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                      </svg>
-                      <span className="font-semibold text-zinc-950">Conversar sobre este projeto</span>
-                      <span className="text-base group-hover:translate-x-0.5 transition-transform">↗</span>
-                    </a>
-
-                    {selectedProject.externalUrl && (
-                      <a
-                        href={selectedProject.externalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full py-2.5 px-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 hover:text-white text-xs font-medium transition-colors flex items-center justify-center gap-2"
-                      >
-                        <span>{selectedProject.externalLabel || 'Ver mais'}</span>
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-
-                    <button
-                      onClick={() => setSelectedProject(null)}
-                      className="w-full py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white/60 hover:text-white text-xs font-medium transition-all cursor-pointer"
-                    >
-                      Voltar à galeria
-                    </button>
-                  </div>
+                <div
+                  className="flex-shrink-0 flex items-center justify-center gap-3 px-4 pb-5 sm:pb-6 pt-1"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <p className="min-w-0 text-xs sm:text-sm text-zinc-300 truncate">
+                    <span className="font-semibold text-white">{selectedProject.title}</span>
+                    <span className="text-zinc-400"> · {selectedProject.client}</span>
+                  </p>
+                  {total > 1 && (
+                    <span className="flex-shrink-0 text-[11px] text-zinc-400 tabular-nums">{position} / {total}</span>
+                  )}
+                  <a
+                    href={getWhatsAppLink(selectedProject.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Conversar sobre este projeto no WhatsApp"
+                    title="Conversar sobre este projeto"
+                    className="flex-shrink-0 w-11 h-11 rounded-full bg-[#f4f4f5] hover:bg-white flex items-center justify-center transition-colors"
+                  >
+                    <svg className="w-4 h-4 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d={WA_ICON_PATH} /></svg>
+                  </a>
                 </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
         </div>
       );
