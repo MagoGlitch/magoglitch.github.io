@@ -1675,6 +1675,7 @@
       // 60FPS Render loop for Estáticos (3 Fileiras 3D em cascata orgânica)
       const renderStaticLoop = () => {
         if (activeTab !== 'estaticos' && activeTab !== 'home') return;
+        if (isFreeMobile()) return; // no mobile as colunas andam por CSS
 
         mouse.current.x += (mouse.current.targetX - mouse.current.x) * 0.08;
         mouse.current.y += (mouse.current.targetY - mouse.current.y) * 0.08;
@@ -1698,6 +1699,7 @@
         const { numCols, stepY } = staticMetrics;
 
         // Defasagem de fase entre as 3 fileiras para efeito de cascata visual
+        const freeMobile = isFreeMobile();
         const colPhases = numCols === 3 ? [0.38, 0, 0.76] : [0];
         const colRotY = numCols === 3 ? [4.5, 0, -4.5] : [0]; // Leve curvatura côncava voltada ao usuário
 
@@ -1722,9 +1724,10 @@
             const sign = Math.sign(offset);
 
             if (absOffset > 2.5) {
-              card.style.visibility = 'hidden';
+              if (!freeMobile || card._vis !== 0) { card._vis = 0; card.style.visibility = 'hidden'; }
               continue;
-            } else {
+            } else if (!freeMobile || card._vis !== 1) {
+              card._vis = 1;
               card.style.visibility = 'visible';
             }
 
@@ -1761,9 +1764,18 @@
             const totalRotY = activeTiltY + (colRotY[c] || 0);
             const opacity = Math.max(0.18, 1 - absOffset * 0.35);
 
-            card.style.zIndex = Math.round(z + 500).toString();
-            card.style.opacity = opacity.toString();
-            card.style.transform = `translateY(${y.toFixed(1)}px) translateZ(${z.toFixed(1)}px) rotateX(${totalRotX.toFixed(1)}deg) rotateY(${totalRotY.toFixed(1)}deg)`;
+            if (freeMobile) {
+              // Mobile: só escreve o que mudou (trocar z-index/opacidade todo quadro força o navegador a reorganizar as camadas)
+              const zi = Math.round(z / 20) * 20 + 500;
+              if (card._zi !== zi) { card._zi = zi; card.style.zIndex = String(zi); }
+              const op = Math.round(opacity * 20) / 20;
+              if (card._op !== op) { card._op = op; card.style.opacity = String(op); }
+              card.style.transform = `translate3d(0, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${rotX.toFixed(2)}deg) rotateY(${(colRotY[c] || 0)}deg)`;
+            } else {
+              card.style.zIndex = Math.round(z + 500).toString();
+              card.style.opacity = opacity.toString();
+              card.style.transform = `translateY(${y.toFixed(1)}px) translateZ(${z.toFixed(1)}px) rotateX(${totalRotX.toFixed(1)}deg) rotateY(${totalRotY.toFixed(1)}deg)`;
+            }
           }
         }
       };
@@ -2633,7 +2645,56 @@
 
           </div>
 
+          {/* Mobile: colunas passando sozinhas via animação CSS (roda na GPU, sem JavaScript por quadro) */}
+          {isFreeMobile() && (
+            <div className="static-marquee absolute inset-x-0 bottom-0 top-[84px] overflow-hidden" style={{ perspective: '900px' }}>
+              <div className="static-marquee-tilt h-full grid grid-cols-3 gap-2.5 px-3">
+                {staticColumns.map((colItems, cIdx) => (
+                  <div key={cIdx} className="relative h-full overflow-hidden">
+                    <div
+                      className="static-marquee-col flex flex-col gap-2.5"
+                      style={{
+                        animationDuration: `${Math.max(colItems.length, 1) * 3.2}s`,
+                        animationDirection: cIdx === 1 ? 'reverse' : 'normal',
+                        animationDelay: `${-cIdx * 4}s`,
+                      }}
+                    >
+                      {[0, 1].map(rep => colItems.map((project) => {
+                        const fmt = project.aspectRatio === '9/16' ? 'STORY' : project.aspectRatio === '1/1' ? 'POST' : 'FEED';
+                        const ratio = project.aspectRatio === '9/16' ? '9:16' : project.aspectRatio === '1/1' ? '1:1' : '4:5';
+                        return (
+                          <div
+                            key={`${rep}-${project.id}`}
+                            className="relative w-full rounded-[14px] overflow-hidden border border-white/15 bg-[#0c0c10] cursor-pointer"
+                            style={{ aspectRatio: project.aspectRatio || '4/5', boxShadow: '0 10px 24px -10px rgba(0,0,0,0.85)' }}
+                            onClick={() => setSelectedProject(project)}
+                            {...(rep === 0 ? pressable(() => setSelectedProject(project), `Abrir peça: ${project.title}`) : { 'aria-hidden': true })}
+                          >
+                            <img
+                              src={project.cover}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              draggable="false"
+                              className="w-full h-full object-cover block select-none pointer-events-none"
+                            />
+                            <span className="absolute top-1.5 left-1.5 text-[8px] bg-black/80 px-1.5 py-0.5 rounded-full text-white border border-white/20 flex items-center gap-1 pointer-events-none">
+                              <span className="w-1 h-1 rounded-full bg-emerald-400" />
+                              <span className="font-stretch font-bold">{fmt}</span>
+                              <span className="text-white/70 font-mono">{ratio}</span>
+                            </span>
+                          </div>
+                        );
+                      }))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* 3D Camera Scene */}
+          {!isFreeMobile() && (
           <div
             className="relative w-full h-full flex items-center justify-center pointer-events-none"
             style={{ perspective: '1400px' }}
@@ -2695,6 +2756,7 @@
                             return (
                               <div
                                 key={layerIdx}
+                                data-layer="mid"
                                 className="absolute inset-0 rounded-[18px] sm:rounded-[20px] border border-[#232328] pointer-events-none overflow-hidden"
                                 style={{
                                   backgroundColor: '#121215',
@@ -2708,6 +2770,7 @@
                             return (
                               <div
                                 key={layerIdx}
+                                data-layer="front"
                                 className="absolute inset-0 rounded-[18px] sm:rounded-[20px] border border-white/20 pointer-events-none overflow-hidden shadow-2xl transition-all group-hover:border-emerald-500/50 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.6)]"
                                 style={{
                                   backgroundColor: '#09090b',
@@ -2761,6 +2824,7 @@
                             return (
                               <div
                                 key={layerIdx}
+                                data-layer="back"
                                 className="absolute inset-0 rounded-[18px] sm:rounded-[20px] border border-white/15 pointer-events-none overflow-hidden p-4 sm:p-5 flex flex-col justify-between text-left"
                                 style={{
                                   backgroundColor: '#0c0c10',
@@ -2826,6 +2890,7 @@
               );
             })}
           </div>
+          )}
 
 
         </div>

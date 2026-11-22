@@ -48,7 +48,7 @@
 
   <!-- Tailwind CSS CDN -->
   <!-- Tailwind compilado (npm run build) -->
-  <link rel="stylesheet" href="styles.css?v=637f88e6">
+  <link rel="stylesheet" href="styles.css?v=11cf0d0d">
 
   <!-- React 18 e ReactDOM 18 -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin defer></script>
@@ -833,6 +833,37 @@
         scroll-behavior: auto !important;
       }
     }
+    /* Mobile: cilindro dos Estáticos mais leve (só a face da frente, sem blur/filtro/sombras pesadas) */
+    @media (max-width: 767px) {
+      #estaticos-section [data-layer="mid"],
+      #estaticos-section [data-layer="back"] { display: none !important; }
+      #estaticos-section [data-layer="front"] {
+        box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.85) !important;
+        transition: none !important;
+      }
+      #estaticos-section [data-layer="front"] img { filter: none !important; }
+      #estaticos-section .backdrop-blur-md { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+    }
+    /* Mobile: colunas dos Estáticos em movimento contínuo (animação só de transform, roda no compositor) */
+    .static-marquee {
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 88%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 88%, transparent 100%);
+    }
+    .static-marquee-tilt { transform: rotateX(10deg) scale(1.06); transform-origin: 50% 40%; }
+    .static-marquee-col {
+      animation-name: staticMarquee;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    @keyframes staticMarquee {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(0, calc(-50% - 5px), 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .static-marquee-col { animation: none !important; }
+    }
     /* Toque: sem flash azul e sem atraso de duplo toque */
     a, button, [role="button"] { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   </style>
@@ -841,6 +872,6 @@
   <div id="root"></div>
 
   <!-- App (compilado de src/app.jsx com "npm run build") -->
-  <script src="app.js?v=637f88e6" defer></script>
+  <script src="app.js?v=11cf0d0d" defer></script>
 </body>
 </html>
