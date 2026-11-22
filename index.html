@@ -1663,19 +1663,7 @@
             </div>
 
             <footer className="vante-bot" ref={botRef} style={{ opacity: 0, visibility: 'hidden' }}>
-              <nav className="vante-id-list" aria-label="Projetos de identidade visual">
-                <span className="vante-id-list-label">Identidade visual</span>
-                {idVisual.map((proj) => (
-                  <button
-                    key={proj.id}
-                    type="button"
-                    className="vante-id-chip"
-                    onClick={() => onSelectProject(proj)}
-                  >
-                    {shortTitle(proj.title)}
-                  </button>
-                ))}
-              </nav>
+              <div></div>
               <div className="vante-mid"></div>
               <button
                 type="button"
