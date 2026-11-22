@@ -1,6 +1,6 @@
     const { useState, useEffect, useRef, useMemo } = React;
 
-    const WHATSAPP_NUMBER = '5531999242870';
+    const WHATSAPP_NUMBER = '5531992142870';
 
     // Acessibilidade: transforma um elemento clicável em "botão" de teclado
     const pressable = (fn, label) => ({

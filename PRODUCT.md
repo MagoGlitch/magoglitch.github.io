@@ -34,7 +34,7 @@ A combinação das duas coisas: a **persona autoral "Mago"** (humana, pessoal, "
 - **Código existente:** página única estática (`index.html`) com React 18 + Babel standalone via CDN, Tailwind via CDN, Three.js (personagem 3D), Lenis (scroll suave). Dados dos projetos em `projects-data.js` (gerado por `build_data.js`). Servidor local em `server.js` na porta 3001. `src/App.tsx` parece uma versão anterior.
 - **Fotografia:** a Clique & Poesia é o projeto de fotografia do próprio Marcos; portfólio em https://www.cliqueepoesia.com.br/#portfolio (link secundário na seção de contato e nas peças dela).
 - **Idioma:** português do Brasil (`lang="pt-BR"`).
-- **Contato:** WhatsApp `5531999242870` (confirmado pelo Marcos em 2026-11-21), usado no link `wa.me`.
+- **Contato:** WhatsApp `5531992142870` (atualizado pelo Marcos em 2026-11-22), usado no link `wa.me`.
 
 ## Brand Commitments
 
