@@ -48,7 +48,7 @@
 
   <!-- Tailwind CSS CDN -->
   <!-- Tailwind compilado (npm run build) -->
-  <link rel="stylesheet" href="styles.css?v=e452337c">
+  <link rel="stylesheet" href="styles.css?v=e7b0de08">
 
   <!-- React 18 e ReactDOM 18 -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin defer></script>
@@ -161,10 +161,15 @@
     .cv-item {
       position: absolute;
       left: 50%;
-      top: 44%;
+      top: 48%;
       transform-style: preserve-3d;
       will-change: transform, z-index;
       cursor: pointer;
+    }
+    @media (min-width: 1024px) {
+      .cv-item {
+        top: 44%;
+      }
     }
 
     .cv-front {
@@ -836,6 +841,6 @@
   <div id="root"></div>
 
   <!-- App (compilado de src/app.jsx com "npm run build") -->
-  <script src="app.js?v=e452337c" defer></script>
+  <script src="app.js?v=e7b0de08" defer></script>
 </body>
 </html>

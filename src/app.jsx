@@ -33,7 +33,11 @@
         fn(e);
       };
     };
-    const IS_TOUCH = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const IS_TOUCH = typeof window !== 'undefined' && (
+      ('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0) ||
+      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)
+    );
     const WA_ICON_PATH = "M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z";
     const PHOTO_PORTFOLIO_URL = 'https://www.cliqueepoesia.com.br/#portfolio';
     const DEFAULT_WA_MSG = 'Olá Marcos! Vi seu portfólio e gostaria de conversar sobre um projeto de design.';
@@ -1110,10 +1114,12 @@
           const w = window.innerWidth;
           const h = window.innerHeight;
           const maxH = Math.max(500, h - HEADER_H);
+          const isMobile = w < 768;
           // Allocate space so cards never touch or cut off top/bottom
-          // Card height H is well-proportioned with ample breathing room
-          const availableSceneH = Math.max(380, maxH - 220);
-          const H = Math.round(Math.min(availableSceneH * 0.74, 440));
+          // No mobile: calibra a altura para deixar respiro generoso entre cabeçalho, 'Psiu!' e título inferior
+          const availableSceneH = isMobile ? Math.max(340, maxH - 260) : Math.max(380, maxH - 220);
+          const maxCardH = isMobile ? Math.min(availableSceneH * 0.68, 380) : 440;
+          const H = Math.round(Math.min(availableSceneH * (isMobile ? 0.68 : 0.74), maxCardH));
           const W = Math.round(H * 0.8); // 4:5 aspect ratio
           setCoverMetrics({ w: W, h: H });
         };
@@ -1221,9 +1227,10 @@
           const dt = Math.min((now - flowLastTime.current) / 1000, 0.1);
           flowLastTime.current = now;
 
-          // Device exponential ease-out
+          // Mobile: desaceleração suave e controlada (sem frear bruscamente nem disparar rápido)
+          const easeSpeed = isFreeMobile() ? 7.5 : 12;
           const delta = flowTarget.current - flowPos.current;
-          flowPos.current += delta * (1 - Math.exp(-dt * 13));
+          flowPos.current += delta * (1 - Math.exp(-dt * easeSpeed));
           if (Math.abs(delta) < 0.0005) {
             flowPos.current = flowTarget.current;
           }
@@ -1331,6 +1338,9 @@
       // Pointer drag handlers for Cover Flow
       const handleFlowPointerDown = (e) => {
         if (viewingCarousel || selectedProject) return;
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+        } catch (_) {}
         flowIsDragging.current = true;
         flowDragStartX.current = e.clientX;
         flowDragStartPos.current = flowPos.current;
@@ -1352,7 +1362,8 @@
         flowLastDragX.current = e.clientX;
         flowLastDragTime.current = now;
 
-        const sensitivity = coverMetrics.w * 0.2 * 2.2;
+        // Sensibilidade natural e controlada: no mobile requer arrasto completo para passar um card
+        const sensitivity = isFreeMobile() ? coverMetrics.w * 1.35 : coverMetrics.w * 0.8;
         const newPos = flowDragStartPos.current - dx / sensitivity;
         flowPos.current = Math.max(-0.4, Math.min(carrosseis.length - 0.6, newPos));
         flowTarget.current = flowPos.current;
@@ -1362,7 +1373,23 @@
         if (!flowIsDragging.current) return;
         flowIsDragging.current = false;
         if (flowHasDragged.current) {
-          const target = Math.max(0, Math.min(carrosseis.length - 1, Math.round(flowPos.current - flowVelocity.current * 70)));
+          let target;
+          if (isFreeMobile()) {
+            // No celular: avança no máximo 1 card por arrasto, com resposta natural e sem disparar
+            const startIndex = Math.round(flowDragStartPos.current);
+            const delta = flowPos.current - startIndex;
+            const flickThreshold = 0.4; // px/ms
+            let step = 0;
+            if (flowVelocity.current < -flickThreshold || delta > 0.25) {
+              step = 1; // arrastou para a esquerda -> avança 1 card
+            } else if (flowVelocity.current > flickThreshold || delta < -0.25) {
+              step = -1; // arrastou para a direita -> volta 1 card
+            }
+            target = Math.max(0, Math.min(carrosseis.length - 1, startIndex + step));
+          } else {
+            target = Math.max(0, Math.min(carrosseis.length - 1, Math.round(flowPos.current - flowVelocity.current * 18)));
+          }
+
           if (activeTab === 'home' && carrosseisTrackRef.current && !isFreeMobile()) {
             const track = carrosseisTrackRef.current;
             const rect = track.getBoundingClientRect();
@@ -2194,17 +2221,15 @@
                     </p>
                   </div>
 
-                  {/* Lembrete do Mago (telas estreitas): linha curta acima das capas */}
-                  {typeof window !== 'undefined' && (window.innerWidth - coverMetrics.w) / 2 <= 340 && (
-                    <p
-                      ref={el => flowHintRefs.current[1] = el}
-                      aria-hidden="true"
-                      style={{ fontFamily: "'Permanent Marker', cursive" }}
-                      className="relative z-30 text-center text-white text-sm tracking-wide pointer-events-none select-none mt-3 mb-5 px-4 doodle"
-                    >
-                      Psiu! Isso é só a capa… <span className="doodle-ink">{IS_TOUCH ? 'toca' : 'clica'}</span> pra ver o resto! <span className="doodle-ink">↓</span>
-                    </p>
-                  )}
+                  {/* Lembrete Mobile: visível apenas abaixo de lg com respiro generoso */}
+                  <p
+                    ref={el => flowHintRefs.current[1] = el}
+                    aria-hidden="true"
+                    style={{ fontFamily: "'Permanent Marker', cursive" }}
+                    className="block lg:hidden relative z-30 text-center text-white text-sm sm:text-base tracking-wide pointer-events-none select-none mt-5 sm:mt-6 mb-7 sm:mb-9 px-4 doodle"
+                  >
+                    Psiu! Isso é só a capa… <span className="doodle-ink">{isFreeMobile() || IS_TOUCH ? 'toca' : 'clica'}</span> pra ver o resto! <span className="doodle-ink">↓</span>
+                  </p>
 
                   {/* 3D Cover Flow Viewport */}
                   <div 
@@ -2220,27 +2245,25 @@
                       perspectiveOrigin: '50% 45%',
                     }}
                   >
-                    {/* Lembrete do Mago (desktop): ocupa o espaço vazio à esquerda da primeira capa */}
-                    {typeof window !== 'undefined' && (window.innerWidth - coverMetrics.w) / 2 > 340 && (
-                      <div
-                        ref={el => flowHintRefs.current[0] = el}
-                        data-centered="1"
-                        aria-hidden="true"
-                        className="absolute top-1/2 z-30 pointer-events-none select-none flex items-start gap-2"
-                        style={{ right: `calc(50% + ${coverMetrics.w / 2 + 36}px)`, width: 280, transform: 'translate(0, -50%)', willChange: 'transform, opacity' }}
+                    {/* Lembrete Desktop: visível apenas em telas amplas (lg+) à esquerda das capas */}
+                    <div
+                      ref={el => flowHintRefs.current[0] = el}
+                      data-centered="1"
+                      aria-hidden="true"
+                      className="hidden lg:flex absolute top-1/2 z-30 pointer-events-none select-none items-start gap-2"
+                      style={{ right: `calc(50% + ${coverMetrics.w / 2 + 36}px)`, width: 280, transform: 'translate(0, -50%)', willChange: 'transform, opacity' }}
+                    >
+                      <p
+                        style={{ fontFamily: "'Permanent Marker', cursive" }}
+                        className="text-white text-xl xl:text-2xl leading-snug tracking-wide -rotate-3 doodle"
                       >
-                        <p
-                          style={{ fontFamily: "'Permanent Marker', cursive" }}
-                          className="text-white text-xl xl:text-2xl leading-snug tracking-wide -rotate-3 doodle"
-                        >
-                          Psiu! Isso é só a capa… <span className="doodle-ink">{IS_TOUCH ? 'toca' : 'clica'}</span> pra ver o resto!
-                        </p>
-                        <svg className="doodle-ink doodle flex-shrink-0 mt-8" width="64" height="52" viewBox="0 0 64 52" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M4,8 C24,4 48,14 56,40" />
-                          <polyline points="46,36 56,42 60,30" />
-                        </svg>
-                      </div>
-                    )}
+                        Psiu! Isso é só a capa… <span className="doodle-ink">{IS_TOUCH ? 'toca' : 'clica'}</span> pra ver o resto!
+                      </p>
+                      <svg className="doodle-ink doodle flex-shrink-0 mt-8" width="64" height="52" viewBox="0 0 64 52" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4,8 C24,4 48,14 56,40" />
+                        <polyline points="46,36 56,42 60,30" />
+                      </svg>
+                    </div>
                     {carrosseis.map((carousel, idx) => (
                       <div
                         key={carousel.id}
