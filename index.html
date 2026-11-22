@@ -364,12 +364,12 @@
     /* Glass Cards (Left & Right) */
     .vante-ui-card {
       position: absolute;
-      background: rgba(255, 255, 255, 0.82);
+      background: rgba(8, 8, 10, 0.78);
       backdrop-filter: blur(28px) saturate(180%);
       -webkit-backdrop-filter: blur(28px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 26px;
-      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.26), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
       pointer-events: auto;
       will-change: transform, opacity;
       z-index: 8;
@@ -381,73 +381,24 @@
       padding: 24px 22px 22px;
       box-sizing: border-box;
     }
-    .vante-figma-badge {
-      display: inline-flex;
-      align-items: center;
-      position: relative;
-      padding: 5px 12px;
-      border: 1.5px solid #059669;
-      border-radius: 3px;
-      background: rgba(16, 185, 129, 0.08);
-      margin-bottom: 14px;
-    }
-    .vante-figma-node {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: #059669;
-      border: 1px solid #ffffff;
-      border-radius: 1px;
-    }
-    .vante-figma-node.node-tl { top: -3.5px; left: -3.5px; }
-    .vante-figma-node.node-tr { top: -3.5px; right: -3.5px; }
-    .vante-figma-node.node-bl { bottom: -3.5px; left: -3.5px; }
-    .vante-figma-node.node-br { bottom: -3.5px; right: -3.5px; }
-    .vante-figma-handle {
-      position: absolute;
-      top: -13px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 7px;
-      height: 7px;
-      background: #059669;
-      border: 1.5px solid #ffffff;
-      border-radius: 50%;
-    }
-    .vante-figma-handle::after {
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: 2px;
-      width: 1px;
-      height: 5px;
-      background: #059669;
-    }
-    .vante-figma-text {
-      font-family: 'Montserrat', system-ui, sans-serif;
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #0f172a;
-      letter-spacing: -0.01em;
-    }
     .vante-ui-desc {
-      font-family: 'Montserrat', system-ui, sans-serif;
-      font-size: 12.8px;
-      line-height: 1.52;
-      color: #334155;
-      font-weight: 500;
+      font-family: 'Inter Tight', system-ui, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #d4d4d8;
+      font-weight: 300;
       margin: 0 0 18px 0;
     }
     .vante-ui-btn {
       width: 100%;
-      padding: 10px 16px;
+      padding: 10.5px 16px;
       border-radius: 9999px;
-      background: rgba(0, 0, 0, 0.06);
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      font-family: 'Montserrat', system-ui, sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: #065f46;
+      background: #f4f4f5;
+      border: 1px solid transparent;
+      font-family: 'Inter Tight', system-ui, sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #09090b;
       cursor: pointer;
       transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
@@ -455,71 +406,80 @@
       justify-content: center;
     }
     .vante-ui-btn:hover {
-      background: #065f46;
-      color: #ffffff;
+      background: #ffffff;
+      color: #000000;
       transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.18);
     }
     .vante-ui-btn + .vante-ui-btn { margin-top: 8px; }
-    .vante-ui-btn-ghost { background: transparent; border-color: rgba(6, 95, 70, 0.28); }
+    .vante-ui-btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #f4f4f5;
+      font-weight: 500;
+    }
+    .vante-ui-btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.24);
+      box-shadow: none;
+    }
 
     /* Right Card (Habilidades) */
     .vante-ui-card-right {
       right: max(3.5vw, calc(50% - 660px));
       top: clamp(210px, 36vh, 440px);
       width: clamp(255px, 19.5vw, 295px);
-      padding: 18px 16px 20px;
+      padding: 20px 18px 20px;
       box-sizing: border-box;
     }
     .vante-skills-title {
-      text-align: center;
-      font-family: 'Montserrat', system-ui, sans-serif;
-      font-size: 14px;
+      font-family: 'Inter Tight', system-ui, sans-serif;
+      font-size: 12.5px;
       font-weight: 700;
-      color: #0f172a;
+      color: #ffffff;
       margin: 0 0 12px 0;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     .vante-skills-list {
       display: flex;
       flex-direction: column;
-      gap: 7.5px;
+      gap: 7px;
       list-style: none;
       padding: 0;
       margin: 0;
     }
     .vante-skill-item {
       display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding: 7px 11px 7.5px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .vante-skill-item:hover {
-      background: rgba(255, 255, 255, 0.95);
-    }
-    .vante-skill-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateX(2px);
     }
     .vante-skill-name {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-family: 'Montserrat', system-ui, sans-serif;
+      gap: 8px;
+      font-family: 'Inter Tight', system-ui, sans-serif;
       font-size: 11.5px;
-      font-weight: 600;
-      color: #1e293b;
+      font-weight: 500;
+      color: #f4f4f5;
     }
     .vante-skill-star {
-      font-size: 10px;
-      color: #065f46;
+      font-size: 9px;
+      color: #ff7500;
       line-height: 1;
     }
     /* macOS Dock */
@@ -1502,13 +1462,16 @@
                     <path d="M25,2 Q25,25 48,25 Q25,25 25,48 Q25,25 2,25 Q25,25 25,2 Z" />
                   </svg>
                 </div>
-                <div className="vante-figma-badge">
-                  <div className="vante-figma-node node-tl"></div>
-                  <div className="vante-figma-node node-tr"></div>
-                  <div className="vante-figma-node node-bl"></div>
-                  <div className="vante-figma-node node-br"></div>
-                  <div className="vante-figma-handle"></div>
-                  <span className="vante-figma-text">Designer &amp; Criador</span>
+                <div className="flex items-center gap-2 mb-3 pointer-events-none" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 30 30" fill="none" stroke="#ff7500" strokeWidth="3" strokeLinecap="round">
+                    <line x1="15" y1="4" x2="15" y2="26" />
+                    <line x1="4" y1="15" x2="26" y2="15" />
+                    <line x1="7" y1="7" x2="23" y2="23" />
+                    <line x1="7" y1="23" x2="23" y2="7" />
+                  </svg>
+                  <span style={{ fontFamily: "'Permanent Marker', cursive" }} className="text-xs tracking-wider uppercase doodle-ink">
+                    // DESIGNER &amp; CRIADOR
+                  </span>
                 </div>
                 <p className="vante-ui-desc">
                   Gosto de criar, testar e explorar ideias criativas, unindo design, conteúdo, identidade visual e arte.
@@ -1540,36 +1503,39 @@
                     <path d="M25,2 Q25,25 48,25 Q25,25 25,48 Q25,25 2,25 Q25,25 25,2 Z" />
                   </svg>
                 </div>
-                <p className="vante-skills-title">Áreas de atuação</p>
+                <p className="vante-skills-title">
+                  <span>Áreas de atuação</span>
+                  <span className="text-[10px] text-zinc-400 font-mono tracking-widest font-normal">06</span>
+                </p>
                 <ul className="vante-skills-list">
                   <li className="vante-skill-item">
                     <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">★</span> Design Gráfico
+                      <span className="vante-skill-star" aria-hidden="true">✦</span> Design Gráfico
                     </span>
                   </li>
                   <li className="vante-skill-item">
                     <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">★</span> Identidade Visual
+                      <span className="vante-skill-star" aria-hidden="true">✦</span> Identidade Visual
                     </span>
                   </li>
                   <li className="vante-skill-item">
                     <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">★</span> Social Media
+                      <span className="vante-skill-star" aria-hidden="true">✦</span> Social Media
                     </span>
                   </li>
                   <li className="vante-skill-item">
                     <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">★</span> Fotografia
+                      <span className="vante-skill-star" aria-hidden="true">✦</span> Fotografia
                     </span>
                   </li>
                   <li className="vante-skill-item">
                     <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">★</span> Edição de vídeo
+                      <span className="vante-skill-star" aria-hidden="true">✦</span> Edição de vídeo
                     </span>
                   </li>
                   <li className="vante-skill-item">
                     <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">★</span> After Effects
+                      <span className="vante-skill-star" aria-hidden="true">✦</span> After Effects
                     </span>
                   </li>
                 </ul>
