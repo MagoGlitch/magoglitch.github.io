@@ -1929,6 +1929,7 @@
       const flowLastTime = useRef(performance.now());
       const flowFrameId = useRef(0);
       const flowCardsRefs = useRef([]);
+      const flowHintRefs = useRef([]);
       const flowWheelAccum = useRef(0);
 
       const flowIsDragging = useRef(false);
@@ -2079,6 +2080,15 @@
 
           const rounded = Math.max(0, Math.min(N - 1, Math.round(flowPos.current)));
           setCurrentFlowIndex(prev => (prev !== rounded ? rounded : prev));
+
+          // Lembrete "Psiu!": some para a esquerda quando a fila anda, volta no primeiro carrossel
+          const hintT = Math.min(1, Math.max(0, flowPos.current / 0.5));
+          flowHintRefs.current.forEach((hintEl) => {
+            if (!hintEl) return;
+            hintEl.style.opacity = String(1 - hintT);
+            hintEl.style.transform = `translate(${-hintT * 140}px, ${hintEl.dataset.centered ? '-50%' : '0'})`;
+            hintEl.style.visibility = hintT >= 1 ? 'hidden' : 'visible';
+          });
 
           // Position all covers in 3D
           for (let i = 0; i < N; i++) {
@@ -3008,6 +3018,18 @@
                     </p>
                   </div>
 
+                  {/* Lembrete do Mago (telas estreitas): linha curta acima das capas */}
+                  {typeof window !== 'undefined' && (window.innerWidth - coverMetrics.w) / 2 <= 340 && (
+                    <p
+                      ref={el => flowHintRefs.current[1] = el}
+                      aria-hidden="true"
+                      style={{ fontFamily: "'Permanent Marker', cursive" }}
+                      className="relative z-30 text-center text-white text-sm tracking-wide pointer-events-none select-none mt-2 px-4 doodle"
+                    >
+                      Psiu! Isso é só a capa… <span className="doodle-ink">{IS_TOUCH ? 'toca' : 'clica'}</span> pra ver o resto! <span className="doodle-ink">↓</span>
+                    </p>
+                  )}
+
                   {/* 3D Cover Flow Viewport */}
                   <div 
                     ref={flowViewportRef}
@@ -3022,6 +3044,27 @@
                       perspectiveOrigin: '50% 45%',
                     }}
                   >
+                    {/* Lembrete do Mago (desktop): ocupa o espaço vazio à esquerda da primeira capa */}
+                    {typeof window !== 'undefined' && (window.innerWidth - coverMetrics.w) / 2 > 340 && (
+                      <div
+                        ref={el => flowHintRefs.current[0] = el}
+                        data-centered="1"
+                        aria-hidden="true"
+                        className="absolute top-1/2 z-30 pointer-events-none select-none flex items-start gap-2"
+                        style={{ right: `calc(50% + ${coverMetrics.w / 2 + 36}px)`, width: 280, transform: 'translate(0, -50%)', willChange: 'transform, opacity' }}
+                      >
+                        <p
+                          style={{ fontFamily: "'Permanent Marker', cursive" }}
+                          className="text-white text-xl xl:text-2xl leading-snug tracking-wide -rotate-3 doodle"
+                        >
+                          Psiu! Isso é só a capa… <span className="doodle-ink">{IS_TOUCH ? 'toca' : 'clica'}</span> pra ver o resto!
+                        </p>
+                        <svg className="doodle-ink doodle flex-shrink-0 mt-8" width="64" height="52" viewBox="0 0 64 52" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M4,8 C24,4 48,14 56,40" />
+                          <polyline points="46,36 56,42 60,30" />
+                        </svg>
+                      </div>
+                    )}
                     {carrosseis.map((carousel, idx) => (
                       <div
                         key={carousel.id}
