@@ -1669,7 +1669,7 @@
                 type="button"
                 className="vante-r pointer-events-auto cursor-pointer hover:opacity-100 transition-opacity flex items-center gap-1 py-3"
                 onClick={() => {
-                  const sobre = document.getElementById('carrosseis-track');
+                  const sobre = document.getElementById('sobre-mim-section');
                   if (sobre) {
                     const rect = sobre.getBoundingClientRect();
                     const targetY = rect.top + window.scrollY - HEADER_H;
@@ -1684,7 +1684,7 @@
                   }
                 }}
               >
-                <span>VER CARROSSÉIS</span>
+                <span>SOBRE O MAGO</span>
                 <span className="text-emerald-400" aria-hidden="true">↓</span>
               </button>
             </footer>
@@ -3714,13 +3714,13 @@
                 onNavigate={setActiveTab}
                 heroVersion={heroVersion}
               />
+              {renderSobreMimBlock()}
               {renderCarrosseisBlock(true)}
               <div id="estaticos-track" style={{ position: 'relative', height: `calc(100vh + ${staticTrackTravel}px)` }}>
                 <div style={{ position: 'sticky', top: 0 }}>
                   {renderEstaticosBlock(true)}
                 </div>
               </div>
-              {renderSobreMimBlock()}
               {renderContatoBlock()}
             </div>
           )}
@@ -3736,9 +3736,9 @@
             >
               {[
                 { key: 'identidade', label: 'Identidades', count: idVisual.length },
+                { key: 'sobre', label: 'Sobre', count: null },
                 { key: 'carrosseis', label: 'Carrosséis', count: carrosseis.length },
                 { key: 'estaticos', label: 'Estáticos', count: estaticos.length },
-                { key: 'sobre', label: 'Sobre', count: null },
               ].map(item => (
                 <button
                   key={item.key}

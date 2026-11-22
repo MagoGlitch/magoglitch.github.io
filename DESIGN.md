@@ -64,7 +64,7 @@
 
 ## Layout and composition
 
-- Ordem da Home: hero com a fita 3D que vira a grade de Identidade Visual → Carrosséis (cover flow fixo) → Estáticos (cilindro fixo, girado pela rolagem) → Sobre → Contato
+- Ordem da Home: hero com a fita 3D que vira a grade de Identidade Visual → Sobre o Mago → Carrosséis (cover flow fixo) → Estáticos (cilindro fixo, girado pela rolagem) → Contato
 - Grid: grade 3×3 em WebGL para Identidade Visual (nomes em botões abaixo); cover flow para Carrosséis; cilindro 3D para Estáticos
 - Spacing rhythm: Tight grouping inside card headers, expansive breathing room between projects
 - Signature layout move: Edge-to-edge seamless continuous panoramas (0 gap) for carousels, allowing pure artwork immersion
