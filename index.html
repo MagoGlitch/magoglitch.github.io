@@ -32,9 +32,14 @@
   <meta name="description" content="Portfólio de Marcos Gabriel, o Mago: direção de arte, social media, identidade visual e fotografia.">
   <meta name="author" content="Marcos Gabriel">
 
+  <!-- Preconnect to Cloudflare R2 (all portfolio assets, images and fonts) -->
+  <link rel="preconnect" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev" crossorigin>
+  <link rel="dns-prefetch" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev">
+
   <!-- Preload critical Hero assets for faster LCP -->
   <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/bg-hero-v2.webp" type="image/webp">
   <link rel="preload" as="image" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/BG%20HERO/marcos-v2-cutout.webp?v=1" type="image/webp">
+  <link rel="preload" as="font" href="https://pub-08de669c0de241f1af8701cc7d228e29.r2.dev/fonts/StretchPro.otf" type="font/otf" crossorigin>
 
   <!-- Google Fonts: Montserrat & Permanent Marker -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1386,15 +1391,19 @@
             }
           };
 
-          window.addEventListener('pointermove', handlePointerMove);
+          window.addEventListener('pointermove', handlePointerMove, { passive: true });
           window.addEventListener('click', handleClick);
 
-          // Animation loop
+          // Animation loop com occlusion culling: pausa WebGL quando o Hero estiver fora da tela
           function loop() {
             if (isDisposed) return;
-            p += (target - p) * 0.12;
-            if (Math.abs(target - p) < 0.00005) p = target;
-            render();
+            const inView = window.scrollY <= TRACK_TOTAL + 100;
+            const isMoving = Math.abs(target - p) > 0.0001;
+            if (inView || isMoving) {
+              p += (target - p) * 0.12;
+              if (Math.abs(target - p) < 0.00005) p = target;
+              render();
+            }
             animId = requestAnimationFrame(loop);
           }
           loop();
@@ -2032,6 +2041,21 @@
             flowPos.current = flowTarget.current;
           }
 
+          // Occlusion culling: se a trilha dos carrosséis estiver fora da tela e em repouso, pausa updates do DOM
+          let inView = true;
+          if (activeTab === 'home') {
+            const track = document.getElementById('carrosseis-track');
+            if (track) {
+              const r = track.getBoundingClientRect();
+              inView = r.bottom > -150 && r.top < window.innerHeight + 150;
+            }
+          }
+
+          if (!inView && Math.abs(delta) < 0.0005) {
+            flowFrameId.current = requestAnimationFrame(tick);
+            return;
+          }
+
           const rounded = Math.max(0, Math.min(N - 1, Math.round(flowPos.current)));
           setCurrentFlowIndex(prev => (prev !== rounded ? rounded : prev));
 
@@ -2373,8 +2397,8 @@
           staticIsDragging.current = false;
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        window.addEventListener('mouseup', handleMouseUp, { passive: true });
         return () => {
           window.removeEventListener('mousemove', handleMouseMove);
           window.removeEventListener('mouseup', handleMouseUp);
@@ -2520,8 +2544,19 @@
       useEffect(() => {
         if (activeTab !== 'estaticos' && activeTab !== 'home') return;
 
+        // Occlusion culling: pausa cálculos trigonométricos de 36 cards quando Estáticos estiver fora da tela
         const tick = () => {
-          renderStaticLoop();
+          let inView = true;
+          if (activeTab === 'home') {
+            const track = document.getElementById('estaticos-track');
+            if (track) {
+              const r = track.getBoundingClientRect();
+              inView = r.bottom > -150 && r.top < window.innerHeight + 150;
+            }
+          }
+          if (inView) {
+            renderStaticLoop();
+          }
           staticFrameId.current = requestAnimationFrame(tick);
         };
 
@@ -3054,21 +3089,23 @@
                           )}
                         </div>
 
-                        {/* Floor Reflection */}
-                        <div className="cv-reflection">
-                          <img
-                            src={carousel.slides[0]}
-                            alt=""
-                            className="w-full h-full object-cover block pointer-events-none select-none"
-                            loading="lazy"
-                            decoding="async"
-                            onError={(e) => {
-                              if (e.target.src.includes('/images/')) {
-                                e.target.src = e.target.src.replace('/images/', '/');
-                              }
-                            }}
-                          />
-                        </div>
+                        {/* Floor Reflection: renderizado apenas para capas no campo de visão */}
+                        {Math.abs(idx - currentFlowIndex) <= 4 && (
+                          <div className="cv-reflection">
+                            <img
+                              src={carousel.slides[0]}
+                              alt=""
+                              className="w-full h-full object-cover block pointer-events-none select-none"
+                              loading="lazy"
+                              decoding="async"
+                              onError={(e) => {
+                                if (e.target.src.includes('/images/')) {
+                                  e.target.src = e.target.src.replace('/images/', '/');
+                                }
+                              }}
+                            />
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -3988,7 +4025,8 @@
                               src={part} 
                               alt={`${selectedProject.title} animação`}
                               className="w-full h-auto object-contain block"
-                              loading="eager"
+                              loading={idx < 2 ? 'eager' : 'lazy'}
+                              decoding="async"
                             />
                           </picture>
                         ) : (
@@ -3997,7 +4035,8 @@
                             src={part} 
                             alt={`${selectedProject.title} - Parte ${idx + 1}`}
                             className="w-full h-auto object-contain block"
-                            loading="eager"
+                            loading={idx < 2 ? 'eager' : 'lazy'}
+                            decoding="async"
                           />
                         )
                       ))}
