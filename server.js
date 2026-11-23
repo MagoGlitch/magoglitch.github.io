@@ -1,6 +1,10 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const PORT = 3001;
 const MIME_TYPES = {
@@ -59,10 +63,8 @@ const server = http.createServer((req, res) => {
   });
 });
 
-if (require.main === module) {
-  server.listen(PORT, () => {
-    console.log(`Portfolio running at http://localhost:${PORT}`);
-  });
-}
+server.listen(PORT, () => {
+  console.log(`Portfolio running at http://localhost:${PORT}`);
+});
 
-module.exports = server;
+export default server;
