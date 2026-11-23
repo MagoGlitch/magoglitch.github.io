@@ -3008,18 +3008,6 @@
           <p className="mt-16 text-[11px] text-zinc-400 tracking-widest uppercase">
             Marcos Gabriel • Designer gráfico e fotógrafo • {new Date().getFullYear()}
           </p>
-          <a
-            href="#admin"
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveTab('admin');
-              window.location.hash = 'admin';
-            }}
-            className="mt-3 text-[11px] text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1 cursor-pointer py-1 px-2"
-            title="Acessar painel de métricas administrativo"
-          >
-            <span>✦ Métricas</span>
-          </a>
         </section>
       );
 
