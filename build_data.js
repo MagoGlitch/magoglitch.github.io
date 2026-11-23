@@ -387,8 +387,8 @@ const staticMeta = {
     "highlight": false
   },
   "11-04---DRA.MARI.png": {
-    "title": "Dra. Mari Araújo — Protocolo de Emagrecimento",
-    "client": "Dra. Mari Araújo",
+    "title": "Dra. Mari Araujo — Protocolo de Emagrecimento",
+    "client": "Dra. Mari Araujo",
     "handle": "",
     "type": "Post de Oferta",
     "software": "Photoshop • Lightroom",
@@ -402,8 +402,8 @@ const staticMeta = {
     "highlight": true
   },
   "11-06-DRA.png": {
-    "title": "Dra. Mari Araújo — Mulher, 40+",
-    "client": "Dra. Mari Araújo",
+    "title": "Dra. Mari Araujo — Mulher, 40+",
+    "client": "Dra. Mari Araujo",
     "handle": "",
     "type": "Post de Conteúdo",
     "software": "Photoshop • Lightroom",
@@ -611,8 +611,8 @@ const staticMeta = {
     "highlight": false
   },
   "ESTÁTICOS-(3)--31-01.png": {
-    "title": "Dra. Mari Araújo — Medicina de Precisão",
-    "client": "Dra. Mari Araújo",
+    "title": "Dra. Mari Araujo — Medicina de Precisão",
+    "client": "Dra. Mari Araujo",
     "handle": "",
     "type": "Story de Conteúdo",
     "software": "Photoshop • Figma",
@@ -626,8 +626,8 @@ const staticMeta = {
     "highlight": false
   },
   "ESTÁTICOS-07-02-(-1-).png": {
-    "title": "Dra. Mari Araújo — Emagrecimento Seguro",
-    "client": "Dra. Mari Araújo",
+    "title": "Dra. Mari Araujo — Emagrecimento Seguro",
+    "client": "Dra. Mari Araujo",
     "handle": "",
     "type": "Story de Conteúdo",
     "software": "Photoshop • Figma",
@@ -1000,7 +1000,430 @@ const staticFiles = staticFilesList.map(f => {
   };
 });
 
-const allProjects = [...carrosseis, ...idVisual, ...staticFiles];
+// Dados conferidos peça a peça (títulos, clientes e cores reais). Prevalecem sobre os metadados acima.
+const VERIFIED_META = {
+  "CARROSSEL": {
+    "title": "Imunofosfo — Mitos ou Verdade",
+    "client": "America Nutrition",
+    "handle": "",
+    "type": "Carrossel Educativo",
+    "desc": "Carrossel no formato mitos ou verdade com três curiosidades sobre o suplemento Imunofosfo.",
+    "colors": [
+      "#FFFFFF",
+      "#2F5493",
+      "#D2DAE2"
+    ]
+  },
+  "CARROSSEL DRA. MARI 01": {
+    "title": "Dra. Mari Araujo — Pequenos Hábitos",
+    "client": "Dra. Mari Araujo",
+    "handle": "",
+    "type": "Carrossel de Conteúdo",
+    "desc": "Carrossel sobre como pequenos hábitos consistentes levam a grandes resultados na saúde.",
+    "colors": [
+      "#663523",
+      "#974D30",
+      "#B65E3B",
+      "#EDB998"
+    ]
+  },
+  "CARROSSEL PANDA ENGLISH": {
+    "title": "Panda English — Não Tenha Medo de Errar",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Educativo",
+    "desc": "Carrossel motivacional sobre o medo de errar ao aprender inglês, com o mascote 3D da escola.",
+    "colors": [
+      "#FFFFFF",
+      "#020203",
+      "#7BABC5",
+      "#2A3D5D"
+    ]
+  },
+  "CARROSSEL SMART GROW - 01": {
+    "title": "Smart Grow Company — Diagnóstico de Marketing e Vendas",
+    "client": "Smart Grow Company",
+    "handle": "",
+    "type": "Carrossel de Captação",
+    "desc": "Carrossel que explica por que uma empresa precisa de um diagnóstico gratuito de marketing e vendas.",
+    "colors": [
+      "#602D31",
+      "#251F28",
+      "#0B2C3E",
+      "#0A1A27"
+    ]
+  },
+  "CARROSSEL DRA. MARI 02": {
+    "title": "Dra. Mari Araujo — Suplementos na Menopausa",
+    "client": "Dra. Mari Araujo",
+    "handle": "",
+    "type": "Carrossel Educativo",
+    "desc": "Carrossel com três suplementos para sintomas da menopausa, em linguagem editorial e clara.",
+    "colors": [
+      "#FDFDFD",
+      "#4A4249",
+      "#2E292F",
+      "#927A4F"
+    ]
+  },
+  "CARROSSEL 01": {
+    "title": "Eu Passei Anos Tentando Escolher uma Profissão",
+    "client": "Projeto autoral",
+    "handle": "",
+    "type": "Storytelling Autoral",
+    "desc": "Carrossel em primeira pessoa sobre a busca por uma profissão e a percepção de valor no trabalho criativo.",
+    "colors": [
+      "#ED7659",
+      "#4B2B26",
+      "#AB5D74",
+      "#9E3B29"
+    ]
+  },
+  "CARROSSEL SELLER CHAT": {
+    "title": "Seller Chat — O Teto de Vidro do Atendimento",
+    "client": "Seller Chat",
+    "handle": "",
+    "type": "Carrossel de Produto",
+    "desc": "Carrossel para vendedores do Mercado Livre sobre os limites do atendimento manual e a solução da Seller Chat.",
+    "colors": [
+      "#6A737C",
+      "#05284A",
+      "#13202C",
+      "#4D535C"
+    ]
+  },
+  "CARROSSEL DRA. MARI 03": {
+    "title": "Dra. Mari Araujo — Segredo Revelado",
+    "client": "Dra. Mari Araujo",
+    "handle": "",
+    "type": "Carrossel Educativo",
+    "desc": "Carrossel sobre emagrecimento com gancho direto e visual leve.",
+    "colors": [
+      "#FFFFFF",
+      "#FF9C1A",
+      "#A47F3B",
+      "#DECDAD"
+    ]
+  },
+  "CARROSSEL INGLÊS OQUE É": {
+    "title": "Panda English — Focado em Melhorar o Seu Inglês?",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Institucional",
+    "desc": "Carrossel sobre a importância do inglês como língua global e a proposta da escola.",
+    "colors": [
+      "#5E6B5F",
+      "#F3EBDE",
+      "#1A2221",
+      "#1F3437"
+    ]
+  },
+  "CARROSSEL 04 - 26-10": {
+    "title": "A IA Executa. Você Dirige",
+    "client": "Projeto autoral",
+    "handle": "",
+    "type": "Ensaio Autoral",
+    "desc": "Carrossel autoral sobre o papel do designer como diretor de criação na era da IA.",
+    "colors": [
+      "#9082C0",
+      "#695622",
+      "#D5A0A6",
+      "#3D4A23"
+    ]
+  },
+  "CARROSSEL DRA. MARI 04": {
+    "title": "Dra. Mari Araujo — Você Está Cansada?",
+    "client": "Dra. Mari Araujo",
+    "handle": "",
+    "type": "Carrossel de Conteúdo",
+    "desc": "Carrossel sobre cansaço e saúde da mulher, com retrato editorial da médica.",
+    "colors": [
+      "#2E140A",
+      "#823A1F",
+      "#4F1A0B",
+      "#6B2811"
+    ]
+  },
+  "CARROSSEL 02": {
+    "title": "Desaprendendo a Ser Designer",
+    "client": "Projeto autoral",
+    "handle": "",
+    "type": "Ensaio Autoral",
+    "desc": "Carrossel autoral sobre largar fórmulas prontas para criar com mais autenticidade.",
+    "colors": [
+      "#AE56D8",
+      "#570C7C",
+      "#E5C2F1",
+      "#721D9F"
+    ]
+  },
+  "CARROSSEL IMUNOFOSFO": {
+    "title": "Imunofosfo — Estresse e Suplementação",
+    "client": "America Nutrition",
+    "handle": "",
+    "type": "Carrossel de Produto",
+    "desc": "Carrossel sobre estresse e suplementação, com linguagem direta sobre o problema e o produto.",
+    "colors": [
+      "#FFFFFF",
+      "#EAEBEC",
+      "#676D6E",
+      "#ADB5B9"
+    ]
+  },
+  "CARROSSEL DRA. MARI 05": {
+    "title": "Dra. Mari Araujo — Os Sinais do Seu Corpo",
+    "client": "Dra. Mari Araujo",
+    "handle": "",
+    "type": "Carrossel de Conteúdo",
+    "desc": "Carrossel que convida a não ignorar os sinais que o corpo dá.",
+    "colors": [
+      "#453F43",
+      "#9C6764",
+      "#732654",
+      "#A01765"
+    ]
+  },
+  "CARROSSEL PANDA ENGLISH 02": {
+    "title": "Panda English — Panda's Birthday & St. Patrick's Day",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel de Evento",
+    "desc": "Carrossel festivo para o aniversário da escola no St. Patrick's Day, com moedas douradas e o mascote 3D.",
+    "colors": [
+      "#FFFFFF",
+      "#070705",
+      "#3D3320",
+      "#E3ECC9"
+    ]
+  },
+  "CARROSSEL SMART GROW - 02": {
+    "title": "Smart Grow Company — Seu SaaS Ainda Depende do Boca a Boca?",
+    "client": "Smart Grow Company",
+    "handle": "",
+    "type": "Carrossel de Captação",
+    "desc": "Carrossel para empresas de software sobre depender só da indicação para crescer.",
+    "colors": [
+      "#000716",
+      "#1B3C56",
+      "#00192F",
+      "#7E9BAE"
+    ]
+  },
+  "CARROSSEL DRA.MARI 06": {
+    "title": "Dra. Mari Araujo — O Que Não Te Contaram Sobre Climatério",
+    "client": "Dra. Mari Araujo",
+    "handle": "",
+    "type": "Carrossel Educativo",
+    "desc": "Carrossel sobre climatério com abordagem acolhedora.",
+    "colors": [
+      "#F4F4F4",
+      "#E0DEDA",
+      "#3D3F3D",
+      "#C6B7AD"
+    ]
+  },
+  "CARROSSEL 03": {
+    "title": "Fazendo Coisas Que Eu Não Sei Fazer",
+    "client": "Projeto autoral",
+    "handle": "",
+    "type": "Ensaio Autoral",
+    "desc": "Carrossel autoral sobre experimentar novas linguagens e sair da zona de conforto.",
+    "colors": [
+      "#104058",
+      "#2E5E73",
+      "#E4B274",
+      "#B08C61"
+    ]
+  },
+  "CARROSSEL 05 - 28-10": {
+    "title": "Aprendendo Muito e Ficando Para Trás",
+    "client": "Projeto autoral",
+    "handle": "",
+    "type": "Ensaio Autoral",
+    "desc": "Carrossel autoral sobre a sensação de aprender muito e ainda assim ficar para trás no mercado criativo.",
+    "colors": [
+      "#1A032C",
+      "#511D44",
+      "#A6686A",
+      "#3C0B43"
+    ]
+  },
+  "CARROSSEL DRA.MARI 07": {
+    "title": "Dra. Mari Araujo — Hormônios Desregulados?",
+    "client": "Dra. Mari Araujo",
+    "handle": "",
+    "type": "Carrossel Interativo",
+    "desc": "Carrossel em formato de perguntas para a mulher avaliar sinais de desregulação hormonal.",
+    "colors": [
+      "#A5B6C9",
+      "#344B6A",
+      "#5A718D",
+      "#3D6282"
+    ]
+  },
+  "ID VISUAL CODIGO HOP": {
+    "title": "CÓDIGO HOP — PROF. ROGÉRIO GRECO E PROF. LEONARDO NOVO",
+    "client": "Código Hop",
+    "handle": "",
+    "type": "EDUCAÇÃO",
+    "desc": "Identidade visual do Código Hop, com os professores Rogério Greco e Leonardo Novo, apresentada em prancha contínua.",
+    "colors": [
+      "#CECFD1",
+      "#EFEFF1",
+      "#6D1110",
+      "#BE968F"
+    ]
+  },
+  "ID VISUAL PEDRO VIZIBELLI": {
+    "title": "PEDRO VIZIBELLI — OFTALMOLOGISTA",
+    "client": "Dr. Pedro Vizibelli",
+    "handle": "",
+    "type": "OFTALMOLOGISTA",
+    "desc": "Identidade visual para oftalmologista, com símbolo construído a partir do olho, apresentada em prancha contínua.",
+    "colors": [
+      "#34456F",
+      "#23325A",
+      "#4B5B83"
+    ]
+  },
+  "ID VISUAL TITA SUSPENSÕES": {
+    "title": "TITA SUSPENSÕES — MECÂNICA AUTOMOTIVA",
+    "client": "Tita Suspensões",
+    "handle": "",
+    "type": "MECÂNICA AUTOMOTIVA",
+    "desc": "Identidade visual para oficina de suspensões, aplicada em uniforme e materiais da marca.",
+    "colors": [
+      "#FB4B07",
+      "#FFFFFF",
+      "#0F1010",
+      "#7A2E1B"
+    ]
+  },
+  "ID VISUAL CARIBENA": {
+    "title": "CARIBEÑA — MODA",
+    "client": "Caribeña",
+    "handle": "",
+    "type": "MODA",
+    "desc": "Identidade visual com universo tropical, apresentada em prancha contínua: tipografia, padrões e aplicações.",
+    "colors": [
+      "#FFFFFF",
+      "#AE8260",
+      "#5E3328",
+      "#C9C5BB"
+    ]
+  },
+  "ID VISUAL PULP CAST": {
+    "title": "PULP CAST — PODCAST",
+    "client": "Pulp Cast",
+    "handle": "",
+    "type": "PODCAST",
+    "desc": "Identidade visual para podcast, com aplicações em produtos e redes sociais.",
+    "colors": [
+      "#F6AA2E",
+      "#F5F5F5",
+      "#2A2927",
+      "#796A4F"
+    ]
+  },
+  "ID VISUAL BETHEL 360": {
+    "title": "BETHEL 360° — EVENTOS",
+    "client": "Bethel 360°",
+    "handle": "",
+    "type": "EVENTOS",
+    "desc": "Identidade visual aplicada em palco, telão e materiais do evento, apresentada em prancha contínua.",
+    "colors": [
+      "#7A6DB1",
+      "#010105",
+      "#1E153D",
+      "#313475"
+    ]
+  },
+  "ID VISUAL DRAGON TEC": {
+    "title": "DRAGONTEC — SOFTWARE",
+    "client": "Dragontec",
+    "handle": "",
+    "type": "SOFTWARE",
+    "desc": "Identidade visual de marca de tecnologia, com símbolo do dragão e aplicações digitais.",
+    "colors": [
+      "#151414",
+      "#403D3D",
+      "#76706C",
+      "#2A2625"
+    ]
+  },
+  "ID VISUAL 4 ESTAÇÕES": {
+    "title": "4 ESTAÇÕES — MODA",
+    "client": "4 Estações",
+    "handle": "",
+    "type": "MODA",
+    "desc": "Identidade visual com lettering autoral, apresentada em prancha contínua.",
+    "colors": [
+      "#3E1A04",
+      "#231204",
+      "#894D2F"
+    ]
+  },
+  "ID VISUAL ESNEAKERS": {
+    "title": "ESNEAKERS — LIFESTYLE",
+    "client": "Esneakers",
+    "handle": "",
+    "type": "LIFESTYLE",
+    "desc": "Identidade visual urbana aplicada em bonés, embalagens e produtos.",
+    "colors": [
+      "#DCDB01",
+      "#3F2E73",
+      "#969B84",
+      "#E8E655"
+    ]
+  }
+};
+
+const applyVerified = (p) => {
+  const v = VERIFIED_META[p.folderName];
+  if (!v) return p;
+  return { ...p, title: v.title, client: v.client, handle: v.handle, type: v.type, description: v.desc, colors: v.colors };
+};
+const fixNames = (p) => JSON.parse(JSON.stringify(p).replace(/Araujo/g, 'Araujo'));
+
+// Ordem de exibição: espalha peças do mesmo cliente para não ficarem lado a lado
+// (nos Estáticos também evita a mesma marca logo acima/abaixo, já que as colunas usam índice % 3).
+function clientKey(p) {
+  return String(p.client || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/^dr[a]?\.\s*/, '')
+    .replace(/^laboratorio\s+/, '')
+    .split(/[\s(]/)[0];
+}
+function spreadByClient(list, { firstId = null, window: win = 3 } = {}) {
+  const remaining = list.map((p, i) => ({ p, i, k: clientKey(p) }));
+  const out = [];
+  if (firstId) {
+    const fi = remaining.findIndex(r => r.p.id === firstId || r.p.folderName === firstId);
+    if (fi >= 0) out.push(remaining.splice(fi, 1)[0]);
+  }
+  while (remaining.length) {
+    const counts = {};
+    remaining.forEach(r => { counts[r.k] = (counts[r.k] || 0) + 1; });
+    let pick = -1;
+    for (let w = win; w >= 0 && pick < 0; w--) {
+      const recent = new Set(out.slice(Math.max(0, out.length - w)).map(r => r.k));
+      let best = -1;
+      remaining.forEach((r, idx) => {
+        if (recent.has(r.k)) return;
+        if (best < 0 || counts[r.k] > counts[remaining[best].k] || (counts[r.k] === counts[remaining[best].k] && r.i < remaining[best].i)) best = idx;
+      });
+      pick = best;
+    }
+    out.push(remaining.splice(pick, 1)[0]);
+  }
+  return out.map(r => r.p);
+}
+
+const carrosseisOrdered = spreadByClient(carrosseis.map(applyVerified).map(fixNames), { firstId: 'CARROSSEL SMART GROW - 01', window: 2 });
+const idVisualVerified = idVisual.map(applyVerified).map(fixNames);
+const staticOrdered = spreadByClient(staticFiles.map(fixNames), { window: 3 });
+const allProjects = [...carrosseisOrdered, ...idVisualVerified, ...staticOrdered];
 console.log('Total projects compiled:', allProjects.length);
 console.log(' - Carrosseis:', carrosseis.length);
 console.log(' - Identidade Visual:', idVisual.length);

@@ -45,7 +45,7 @@ A combinação das duas coisas: a **persona autoral "Mago"** (humana, pessoal, "
 
 ## Evidence on Hand
 
-- **65 projetos reais** (20 carrosséis, 36 estáticos, 9 identidades) em `projects-data.js`, com imagens em `Carrosséis/`, `Estáticos/` e `Identidade Visual/`. Clientes incluem Dra. Mari Araújo, America Nutrition (Imunofosfo), Unidas, Certificação Conceber, Sou Vitória, Panda English, Smart Grow Company, Seller Chat, Ronan Pedroza, Boarding Group, Forró Piro 23°, Clique & Poesia, Código Hop, Caribeña, Bethel 360°, Dragontec, entre outros.
+- **65 projetos reais** (20 carrosséis, 36 estáticos, 9 identidades) em `projects-data.js`, com imagens em `Carrosséis/`, `Estáticos/` e `Identidade Visual/`. Clientes incluem Dra. Mari Araujo, America Nutrition (Imunofosfo), Unidas, Certificação Conceber, Sou Vitória, Panda English, Smart Grow Company, Seller Chat, Ronan Pedroza, Boarding Group, Forró Piro 23°, Clique & Poesia, Código Hop, Caribeña, Bethel 360°, Dragontec, entre outros.
 - Títulos, clientes e descrições foram reescritos em 2026-11-21 a partir das próprias peças. Os @ que não aparecem nas artes ficaram em branco e as ferramentas (`software`) ainda não foram conferidas.
 - **Não existem** depoimentos de clientes, números de resultado (engajamento, conversão), prêmios ou menções na imprensa. Não inventar nenhum desses. A frase "Não dá para separar o Marcos do Mago" não tem autor registrado.
 
