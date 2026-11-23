@@ -1361,9 +1361,8 @@
       // Pointer drag handlers for Cover Flow
       const handleFlowPointerDown = (e) => {
         if (viewingCarousel || selectedProject) return;
-        try {
-          e.currentTarget.setPointerCapture(e.pointerId);
-        } catch (_) {}
+        // Não captura o ponteiro aqui: capturar no toque inicial faz o clique cair no contêiner
+        // e a capa nunca recebe o clique (o carrossel não abre). A captura só acontece quando vira arrasto.
         flowIsDragging.current = true;
         flowDragStartX.current = e.clientX;
         flowDragStartPos.current = flowPos.current;
@@ -1376,8 +1375,11 @@
       const handleFlowPointerMove = (e) => {
         if (!flowIsDragging.current) return;
         const dx = e.clientX - flowDragStartX.current;
-        if (Math.abs(dx) > 4) {
+        if (Math.abs(dx) > 4 && !flowHasDragged.current) {
           flowHasDragged.current = true;
+          try {
+            e.currentTarget.setPointerCapture(e.pointerId);
+          } catch (_) {}
         }
         const now = performance.now();
         const dt = Math.max(1, now - flowLastDragTime.current);
