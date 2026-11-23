@@ -1083,9 +1083,9 @@ const VERIFIED_META = {
   },
   "CARROSSEL 01": {
     "title": "Eu Passei Anos Tentando Escolher uma Profissão",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Storytelling Autoral",
+    "type": "Carrossel de Storytelling",
     "desc": "Carrossel em primeira pessoa sobre a busca por uma profissão e a percepção de valor no trabalho criativo.",
     "colors": [
       "#ED7659",
@@ -1135,10 +1135,10 @@ const VERIFIED_META = {
   },
   "CARROSSEL 04 - 26-10": {
     "title": "A IA Executa. Você Dirige",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
-    "desc": "Carrossel autoral sobre o papel do designer como diretor de criação na era da IA.",
+    "type": "Carrossel de Conteúdo",
+    "desc": "Carrossel sobre o papel do designer como diretor de criação na era da IA.",
     "colors": [
       "#9082C0",
       "#695622",
@@ -1161,10 +1161,10 @@ const VERIFIED_META = {
   },
   "CARROSSEL 02": {
     "title": "Desaprendendo a Ser Designer",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
-    "desc": "Carrossel autoral sobre largar fórmulas prontas para criar com mais autenticidade.",
+    "type": "Carrossel de Conteúdo",
+    "desc": "Carrossel sobre largar fórmulas prontas para criar com mais autenticidade.",
     "colors": [
       "#AE56D8",
       "#570C7C",
@@ -1239,10 +1239,10 @@ const VERIFIED_META = {
   },
   "CARROSSEL 03": {
     "title": "Fazendo Coisas Que Eu Não Sei Fazer",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
-    "desc": "Carrossel autoral sobre experimentar novas linguagens e sair da zona de conforto.",
+    "type": "Carrossel de Conteúdo",
+    "desc": "Carrossel sobre experimentar novas linguagens e sair da zona de conforto.",
     "colors": [
       "#104058",
       "#2E5E73",
@@ -1252,10 +1252,10 @@ const VERIFIED_META = {
   },
   "CARROSSEL 05 - 28-10": {
     "title": "Aprendendo Muito e Ficando Para Trás",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
-    "desc": "Carrossel autoral sobre a sensação de aprender muito e ainda assim ficar para trás no mercado criativo.",
+    "type": "Carrossel de Conteúdo",
+    "desc": "Carrossel sobre a sensação de aprender muito e ainda assim ficar para trás no mercado criativo.",
     "colors": [
       "#1A032C",
       "#511D44",

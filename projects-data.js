@@ -59,9 +59,9 @@ window.PORTFOLIO_PROJECTS = [
     "id": "carrossel-carrossel-05-28-10",
     "folderName": "CARROSSEL 05 - 28-10",
     "title": "Aprendendo Muito e Ficando Para Trás",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
+    "type": "Carrossel de Conteúdo",
     "category": "Carrosséis",
     "cover": "Carrosséis/CARROSSEL 05 - 28-10/01.webp",
     "slides": [
@@ -81,7 +81,7 @@ window.PORTFOLIO_PROJECTS = [
       "#A6686A",
       "#3C0B43"
     ],
-    "description": "Carrossel autoral sobre a sensação de aprender muito e ainda assim ficar para trás no mercado criativo.",
+    "description": "Carrossel sobre a sensação de aprender muito e ainda assim ficar para trás no mercado criativo.",
     "highlight": true
   },
   {
@@ -140,9 +140,9 @@ window.PORTFOLIO_PROJECTS = [
     "id": "carrossel-carrossel-01",
     "folderName": "CARROSSEL 01",
     "title": "Eu Passei Anos Tentando Escolher uma Profissão",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Storytelling Autoral",
+    "type": "Carrossel de Storytelling",
     "category": "Carrosséis",
     "cover": "Carrosséis/CARROSSEL 01/Sem-Título-1_06.webp",
     "slides": [
@@ -218,9 +218,9 @@ window.PORTFOLIO_PROJECTS = [
     "id": "carrossel-carrossel-02",
     "folderName": "CARROSSEL 02",
     "title": "Desaprendendo a Ser Designer",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
+    "type": "Carrossel de Conteúdo",
     "category": "Carrosséis",
     "cover": "Carrosséis/CARROSSEL 02/images/01.webp",
     "slides": [
@@ -240,7 +240,7 @@ window.PORTFOLIO_PROJECTS = [
       "#E5C2F1",
       "#721D9F"
     ],
-    "description": "Carrossel autoral sobre largar fórmulas prontas para criar com mais autenticidade.",
+    "description": "Carrossel sobre largar fórmulas prontas para criar com mais autenticidade.",
     "highlight": true
   },
   {
@@ -299,9 +299,9 @@ window.PORTFOLIO_PROJECTS = [
     "id": "carrossel-carrossel-03",
     "folderName": "CARROSSEL 03",
     "title": "Fazendo Coisas Que Eu Não Sei Fazer",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
+    "type": "Carrossel de Conteúdo",
     "category": "Carrosséis",
     "cover": "Carrosséis/CARROSSEL 03/images/01.webp",
     "slides": [
@@ -321,7 +321,7 @@ window.PORTFOLIO_PROJECTS = [
       "#E4B274",
       "#B08C61"
     ],
-    "description": "Carrossel autoral sobre experimentar novas linguagens e sair da zona de conforto.",
+    "description": "Carrossel sobre experimentar novas linguagens e sair da zona de conforto.",
     "highlight": true
   },
   {
@@ -466,9 +466,9 @@ window.PORTFOLIO_PROJECTS = [
     "id": "carrossel-carrossel-04-26-10",
     "folderName": "CARROSSEL 04 - 26-10",
     "title": "A IA Executa. Você Dirige",
-    "client": "Projeto autoral",
+    "client": "Umcaracaramelo",
     "handle": "",
-    "type": "Ensaio Autoral",
+    "type": "Carrossel de Conteúdo",
     "category": "Carrosséis",
     "cover": "Carrosséis/CARROSSEL 04 - 26-10/01.webp",
     "slides": [
@@ -487,7 +487,7 @@ window.PORTFOLIO_PROJECTS = [
       "#D5A0A6",
       "#3D4A23"
     ],
-    "description": "Carrossel autoral sobre o papel do designer como diretor de criação na era da IA.",
+    "description": "Carrossel sobre o papel do designer como diretor de criação na era da IA.",
     "highlight": true
   },
   {
