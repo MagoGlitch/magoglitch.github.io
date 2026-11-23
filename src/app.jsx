@@ -19,8 +19,8 @@
     // Versão mobile (< 768px): Carrosséis e Estáticos não prendem a rolagem da página (navegação livre por arraste).
     // Acima disso (desktop/tablet largo) nada muda.
     const isFreeMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
-    // No celular os slides "todos na tela" ficam minúsculos: abre já no modo ampliado (arrastar para o lado)
-    const defaultRibbonMode = () => (typeof window !== 'undefined' && window.innerWidth < 640 ? 'scroll' : 'fit');
+    // No celular e tablets os slides "todos na tela" ficam minúsculos: abre já no modo ampliado (arrastar para o lado)
+    const defaultRibbonMode = () => (typeof window !== 'undefined' && window.innerWidth < 1024 ? 'scroll' : 'fit');
 
     // No celular a barra do navegador aparece/some ao rolar e dispara "resize" sem mudar a largura.
     // Recalcular tudo nessa hora trava a rolagem; então só reagimos quando a largura muda.
@@ -2531,12 +2531,88 @@
         }
       };
 
-      // Ribbon scroll for United View
+      // Ribbon scroll & gestures for United View
+      const [activeRibbonSlide, setActiveRibbonSlide] = useState(0);
+      const ribbonTouchX = useRef(0);
+      const ribbonTouchY = useRef(0);
+      const ribbonDragged = useRef(false);
+      const ribbonMouseIsDown = useRef(false);
+      const ribbonMouseStartX = useRef(0);
+      const ribbonMouseScrollLeft = useRef(0);
+
+      const handleRibbonTouchStart = (e) => {
+        if (!e.touches || !e.touches[0]) return;
+        ribbonTouchX.current = e.touches[0].clientX;
+        ribbonTouchY.current = e.touches[0].clientY;
+        ribbonDragged.current = false;
+      };
+
+      const handleRibbonTouchMove = (e) => {
+        if (!e.touches || !e.touches[0]) return;
+        const dx = Math.abs(e.touches[0].clientX - ribbonTouchX.current);
+        const dy = Math.abs(e.touches[0].clientY - ribbonTouchY.current);
+        if (dx > 8 || dy > 8) {
+          ribbonDragged.current = true;
+        }
+      };
+
+      const handleRibbonScroll = () => {
+        if (!ribbonRef.current) return;
+        const el = ribbonRef.current;
+        const slideEl = el.querySelector('.carousel-slide-item');
+        if (!slideEl) return;
+        const slideW = slideEl.offsetWidth || 1;
+        const idx = Math.round(el.scrollLeft / slideW);
+        const maxIdx = (viewingCarousel?.slides?.length || 1) - 1;
+        setActiveRibbonSlide(Math.max(0, Math.min(maxIdx, idx)));
+      };
+
+      const scrollRibbon = (direction) => {
+        if (!ribbonRef.current) return;
+        const el = ribbonRef.current;
+        const slideEl = el.querySelector('.carousel-slide-item');
+        const slideW = slideEl ? slideEl.offsetWidth : 320;
+        el.scrollBy({ left: direction * (slideW + 4), behavior: 'smooth' });
+      };
+
+      const handleRibbonMouseDown = (e) => {
+        if (!ribbonRef.current) return;
+        if (e.target.closest && e.target.closest('button, a')) return;
+        ribbonMouseIsDown.current = true;
+        ribbonDragged.current = false;
+        ribbonMouseStartX.current = e.clientX;
+        ribbonMouseScrollLeft.current = ribbonRef.current.scrollLeft;
+
+        const onMouseMove = (moveEvent) => {
+          if (!ribbonMouseIsDown.current || !ribbonRef.current) return;
+          const dx = moveEvent.clientX - ribbonMouseStartX.current;
+          if (Math.abs(dx) > 5) ribbonDragged.current = true;
+          ribbonRef.current.scrollLeft = ribbonMouseScrollLeft.current - dx;
+        };
+
+        const onMouseUp = () => {
+          ribbonMouseIsDown.current = false;
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      };
+
       const handleRibbonWheel = (e) => {
         if (!ribbonRef.current) return;
         e.preventDefault();
         ribbonRef.current.scrollLeft += (e.deltaY || e.deltaX) * 1.5;
       };
+
+      useEffect(() => {
+        if (viewingCarousel) {
+          setActiveRibbonSlide(0);
+          ribbonDragged.current = false;
+          if (ribbonRef.current) ribbonRef.current.scrollLeft = 0;
+        }
+      }, [viewingCarousel]);
 
       // Global Keyboard listener for Carrosséis tab & Modal navigation
       useEffect(() => {
@@ -2550,6 +2626,8 @@
 
           if (viewingCarousel) {
             if (e.key === 'Escape') setViewingCarousel(null);
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); scrollRibbon(-1); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); scrollRibbon(1); }
             return;
           }
 
@@ -3290,9 +3368,8 @@
           >
           <div className="relative flex-1 flex flex-col overflow-hidden select-none">
               
-              {/* MODE A: 3D COVER FLOW VIEW */}
-              {!viewingCarousel && (
-                <div className="relative flex-1 flex flex-col justify-between overflow-hidden pt-6 sm:pt-16 pb-1">
+              {/* 3D COVER FLOW VIEW */}
+              <div className="relative flex-1 flex flex-col justify-between overflow-hidden pt-6 sm:pt-16 pb-1">
                   
                   {/* Ambient Dynamic Glow Tinted by Center Album Colors */}
                   <div id="glow" />
@@ -3531,138 +3608,6 @@
                   </footer>
 
                 </div>
-              )}
-
-              {/* MODE B: ALL SLIDES UNITED SIDE-BY-SIDE WITH ZERO GAP (AS REQUESTED) */}
-              {viewingCarousel && (
-                <div className="relative flex-1 flex flex-col justify-between overflow-hidden animate-fadeIn">
-                  
-                  {/* Panoramic Viewer Header */}
-                  <div className="px-4 sm:px-8 py-3 border-b border-white/[0.08] bg-[#08080a]/90 backdrop-blur-md flex items-center justify-between z-20 flex-shrink-0 gap-3">
-                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                      <button
-                        onClick={() => setViewingCarousel(null)}
-                        className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer flex-shrink-0"
-                        title="Voltar à galeria (Esc)"
-                      >
-                        <span aria-hidden="true">←</span>
-                        <span className="hidden sm:inline">Voltar à galeria</span>
-                        <span className="sm:hidden">Voltar</span>
-                      </button>
-                      <span className="text-white/30 hidden sm:inline">|</span>
-                      <span className="hidden sm:inline text-xs font-medium text-zinc-400 flex-shrink-0">
-                        {viewingCarousel.client}
-                      </span>
-                      <h3 className="text-sm sm:text-base font-bold text-white tracking-wide truncate max-w-[180px] sm:max-w-md">
-                        {viewingCarousel.title}
-                      </h3>
-                      <span className="text-[11px] font-light text-white/50 hidden lg:inline">
-                        ({viewingCarousel.slideCount} SLIDES <span className="font-stretch font-bold text-white/80">COMPLETOS</span>)
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2 flex-shrink-0">
-
-
-                      <button
-                        onClick={() => setViewingCarousel(null)}
-                        className="w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center text-xs font-bold transition-all cursor-pointer ml-1"
-                        title="Fechar (Esc)"
-                        aria-label="Fechar carrossel"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Panoramic Seamless Ribbon Track (All slides side-by-side with 0 gap!) */}
-                  <div
-                    ref={ribbonRef}
-                    onWheel={handleRibbonWheel}
-                    className="flex-1 flex items-center justify-center overflow-x-auto overflow-y-hidden px-4 sm:px-8 py-3 sm:py-6 cursor-grab active:cursor-grabbing no-scrollbar select-none"
-                    style={IS_TOUCH && ribbonFitMode !== 'fit' ? { scrollSnapType: 'x mandatory' } : undefined}
-                  >
-                    <div
-                      className="flex items-center gap-0 p-0 overflow-hidden rounded-2xl border border-white/20 shadow-2xl bg-black backdrop-blur-md mx-auto transition-all duration-300"
-                      style={ribbonFitMode === 'fit' ? {
-                        width: `min(calc(100vw - 48px), calc((100vh - 165px) * ${0.8 * (viewingCarousel.slides.length || 1)}))`,
-                        maxWidth: '100%',
-                        maxHeight: 'min(calc(100vh - 165px), 560px)',
-                      } : {
-                        width: 'max-content',
-                      }}
-                    >
-                      {viewingCarousel.slides.map((slideImg, sIdx) => (
-                        <div
-                          key={sIdx}
-                          onClick={() => {
-                            slideOverride.current = sIdx;
-                            setSelectedProject(viewingCarousel);
-                            trackEvent('slide_expand', `${viewingCarousel.title} - Slide ${sIdx + 1}`, 1);
-                          }}
-                          {...pressable(() => {
-                            slideOverride.current = sIdx;
-                            setSelectedProject(viewingCarousel);
-                            trackEvent('slide_expand', `${viewingCarousel.title} - Slide ${sIdx + 1}`, 1);
-                          }, `Ampliar slide ${sIdx + 1} de ${viewingCarousel.slideCount}`)}
-                          className="relative group cursor-pointer overflow-hidden transition-all min-w-[150px] sm:min-w-0"
-                          style={ribbonFitMode === 'fit' ? {
-                            flex: '1 1 0',
-                            aspectRatio: '4/5',
-                            maxHeight: 'min(calc(100vh - 165px), 560px)',
-                          } : {
-                            flexShrink: 0,
-                            height: 'min(68vh, 560px, calc((100vw - 32px) * 1.25))',
-                            aspectRatio: '4/5',
-                            scrollSnapAlign: 'center',
-                          }}
-                        >
-                          <img
-                            src={slideImg}
-                            alt={`${viewingCarousel.title} - Slide ${sIdx + 1}`}
-                            className="w-full h-full object-cover block select-none pointer-events-none"
-                            loading="eager"
-                            decoding="async"
-                          />
-
-
-                          {/* Hover Zoom Overlay */}
-                          <div className="absolute inset-0 bg-white/[0.05] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                            <span className="text-xs sm:text-sm text-white font-medium tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
-                              <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">AMPLIAR</span> ↗
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Ribbon Guidance Footer */}
-                  <footer className="px-6 py-2.5 border-t border-white/[0.08] bg-[#08080a]/80 backdrop-blur-md flex items-center justify-between text-xs text-zinc-400 flex-shrink-0 z-20">
-                    <div className="flex items-center gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                      <span className="font-light tracking-wide text-zinc-400">
-                        {ribbonFitMode === 'fit' ? (
-                          <>
-                            <span className="font-bold text-emerald-400">{viewingCarousel.slideCount} SLIDES</span> LADO A LADO • {IS_TOUCH ? 'TOQUE' : 'CLIQUE'} EM UM SLIDE PARA AMPLIAR
-                          </>
-                        ) : (
-                          <>
-                            {IS_TOUCH ? <>DESLIZE PARA O LADO PARA VER OS SLIDES • TOQUE PARA AMPLIAR</> : <>ARRASTE NA HORIZONTAL OU USE A RODA DO MOUSE PARA VER OS SLIDES</>}
-                          </>
-                        )}
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => setViewingCarousel(null)}
-                      className="hidden sm:inline text-zinc-400 hover:text-white cursor-pointer text-[11px] font-medium transition-colors"
-                    >
-                      ← Voltar à galeria
-                    </button>
-                  </footer>
-
-                </div>
-              )}
 
             </div>
           </div>
@@ -4245,6 +4190,225 @@
           )}
 
           {/* ======================================================== */}
+          {/* CARROSSÉIS: VISUALIZADOR PANORÂMICO COMPLETO COM ROLAGEM */}
+          {/* ======================================================== */}
+          {viewingCarousel && (
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Carrossel: ${viewingCarousel.title}`}
+              className="fixed inset-0 z-50 bg-[#08080a] flex flex-col justify-between overflow-hidden animate-fadeIn select-none"
+            >
+              {/* Header com Voltar, Cliente, Título, Contador e Fechar */}
+              <header className="px-4 sm:px-8 py-3.5 border-b border-white/[0.08] bg-[#08080a]/92 backdrop-blur-xl flex items-center justify-between z-20 flex-shrink-0 gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+                  <button
+                    type="button"
+                    onClick={() => setViewingCarousel(null)}
+                    className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer flex-shrink-0 active:scale-95"
+                    title="Voltar à galeria (Esc)"
+                  >
+                    <span aria-hidden="true">←</span>
+                    <span className="hidden sm:inline">Voltar à galeria</span>
+                    <span className="sm:hidden">Voltar</span>
+                  </button>
+                  <span className="text-white/20 hidden sm:inline">|</span>
+                  <div className="flex flex-col min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm sm:text-base font-bold text-white tracking-wide truncate max-w-[180px] sm:max-w-md">
+                        {viewingCarousel.title}
+                      </h3>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-emerald-400 font-semibold border border-white/10 flex-shrink-0">
+                        {activeRibbonSlide + 1}/{viewingCarousel.slides.length}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-zinc-400 truncate hidden sm:block">
+                      {viewingCarousel.client}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {/* Alternar modo Ajustar vs Estender Rolagem (Desktop) */}
+                  <button
+                    type="button"
+                    onClick={() => setRibbonFitMode(m => m === 'fit' ? 'scroll' : 'fit')}
+                    className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-zinc-300 hover:text-white transition-all cursor-pointer"
+                    title="Alternar modo de visualização"
+                  >
+                    <span>{ribbonFitMode === 'fit' ? '⤢ Estender Rolagem' : '⤡ Ver Todos Lado a Lado'}</span>
+                  </button>
+
+                  {/* WhatsApp CTA */}
+                  <a
+                    href={getWhatsAppLink(viewingCarousel.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent('click', 'whatsapp_carousel_view', 1, { project: viewingCarousel.title })}
+                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f4f4f5] hover:bg-white text-zinc-950 text-xs font-bold transition-all shadow-md active:scale-95"
+                  >
+                    <span>Conversar sobre este carrossel</span>
+                    <span>↗</span>
+                  </a>
+
+                  {/* Fechar */}
+                  <button
+                    type="button"
+                    onClick={() => setViewingCarousel(null)}
+                    className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center text-xs font-bold transition-all cursor-pointer ml-1 active:scale-95"
+                    title="Fechar (Esc)"
+                    aria-label="Fechar carrossel"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </header>
+
+              {/* Área central com setas flutuantes e esteira contínua */}
+              <div className="relative flex-1 flex items-center justify-center min-h-0 w-full overflow-hidden">
+                
+                {/* Seta Esquerda */}
+                <button
+                  type="button"
+                  onClick={() => scrollRibbon(-1)}
+                  aria-label="Slide anterior"
+                  className="absolute left-2 sm:left-4 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/75 hover:bg-black border border-white/25 text-white text-base sm:text-lg flex items-center justify-center backdrop-blur-md shadow-2xl transition-all cursor-pointer active:scale-90"
+                  title="Slide Anterior"
+                >
+                  ←
+                </button>
+
+                {/* Seta Direita */}
+                <button
+                  type="button"
+                  onClick={() => scrollRibbon(1)}
+                  aria-label="Próximo slide"
+                  className="absolute right-2 sm:right-4 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/75 hover:bg-black border border-white/25 text-white text-base sm:text-lg flex items-center justify-center backdrop-blur-md shadow-2xl transition-all cursor-pointer active:scale-90"
+                  title="Próximo Slide"
+                >
+                  →
+                </button>
+
+                {/* Container de Rolagem Horizontal */}
+                <div
+                  ref={ribbonRef}
+                  onWheel={handleRibbonWheel}
+                  onScroll={handleRibbonScroll}
+                  onTouchStart={handleRibbonTouchStart}
+                  onTouchMove={handleRibbonTouchMove}
+                  onMouseDown={handleRibbonMouseDown}
+                  className={`w-full h-full flex items-center overflow-x-auto overflow-y-hidden px-4 sm:px-12 py-3 sm:py-6 no-scrollbar cursor-grab active:cursor-grabbing ${
+                    ribbonFitMode === 'fit' ? 'justify-center' : 'justify-start'
+                  }`}
+                  style={{
+                    WebkitOverflowScrolling: 'touch',
+                    touchAction: 'pan-x',
+                    overscrollBehaviorX: 'contain',
+                    scrollSnapType: ribbonFitMode === 'fit' ? 'none' : 'x mandatory',
+                    scrollPaddingLeft: '16px',
+                    scrollPaddingRight: '16px',
+                  }}
+                >
+                  {/* Esteira contínua dos slides (Sem espaço entre eles, padrão panorâmico) */}
+                  <div
+                    className="flex items-center gap-0 p-0 overflow-hidden rounded-2xl border border-white/20 shadow-2xl bg-black backdrop-blur-md flex-shrink-0 transition-all duration-300"
+                    style={ribbonFitMode === 'fit' ? {
+                      width: `min(calc(100vw - 48px), calc((100vh - 165px) * ${0.8 * (viewingCarousel.slides.length || 1)}))`,
+                      maxWidth: '100%',
+                      maxHeight: 'min(calc(100vh - 165px), 560px)',
+                    } : {
+                      width: 'max-content',
+                    }}
+                  >
+                    {viewingCarousel.slides.map((slideImg, sIdx) => (
+                      <div
+                        key={sIdx}
+                        className="carousel-slide-item relative group cursor-pointer overflow-hidden transition-all flex-shrink-0"
+                        onClick={() => {
+                          if (ribbonDragged.current) return;
+                          slideOverride.current = sIdx;
+                          setSelectedProject(viewingCarousel);
+                          trackEvent('slide_expand', `${viewingCarousel.title} - Slide ${sIdx + 1}`, 1);
+                        }}
+                        style={ribbonFitMode === 'fit' ? {
+                          flex: '1 1 0',
+                          aspectRatio: '4/5',
+                          maxHeight: 'min(calc(100vh - 165px), 560px)',
+                        } : {
+                          flexShrink: 0,
+                          height: 'min(68vh, 560px, calc((100vw - 32px) * 1.25))',
+                          aspectRatio: '4/5',
+                          scrollSnapAlign: 'center',
+                        }}
+                      >
+                        <img
+                          src={slideImg}
+                          alt={`${viewingCarousel.title} - Slide ${sIdx + 1}`}
+                          className="w-full h-full object-cover block select-none pointer-events-none"
+                          loading="eager"
+                          decoding="async"
+                        />
+
+                        {/* Indicador de Ampliar ao passar o mouse */}
+                        <div className="absolute inset-0 bg-white/[0.05] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                          <span className="text-xs text-white font-medium tracking-wide drop-shadow-md">
+                            <span className="font-light text-white/70">VER</span> <span className="font-bold text-emerald-400">AMPLIAR</span> ↗
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Rodapé com instruções e indicador de slides */}
+              <footer className="px-4 sm:px-8 py-2.5 border-t border-white/[0.08] bg-[#08080a]/90 backdrop-blur-md flex items-center justify-between text-xs text-zinc-400 flex-shrink-0 z-20">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="font-light tracking-wide text-zinc-300 text-[11px] sm:text-xs">
+                    {IS_TOUCH ? (
+                      <>DESLIZE PARA O LADO PARA VER OS SLIDES • TOQUE PARA AMPLIAR</>
+                    ) : (
+                      <>ARRASTE OU RODE O MOUSE PARA NAVEGAR • CLIQUE PARA AMPLIAR</>
+                    )}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {/* Pontos indicadores de slide clicáveis */}
+                  <div className="flex items-center gap-1">
+                    {viewingCarousel.slides.map((_, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        type="button"
+                        aria-label={`Ir para slide ${dotIdx + 1}`}
+                        onClick={() => {
+                          if (!ribbonRef.current) return;
+                          const slides = ribbonRef.current.querySelectorAll('.carousel-slide-item');
+                          if (slides[dotIdx]) {
+                            slides[dotIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                          }
+                        }}
+                        className={`h-1.5 rounded-full transition-all cursor-pointer p-0 border-0 ${
+                          activeRibbonSlide === dotIdx ? 'w-5 bg-emerald-400' : 'w-1.5 bg-white/20 hover:bg-white/40'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setViewingCarousel(null)}
+                    className="hidden sm:inline text-zinc-400 hover:text-white cursor-pointer text-[11px] font-medium transition-colors ml-2"
+                  >
+                    ← Voltar
+                  </button>
+                </div>
+              </footer>
+            </div>
+          )}
+
+          {/* ======================================================== */}
           {/* IDENTIDADE VISUAL: APRESENTAÇÃO COMPLETA (SEM PAINEL)    */}
           {/* ROLAGEM VERTICAL COMPLETA, FULL VIEWPORT, ZERO PAINÉIS   */}
           {/* ======================================================== */}
@@ -4258,7 +4422,7 @@
                 role="dialog"
                 aria-modal="true"
                 aria-label={`Identidade visual: ${selectedProject.title}`}
-                className="fixed inset-0 z-50 pointer-events-none animate-fadeIn"
+                className="fixed inset-0 z-[60] pointer-events-none animate-fadeIn"
               >
                 <div 
                   id="idvisual-modal-scroll"
@@ -4479,7 +4643,7 @@
                 role="dialog"
                 aria-modal="true"
                 aria-label={`${selectedProject.title} — arte ${position} de ${total}`}
-                className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col animate-fadeIn select-none"
+                className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex flex-col animate-fadeIn select-none"
                 onClick={() => setSelectedProject(null)}
                 onTouchStart={(e) => { lightboxTouch.current = e.touches[0].clientX; }}
                 onTouchEnd={(e) => {
