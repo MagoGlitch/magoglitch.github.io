@@ -1930,9 +1930,16 @@
         // Profundidade de rolagem (25%, 50%, 75%, 100%)
         const firedDepths = new Set();
         const handleScrollDepth = () => {
-          const docH = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollY = (window.lenis && typeof window.lenis.scroll === 'number')
+            ? window.lenis.scroll
+            : (window.scrollY || document.documentElement.scrollTop || 0);
+          const scrollHeight = Math.max(
+            document.documentElement.scrollHeight,
+            document.body.scrollHeight
+          );
+          const docH = scrollHeight - window.innerHeight;
           if (docH <= 0) return;
-          const progress = Math.min(100, Math.round((window.scrollY / docH) * 100));
+          const progress = Math.min(100, Math.round((scrollY / docH) * 100));
           [25, 50, 75, 100].forEach(milestone => {
             if (progress >= milestone && !firedDepths.has(milestone)) {
               firedDepths.add(milestone);
@@ -1941,6 +1948,7 @@
           });
         };
 
+        window.__handleScrollDepth = handleScrollDepth;
         window.addEventListener('scroll', handleScrollDepth, { passive: true });
 
         // Mantém a seção ao sair: se a página voltar do cache (botão voltar),
@@ -1955,6 +1963,7 @@
           flushActive();
           document.removeEventListener('visibilitychange', handleVisibility);
           if (observer) observer.disconnect();
+          window.__handleScrollDepth = null;
           window.removeEventListener('scroll', handleScrollDepth);
           window.removeEventListener('pagehide', handleUnload);
           window.removeEventListener('beforeunload', handleUnload);
@@ -2029,6 +2038,13 @@
         });
 
         window.lenis = lenis;
+
+        const onLenisScroll = () => {
+          if (typeof window.__handleScrollDepth === 'function') {
+            window.__handleScrollDepth();
+          }
+        };
+        lenis.on('scroll', onLenisScroll);
 
         // Bridge window.scrollTo so all programmatic scrolls use Lenis physics
         const origScrollTo = window.scrollTo.bind(window);
