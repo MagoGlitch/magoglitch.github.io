@@ -1669,7 +1669,9 @@
                               {s.referrer || 'Direto'}
                             </td>
                             <td className="py-3 px-3 text-zinc-300 whitespace-nowrap">
-                              {Number(s.total_duration) > 0 ? formatTime(s.total_duration) : '< 5s'}
+                              {Number(s.total_duration) > 0 ? formatTime(s.total_duration) : (
+                                <span className="text-zinc-500 font-sans text-[11px]" title="Nenhum tempo chegou desta visita (aba fechada antes do envio ou visita antiga, anterior à correção da medição)">sem registro</span>
+                              )}
                             </td>
                             <td className="py-3 px-3 text-zinc-300 whitespace-nowrap font-sans">
                               {Number(s.projects_viewed) > 0 ? (
@@ -1856,15 +1858,20 @@
         let activeSection = null;
         let activeStart = 0;
 
-        const flushActive = () => {
+        // Envia o tempo acumulado na seção atual e zera o cronômetro.
+        const sendElapsed = () => {
           if (activeSection && activeStart) {
             const elapsed = Math.round((Date.now() - activeStart) / 1000);
-            if (elapsed >= 2) {
+            if (elapsed >= 1) {
               trackEvent('section_dwell', activeSection, elapsed);
             }
-            activeStart = 0;
-            activeSection = null;
           }
+          activeStart = 0;
+        };
+
+        const flushActive = () => {
+          sendElapsed();
+          activeSection = null;
         };
 
         const switchSection = (newSection) => {
@@ -1872,9 +1879,22 @@
           flushActive();
           if (newSection) {
             activeSection = newSection;
+            // Com a aba escondida o cronômetro fica parado até ela voltar
+            activeStart = document.hidden ? 0 : Date.now();
+          }
+        };
+
+        // Aba escondida (troca de aba, volta para o app no celular, minimiza):
+        // envia o tempo na hora, porque pagehide/beforeunload muitas vezes nunca disparam
+        // no celular, e pausa para não contar tempo em segundo plano.
+        const handleVisibility = () => {
+          if (document.hidden) {
+            sendElapsed();
+          } else if (activeSection && !activeStart) {
             activeStart = Date.now();
           }
         };
+        document.addEventListener('visibilitychange', handleVisibility);
 
         let observer = null;
         if (typeof IntersectionObserver !== 'undefined') {
@@ -1923,14 +1943,17 @@
 
         window.addEventListener('scroll', handleScrollDepth, { passive: true });
 
+        // Mantém a seção ao sair: se a página voltar do cache (botão voltar),
+        // o visibilitychange retoma a contagem.
         const handleUnload = () => {
-          flushActive();
+          sendElapsed();
         };
         window.addEventListener('pagehide', handleUnload);
         window.addEventListener('beforeunload', handleUnload);
 
         return () => {
           flushActive();
+          document.removeEventListener('visibilitychange', handleVisibility);
           if (observer) observer.disconnect();
           window.removeEventListener('scroll', handleScrollDepth);
           window.removeEventListener('pagehide', handleUnload);
