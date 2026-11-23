@@ -53,6 +53,45 @@
     // =========================================================================
     // VANTE 3D RIBBON SCROLL HERO (INÍCIO / HOME VIEW)
     // =========================================================================
+    // Área de atuação: ao passar o mouse, tocar ou focar, a barra enche até 100% com contador
+    function SkillRow({ label }) {
+      const [level, setLevel] = useState(0);
+      const animRef = useRef(0);
+      const fill = () => {
+        if (level >= 100 || animRef.current) return;
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) { setLevel(100); return; }
+        const start = performance.now();
+        const DURATION = 900;
+        const step = (now) => {
+          const t = Math.min(1, (now - start) / DURATION);
+          const eased = 1 - Math.pow(1 - t, 4);
+          setLevel(Math.round(eased * 100));
+          if (t < 1) animRef.current = requestAnimationFrame(step);
+          else animRef.current = 0;
+        };
+        animRef.current = requestAnimationFrame(step);
+      };
+      useEffect(() => () => cancelAnimationFrame(animRef.current), []);
+      const done = level >= 100;
+      return (
+        <li
+          className={`vante-skill-item vante-skill-meter${done ? ' is-full' : ''}`}
+          tabIndex={0}
+          aria-label={label}
+          onMouseEnter={fill}
+          onFocus={fill}
+          onClick={fill}
+        >
+          <span className="vante-skill-fill" aria-hidden="true" style={{ transform: `scaleX(${level / 100})` }} />
+          <span className="vante-skill-name">
+            <span className="vante-skill-star" aria-hidden="true">✦</span> {label}
+          </span>
+          <span className="vante-skill-level" aria-hidden="true">{level > 0 ? `${level}%` : ''}</span>
+        </li>
+      );
+    }
+
     function HomeView({ idVisual, onSelectProject, onNavigate, heroVersion = 'v2' }) {
       const containerRef = useRef(null);
       const stageRef = useRef(null);
@@ -679,36 +718,12 @@
                   <span>Áreas de atuação</span>
                 </p>
                 <ul className="vante-skills-list">
-                  <li className="vante-skill-item">
-                    <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">✦</span> Design Gráfico
-                    </span>
-                  </li>
-                  <li className="vante-skill-item">
-                    <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">✦</span> Identidade Visual
-                    </span>
-                  </li>
-                  <li className="vante-skill-item">
-                    <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">✦</span> Social Media
-                    </span>
-                  </li>
-                  <li className="vante-skill-item">
-                    <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">✦</span> Edição de vídeo
-                    </span>
-                  </li>
-                  <li className="vante-skill-item">
-                    <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">✦</span> Motion Designer
-                    </span>
-                  </li>
-                  <li className="vante-skill-item">
-                    <span className="vante-skill-name">
-                      <span className="vante-skill-star" aria-hidden="true">✦</span> Fotografia
-                    </span>
-                  </li>
+                  <SkillRow label="Design Gráfico" />
+                  <SkillRow label="Identidade Visual" />
+                  <SkillRow label="Social Media" />
+                  <SkillRow label="Edição de vídeo" />
+                  <SkillRow label="Motion Designer" />
+                  <SkillRow label="Fotografia" />
                 </ul>
               </div>
 

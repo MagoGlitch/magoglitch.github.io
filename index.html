@@ -75,7 +75,7 @@
 
   <!-- Tailwind CSS CDN -->
   <!-- Tailwind compilado (npm run build) -->
-  <link rel="stylesheet" href="styles.css?v=9aca6939">
+  <link rel="stylesheet" href="styles.css?v=09ccb894">
 
   <!-- React 18 e ReactDOM 18 -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin defer></script>
@@ -498,6 +498,37 @@
       color: #ff7500;
       line-height: 1;
     }
+    /* Barra que enche ao interagir (Áreas de atuação) */
+    .vante-skill-meter {
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      justify-content: space-between;
+    }
+    .vante-skill-meter > .vante-skill-name,
+    .vante-skill-meter > .vante-skill-level { position: relative; z-index: 1; }
+    .vante-skill-fill {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      transform: scaleX(0);
+      background: linear-gradient(90deg, rgba(255, 117, 0, 0.10) 0%, rgba(255, 117, 0, 0.32) 100%);
+      box-shadow: inset -2px 0 0 #ff7500;
+      border-radius: inherit;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .vante-skill-meter.is-full .vante-skill-fill { box-shadow: none; }
+    .vante-skill-meter.is-full { border-color: rgba(255, 117, 0, 0.45); }
+    .vante-skill-level {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: 10px;
+      font-weight: 500;
+      color: #ffb27a;
+      font-variant-numeric: tabular-nums;
+      min-width: 3.2em;
+      text-align: right;
+    }
     /* macOS Dock */
     .vante-ui-dock-wrap {
       position: absolute;
@@ -899,6 +930,6 @@
   <div id="root"></div>
 
   <!-- App (compilado de src/app.jsx com "npm run build") -->
-  <script src="app.js?v=9aca6939" defer></script>
+  <script src="app.js?v=09ccb894" defer></script>
 </body>
 </html>
