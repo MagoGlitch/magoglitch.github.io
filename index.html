@@ -621,7 +621,7 @@
     }
     @media (max-width: 768px) {
       .vante-ui-top {
-        top: 20px;
+        top: max(clamp(44px, 6vh, 60px), calc(env(safe-area-inset-top) + 16px));
       }
       .vante-ui-card-left, .vante-ui-card-right {
         position: static;
