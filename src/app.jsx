@@ -1069,6 +1069,19 @@
         }
       };
 
+      const formatEntryTime = (timeStr) => {
+        if (!timeStr) return '—';
+        try {
+          const [datePart, timePart] = timeStr.split(' ');
+          if (!datePart || !timePart) return timeStr;
+          const [year, month, day] = datePart.split('-');
+          const [hour, min, sec] = timePart.split(':');
+          return `${day}/${month} às ${hour}:${min}:${sec}`;
+        } catch (_) {
+          return timeStr;
+        }
+      };
+
       const formatTime = (secs) => {
         if (!secs || secs < 60) return `${Math.round(secs || 0)}s`;
         const m = Math.floor(secs / 60);
@@ -1157,6 +1170,7 @@
       const clicks = data?.clicks || [];
       const scroll = data?.scroll || [];
       const daily = data?.daily || [];
+      const recentSessions = data?.recent_sessions || [];
 
       const conversionRate = summary.total_sessions > 0
         ? ((summary.whatsapp_clicks / summary.total_sessions) * 100).toFixed(1)
@@ -1542,6 +1556,83 @@
               </div>
             )}
 
+            {/* ÚLTIMOS VISITANTES & HORÁRIO DE ENTRADA */}
+            <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                    Últimas Visitas • Horário de Entrada
+                  </h2>
+                  <p className="text-xs text-zinc-400">Momento exato em que cada visitante entrou no site e sua jornada</p>
+                </div>
+                <span className="text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded">
+                  {recentSessions.length} {recentSessions.length === 1 ? 'registro' : 'registros'}
+                </span>
+              </div>
+
+              {recentSessions.length === 0 ? (
+                <div className="py-8 text-center text-zinc-500 text-xs">
+                  Nenhuma sessão registrada no período selecionado.
+                </div>
+              ) : (
+                <div className="overflow-x-auto no-scrollbar">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b border-white/10 text-zinc-400 text-[11px] font-medium">
+                        <th className="py-2.5 px-3">Horário de Entrada</th>
+                        <th className="py-2.5 px-3">Dispositivo</th>
+                        <th className="py-2.5 px-3">Origem</th>
+                        <th className="py-2.5 px-3">Tempo no Site</th>
+                        <th className="py-2.5 px-3">Projetos Vistos</th>
+                        <th className="py-2.5 px-3 text-right">Ação / Conversão</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 font-mono">
+                      {recentSessions.map((s, idx) => {
+                        const isMobile = s.is_touch === 'true';
+                        const timeStr = formatEntryTime(s.entry_time);
+                        return (
+                          <tr key={idx} className="hover:bg-white/[0.02] transition-colors">
+                            <td className="py-3 px-3 text-zinc-200 whitespace-nowrap">
+                              <span className="text-emerald-400 font-bold">{timeStr}</span>
+                            </td>
+                            <td className="py-3 px-3 text-zinc-300 font-sans whitespace-nowrap">
+                              <span className="inline-flex items-center gap-1.5 text-xs">
+                                <span>{isMobile ? '📱' : '💻'}</span>
+                                <span className="text-zinc-400">{isMobile ? 'Celular' : 'Computador'}</span>
+                              </span>
+                            </td>
+                            <td className="py-3 px-3 text-zinc-400 font-sans truncate max-w-[140px]" title={s.referrer}>
+                              {s.referrer || 'Direto'}
+                            </td>
+                            <td className="py-3 px-3 text-zinc-300 whitespace-nowrap">
+                              {Number(s.total_duration) > 0 ? formatTime(s.total_duration) : '< 5s'}
+                            </td>
+                            <td className="py-3 px-3 text-zinc-300 whitespace-nowrap font-sans">
+                              {Number(s.projects_viewed) > 0 ? (
+                                <span className="text-zinc-200 font-medium">{s.projects_viewed} {s.projects_viewed === 1 ? 'projeto' : 'projetos'}</span>
+                              ) : (
+                                <span className="text-zinc-500">—</span>
+                              )}
+                            </td>
+                            <td className="py-3 px-3 text-right whitespace-nowrap font-sans">
+                              {s.converted_whatsapp ? (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-semibold text-[11px]">
+                                  <span>💬</span> WhatsApp
+                                </span>
+                              ) : (
+                                <span className="text-zinc-500 text-[11px]">Navegação</span>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
           </main>
 
           {/* MODAL PARA ALTERAR O PIN */}
@@ -1653,6 +1744,27 @@
           const cleanUrl = window.location.pathname + window.location.hash;
           window.history.replaceState({}, document.title, cleanUrl);
         }
+      }, []);
+
+      // Telemetria: registra o momento exato de entrada do visitante no site
+      useEffect(() => {
+        if (typeof window === 'undefined') return;
+        if (isExcludedVisitor()) return;
+        try {
+          const started = sessionStorage.getItem('mago_session_started');
+          if (!started) {
+            sessionStorage.setItem('mago_session_started', 'true');
+            let ref = 'Direto';
+            if (document.referrer) {
+              try {
+                ref = new URL(document.referrer).hostname.replace(/^www\./, '');
+              } catch (_) {
+                ref = document.referrer.slice(0, 50);
+              }
+            }
+            trackEvent('session_start', 'Entrada no site', 0, { referrer: ref });
+          }
+        } catch (_) {}
       }, []);
 
       // Shared lightbox / details modal
