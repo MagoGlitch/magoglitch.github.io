@@ -43,6 +43,55 @@
     const DEFAULT_WA_MSG = 'Olá Marcos! Vi seu portfólio e gostaria de conversar sobre um projeto de design.';
     const whatsappHref = (msg = DEFAULT_WA_MSG) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
+    // =========================================================================
+    // SUPABASE ANALYTICS & TELEMETRY
+    // =========================================================================
+    const SUPABASE_URL = 'https://flvanzlnxjnybnjqomyq.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZsdmFuemxueGpueWJuanFvbXlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU0MzYxMDcsImV4cCI6MjExMTAxMjEwN30._A2AraZGwEbAr-WoM-JoOBMlhb6LrAyAJW2o7AC8j8k';
+
+    const getSessionId = () => {
+      if (typeof window === 'undefined') return '';
+      try {
+        let sid = sessionStorage.getItem('mago_analytics_sid');
+        if (!sid) {
+          sid = 's_' + Math.random().toString(36).slice(2, 9) + '_' + Date.now().toString(36);
+          sessionStorage.setItem('mago_analytics_sid', sid);
+        }
+        return sid;
+      } catch (_) {
+        return 's_anon';
+      }
+    };
+
+    const trackEvent = (eventType, target, value = 0, metadata = {}) => {
+      if (typeof window === 'undefined') return;
+      if (window.location.hash === '#admin') return;
+      try {
+        const payload = {
+          session_id: getSessionId(),
+          event_type: eventType,
+          target: String(target || '').slice(0, 120),
+          value: Number(value) || 0,
+          metadata: {
+            is_touch: !!IS_TOUCH,
+            screen_w: typeof window !== 'undefined' ? window.innerWidth : 0,
+            ...metadata,
+          },
+        };
+        fetch(`${SUPABASE_URL}/rest/v1/analytics_events`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal',
+          },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        }).catch(() => {});
+      } catch (_) {}
+    };
+
     // Shared Scroll & Pacing Constants for Hero 3D & Transitions
     const ANIM_SCROLL = 1800;
     const BROWSE_SCROLL = 350;
@@ -691,6 +740,7 @@
                   type="button"
                   className="vante-ui-btn"
                   onClick={() => {
+                    trackEvent('click', 'btn_conheca_trabalho', 1);
                     window.scrollTo({ top: ANIM_SCROLL, behavior: 'smooth' });
                   }}
                 >
@@ -699,6 +749,7 @@
                 <a
                   className="vante-ui-btn vante-ui-btn-ghost"
                   href={whatsappHref()}
+                  onClick={() => trackEvent('click', 'whatsapp_hero', 1)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -846,6 +897,639 @@
       );
     }
 
+    // =========================================================================
+    // PAINEL DE ADMINISTRADOR & MÉTRICAS (ROTA #admin)
+    // =========================================================================
+    function AdminDashboard({ onExit }) {
+      const [pin, setPin] = useState('');
+      const [savedPin, setSavedPin] = useState(() => {
+        return (typeof window !== 'undefined' && sessionStorage.getItem('mago_admin_pin')) || '';
+      });
+      const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return !!(typeof window !== 'undefined' && sessionStorage.getItem('mago_admin_pin'));
+      });
+      const [days, setDays] = useState(30);
+      const [data, setData] = useState(null);
+      const [loading, setLoading] = useState(false);
+      const [error, setError] = useState(null);
+
+      // Estado do modal de alteração de PIN
+      const [showPinModal, setShowPinModal] = useState(false);
+      const [oldPin, setOldPin] = useState('');
+      const [newPin, setNewPin] = useState('');
+      const [pinMsg, setPinMsg] = useState('');
+      const [pinLoading, setPinLoading] = useState(false);
+
+      const loadData = async (pinToUse, daysToUse) => {
+        setLoading(true);
+        setError(null);
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_analytics_summary`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ p_pin: pinToUse, p_days: Number(daysToUse) || 30 }),
+          });
+          if (!res.ok) {
+            const errJson = await res.json().catch(() => ({}));
+            throw new Error(errJson.message || 'PIN incorreto ou acesso não autorizado.');
+          }
+          const json = await res.json();
+          setData(json);
+          setSavedPin(pinToUse);
+          sessionStorage.setItem('mago_admin_pin', pinToUse);
+          setIsAuthenticated(true);
+        } catch (e) {
+          setError(e.message || 'Erro ao carregar métricas.');
+          if (!data) setIsAuthenticated(false);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      useEffect(() => {
+        if (savedPin) {
+          loadData(savedPin, days);
+        }
+      }, [days]);
+
+      const handleLogin = (e) => {
+        e.preventDefault();
+        if (!pin.trim()) return;
+        loadData(pin.trim(), days);
+      };
+
+      const handleLogout = () => {
+        sessionStorage.removeItem('mago_admin_pin');
+        setSavedPin('');
+        setIsAuthenticated(false);
+        setData(null);
+        setPin('');
+      };
+
+      const handleUpdatePin = async (e) => {
+        e.preventDefault();
+        if (!oldPin || !newPin) return;
+        setPinLoading(true);
+        setPinMsg('');
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/update_admin_pin`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ p_old_pin: oldPin, p_new_pin: newPin }),
+          });
+          if (!res.ok) {
+            const errJson = await res.json().catch(() => ({}));
+            throw new Error(errJson.message || 'PIN antigo incorreto.');
+          }
+          sessionStorage.setItem('mago_admin_pin', newPin);
+          setSavedPin(newPin);
+          setPinMsg('✓ PIN atualizado com sucesso!');
+          setTimeout(() => {
+            setShowPinModal(false);
+            setOldPin('');
+            setNewPin('');
+            setPinMsg('');
+          }, 1400);
+        } catch (err) {
+          setPinMsg(`✗ ${err.message || 'Erro ao atualizar PIN.'}`);
+        } finally {
+          setPinLoading(false);
+        }
+      };
+
+      const formatTime = (secs) => {
+        if (!secs || secs < 60) return `${Math.round(secs || 0)}s`;
+        const m = Math.floor(secs / 60);
+        const s = Math.round(secs % 60);
+        if (m < 60) return `${m}m ${s}s`;
+        const h = Math.floor(m / 60);
+        return `${h}h ${m % 60}m`;
+      };
+
+      const formatButtonName = (name = '') => {
+        const map = {
+          'whatsapp': 'WhatsApp (Geral)',
+          'whatsapp_hero': 'WhatsApp (Hero)',
+          'whatsapp_sobre': 'WhatsApp (Sobre)',
+          'whatsapp_contato': 'WhatsApp (Contato)',
+          'whatsapp_floating': 'WhatsApp (Flutuante)',
+          'whatsapp_modal': 'WhatsApp (Modal de Projeto)',
+          'btn_conheca_trabalho': 'Botão "Conheça meu trabalho"',
+          'external_cliqueepoesia': 'Link "Clique & Poesia"',
+          'nav_identidade': 'Menu Identidades',
+          'nav_sobre': 'Menu Sobre',
+          'nav_carrosseis': 'Menu Carrosséis',
+          'nav_estaticos': 'Menu Estáticos',
+        };
+        return map[name] || name;
+      };
+
+      if (!isAuthenticated) {
+        return (
+          <div className="min-h-screen bg-[#08080a] text-zinc-100 flex items-center justify-center p-4 font-sans select-none relative">
+            <div className="absolute inset-0 bg-grain pointer-events-none opacity-40" />
+            <div className="relative z-10 w-full max-w-sm bg-[#0e0e12]/95 border border-white/10 rounded-3xl p-8 shadow-2xl backdrop-blur-xl">
+              <div className="flex flex-col items-center text-center mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl font-bold mb-4 shadow-lg shadow-emerald-500/10">
+                  ✦
+                </div>
+                <h1 className="text-xl font-bold tracking-tight text-white">Painel de Métricas</h1>
+                <p className="text-xs text-zinc-400 mt-1">Acesso administrativo do portfólio</p>
+              </div>
+
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div>
+                  <label className="block text-[11px] font-medium text-zinc-400 mb-1.5 text-center">Digite o PIN de acesso:</label>
+                  <input
+                    type="password"
+                    value={pin}
+                    onChange={(e) => setPin(e.target.value)}
+                    placeholder="PIN (padrão: mago2026)"
+                    className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-center text-base tracking-widest text-white placeholder-zinc-600 focus:outline-none focus:border-emerald-500 transition-colors"
+                    autoFocus
+                  />
+                </div>
+
+                {error && (
+                  <div className="text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-lg p-2.5 text-center">
+                    {error}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs sm:text-sm tracking-wide transition-all shadow-lg shadow-emerald-500/20 cursor-pointer disabled:opacity-50"
+                >
+                  {loading ? 'Validando...' : 'Entrar no Painel'}
+                </button>
+              </form>
+
+              <div className="mt-6 pt-5 border-t border-white/10 text-center">
+                <button
+                  type="button"
+                  onClick={onExit}
+                  className="text-xs text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  ← Voltar ao Portfólio
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const summary = data?.summary || { total_sessions: 0, whatsapp_clicks: 0, total_clicks: 0, total_project_opens: 0 };
+      const sections = data?.sections || [];
+      const projects = data?.projects || [];
+      const clicks = data?.clicks || [];
+      const scroll = data?.scroll || [];
+      const daily = data?.daily || [];
+
+      const conversionRate = summary.total_sessions > 0
+        ? ((summary.whatsapp_clicks / summary.total_sessions) * 100).toFixed(1)
+        : '0.0';
+
+      const maxSectionTime = Math.max(...sections.map(s => Number(s.total_seconds) || 1), 1);
+      const maxDailySessions = Math.max(...daily.map(d => Number(d.sessions) || 1), 1);
+
+      return (
+        <div className="min-h-screen bg-[#08080a] text-zinc-100 flex flex-col font-sans select-none relative pb-16">
+          <div className="absolute inset-0 bg-grain pointer-events-none opacity-40 z-0" />
+
+          {/* TOP BAR */}
+          <header className="sticky top-0 z-30 border-b border-white/[0.08] bg-[#08080a]/90 backdrop-blur-xl px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div>
+                <h1 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                  PAINEL DE MÉTRICAS <span className="text-zinc-500 font-light">/ MARCOS GABRIEL</span>
+                </h1>
+                <p className="text-[10px] text-zinc-400">Dados em tempo real via Supabase</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* Filtro de Período */}
+              <div className="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 text-xs">
+                {[
+                  { label: '7 dias', val: 7 },
+                  { label: '30 dias', val: 30 },
+                  { label: '90 dias', val: 90 },
+                ].map(opt => (
+                  <button
+                    key={opt.val}
+                    type="button"
+                    onClick={() => setDays(opt.val)}
+                    className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors cursor-pointer ${
+                      days === opt.val
+                        ? 'bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30'
+                        : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Botão Atualizar */}
+              <button
+                type="button"
+                onClick={() => loadData(savedPin, days)}
+                disabled={loading}
+                className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-zinc-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                title="Atualizar dados agora"
+              >
+                <span className={loading ? 'animate-spin' : ''}>↻</span>
+                <span className="hidden sm:inline">Atualizar</span>
+              </button>
+
+              {/* Botão Alterar PIN */}
+              <button
+                type="button"
+                onClick={() => setShowPinModal(true)}
+                className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-zinc-300 hover:text-white transition-colors cursor-pointer"
+              >
+                PIN
+              </button>
+
+              {/* Botão Sair / Logout */}
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-rose-500/10 border border-white/10 hover:border-rose-500/30 text-xs text-zinc-400 hover:text-rose-300 transition-colors cursor-pointer"
+                title="Desconectar do painel"
+              >
+                Sair
+              </button>
+
+              {/* Voltar ao Portfólio */}
+              <button
+                type="button"
+                onClick={onExit}
+                className="px-3.5 py-1.5 rounded-lg bg-white text-zinc-950 font-bold text-xs hover:bg-zinc-200 transition-colors cursor-pointer ml-1"
+              >
+                ← Portfólio
+              </button>
+            </div>
+          </header>
+
+          {/* CONTEÚDO PRINCIPAL */}
+          <main className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 space-y-6">
+
+            {/* 4 CARDS DE KPI */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              {/* KPI 1: Sessões Únicas */}
+              <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-4 sm:p-5 backdrop-blur-md">
+                <div className="flex items-center justify-between text-zinc-400 text-xs mb-2">
+                  <span>Visitantes Únicos</span>
+                  <span className="text-zinc-600">👥</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  {summary.total_sessions}
+                </div>
+                <div className="text-[11px] text-zinc-500 mt-1">
+                  nos últimos {days} dias
+                </div>
+              </div>
+
+              {/* KPI 2: Cliques no WhatsApp (Conversão) */}
+              <div className="bg-[#0e0e12]/80 border border-emerald-500/20 rounded-2xl p-4 sm:p-5 backdrop-blur-md relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
+                <div className="flex items-center justify-between text-zinc-400 text-xs mb-2">
+                  <span className="text-emerald-400 font-medium">Conversões (WhatsApp)</span>
+                  <span className="text-emerald-500">💬</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400 tracking-tight flex items-baseline gap-2">
+                  <span>{summary.whatsapp_clicks}</span>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
+                    {conversionRate}%
+                  </span>
+                </div>
+                <div className="text-[11px] text-zinc-500 mt-1">
+                  dos visitantes clicaram no WhatsApp
+                </div>
+              </div>
+
+              {/* KPI 3: Projetos Explorados */}
+              <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-4 sm:p-5 backdrop-blur-md">
+                <div className="flex items-center justify-between text-zinc-400 text-xs mb-2">
+                  <span>Projetos Explorados</span>
+                  <span className="text-zinc-600">🖼️</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  {summary.total_project_opens}
+                </div>
+                <div className="text-[11px] text-zinc-500 mt-1">
+                  aberturas de carrosséis e detalhes
+                </div>
+              </div>
+
+              {/* KPI 4: Interações Totais */}
+              <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-4 sm:p-5 backdrop-blur-md">
+                <div className="flex items-center justify-between text-zinc-400 text-xs mb-2">
+                  <span>Cliques Totais</span>
+                  <span className="text-zinc-600">🖱️</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  {summary.total_clicks}
+                </div>
+                <div className="text-[11px] text-zinc-500 mt-1">
+                  interações medidas no site
+                </div>
+              </div>
+            </div>
+
+            {/* GRID PRINCIPAL: TEMPO POR SEÇÃO & RANKING */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+              {/* COLUNA ESQUERDA (7 cols): ONDE FICAM MAIS TEMPO */}
+              <div className="lg:col-span-7 bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md flex flex-col">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                      Onde os visitantes passam mais tempo
+                    </h2>
+                    <p className="text-xs text-zinc-400">Tempo médio e acumulado de permanência por seção</p>
+                  </div>
+                  <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                    Dwell Time
+                  </span>
+                </div>
+
+                {sections.length === 0 ? (
+                  <div className="flex-1 flex flex-col items-center justify-center py-10 text-zinc-500 text-xs">
+                    Nenhum tempo medido ainda. Conforme as pessoas navegarem, os dados aparecerão aqui.
+                  </div>
+                ) : (
+                  <div className="space-y-4 my-auto">
+                    {sections.map((s, idx) => {
+                      const pct = Math.min(100, Math.round((Number(s.total_seconds) / maxSectionTime) * 100));
+                      return (
+                        <div key={idx} className="space-y-1.5">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-semibold text-zinc-200">{s.section_name}</span>
+                            <div className="flex items-center gap-2 text-[11px]">
+                              <span className="text-emerald-400 font-mono font-bold">{s.avg_seconds}s méd.</span>
+                              <span className="text-zinc-500">•</span>
+                              <span className="text-zinc-400">{formatTime(s.total_seconds)} total</span>
+                              <span className="text-zinc-500">•</span>
+                              <span className="text-zinc-400">{s.visitors} vis.</span>
+                            </div>
+                          </div>
+                          <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* FUNIL DE ROLAGEM (SCROLL DEPTH) */}
+                <div className="mt-6 pt-5 border-t border-white/10">
+                  <div className="flex items-center justify-between mb-3 text-xs">
+                    <span className="font-bold text-white">Profundidade de Rolagem (Scroll Depth)</span>
+                    <span className="text-zinc-400 text-[11px]">Até onde os visitantes descem</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {['25%', '50%', '75%', '100%'].map((milestone) => {
+                      const item = scroll.find(sc => sc.milestone === milestone);
+                      const count = item ? Number(item.sessions) : 0;
+                      const pct = summary.total_sessions > 0
+                        ? Math.round((count / summary.total_sessions) * 100)
+                        : 0;
+                      return (
+                        <div key={milestone} className="bg-white/5 border border-white/5 rounded-xl p-2.5 text-center">
+                          <div className="text-[10px] text-zinc-400 font-mono">{milestone}</div>
+                          <div className="text-base font-bold text-white mt-0.5">{pct}%</div>
+                          <div className="text-[10px] text-zinc-500">{count} visitas</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* COLUNA DIREITA (5 cols): RANKING DE PROJETOS E CLIQUES */}
+              <div className="lg:col-span-5 space-y-6">
+
+                {/* RANKING DE PROJETOS */}
+                <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                        Projetos mais visualizados
+                      </h2>
+                      <p className="text-xs text-zinc-400">Carrosséis e identidades com mais aberturas</p>
+                    </div>
+                    <span className="text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                      Top 10
+                    </span>
+                  </div>
+
+                  {projects.length === 0 ? (
+                    <div className="py-8 text-center text-zinc-500 text-xs">
+                      Nenhum projeto visualizado ainda.
+                    </div>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {projects.map((p, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 transition-colors text-xs"
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                              idx === 0 ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30' :
+                              idx === 1 ? 'bg-zinc-300/20 text-zinc-200 border border-zinc-300/30' :
+                              idx === 2 ? 'bg-amber-700/20 text-amber-400 border border-amber-700/30' :
+                              'text-zinc-500 font-mono'
+                            }`}>
+                              {idx + 1}
+                            </span>
+                            <span className="font-medium text-zinc-200 truncate" title={p.project_title}>
+                              {p.project_title}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[11px] flex-shrink-0 font-mono">
+                            <span className="text-emerald-400 font-bold">{p.views} views</span>
+                            <span className="text-zinc-500">•</span>
+                            <span className="text-zinc-400">{p.unique_visitors} vis.</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* BOTÕES MAIS CLICADOS */}
+                <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                        Pontos de Clique & Conversão
+                      </h2>
+                      <p className="text-xs text-zinc-400">Onde os visitantes clicam</p>
+                    </div>
+                  </div>
+
+                  {clicks.length === 0 ? (
+                    <div className="py-6 text-center text-zinc-500 text-xs">
+                      Nenhum clique registrado ainda.
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {clicks.map((c, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] text-xs"
+                        >
+                          <span className="text-zinc-300 truncate pr-2">
+                            {formatButtonName(c.button_name)}
+                          </span>
+                          <span className="text-emerald-400 font-mono font-bold flex-shrink-0">
+                            {c.total_clicks} cliques
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            </div>
+
+            {/* GRÁFICO DIÁRIO DE ATIVIDADE */}
+            {daily.length > 0 && (
+              <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                      Atividade Diária Recente
+                    </h2>
+                    <p className="text-xs text-zinc-400">Volume de visitantes e conversões por dia</p>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-sm bg-zinc-600" />
+                      <span className="text-zinc-400 text-[11px]">Visitas</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500" />
+                      <span className="text-emerald-400 text-[11px]">WhatsApp</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-32 flex items-end gap-2 pt-4 overflow-x-auto no-scrollbar">
+                  {daily.map((d, idx) => {
+                    const sessHeight = Math.max(10, Math.round((Number(d.sessions) / maxDailySessions) * 100));
+                    const hasLead = Number(d.whatsapp_clicks) > 0;
+                    return (
+                      <div key={idx} className="flex-1 min-w-[28px] max-w-[48px] flex flex-col items-center gap-1.5 h-full justify-end group">
+                        <div className="text-[10px] text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity font-mono">
+                          {d.sessions}
+                        </div>
+                        <div
+                          className={`w-full rounded-t transition-all ${
+                            hasLead ? 'bg-emerald-500 shadow-lg shadow-emerald-500/20' : 'bg-zinc-700 hover:bg-zinc-600'
+                          }`}
+                          style={{ height: `${sessHeight}%` }}
+                        />
+                        <div className="text-[9px] text-zinc-500 font-mono truncate">
+                          {d.day.slice(5)}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+          </main>
+
+          {/* MODAL PARA ALTERAR O PIN */}
+          {showPinModal && (
+            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+              <div className="w-full max-w-sm bg-[#111116] border border-white/10 rounded-2xl p-6 shadow-2xl space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-white">Alterar PIN de Acesso</h3>
+                  <button
+                    type="button"
+                    onClick={() => { setShowPinModal(false); setPinMsg(''); }}
+                    className="text-zinc-500 hover:text-white text-xs cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <form onSubmit={handleUpdatePin} className="space-y-3">
+                  <div>
+                    <label className="block text-[11px] text-zinc-400 mb-1">PIN Atual:</label>
+                    <input
+                      type="password"
+                      value={oldPin}
+                      onChange={(e) => setOldPin(e.target.value)}
+                      placeholder="PIN atual"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] text-zinc-400 mb-1">Novo PIN:</label>
+                    <input
+                      type="password"
+                      value={newPin}
+                      onChange={(e) => setNewPin(e.target.value)}
+                      placeholder="Novo PIN desejado"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  {pinMsg && (
+                    <div className={`text-xs p-2 rounded-lg text-center ${
+                      pinMsg.startsWith('✓') ? 'bg-emerald-500/15 text-emerald-300' : 'bg-rose-500/15 text-rose-300'
+                    }`}>
+                      {pinMsg}
+                    </div>
+                  )}
+
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => { setShowPinModal(false); setPinMsg(''); }}
+                      className="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-zinc-400 cursor-pointer"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={pinLoading}
+                      className="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs cursor-pointer disabled:opacity-50"
+                    >
+                      {pinLoading ? 'Salvando...' : 'Salvar PIN'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
     function App() {
       // Hero Version Switcher: 'v1' (locked chair cutout) | 'v2' (new cinematic bokeh portrait)
       const [heroVersion, setHeroVersion] = useState(() => {
@@ -858,8 +1542,26 @@
         return 'v2';
       });
 
-      // 3 Main Category Menus: 'carrosseis' | 'estaticos' | 'identidade-visual'
-      const [activeTab, setActiveTab] = useState('home');
+      // 3 Main Category Menus: 'carrosseis' | 'estaticos' | 'identidade-visual' + 'admin'
+      const [activeTab, setActiveTab] = useState(() => {
+        if (typeof window !== 'undefined' && window.location.hash === '#admin') return 'admin';
+        return 'home';
+      });
+
+      // Monitor URL hash for #admin
+      useEffect(() => {
+        const checkHash = () => {
+          if (typeof window === 'undefined') return;
+          if (window.location.hash === '#admin') {
+            setActiveTab('admin');
+            window.scrollTo(0, 0);
+          } else if (activeTab === 'admin') {
+            setActiveTab('home');
+          }
+        };
+        window.addEventListener('hashchange', checkHash);
+        return () => window.removeEventListener('hashchange', checkHash);
+      }, [activeTab]);
 
       // Limpeza suave da URL: remove parâmetros de teste (?v=hero_v2) da barra sem recarregar
       useEffect(() => {
@@ -873,6 +1575,109 @@
       const [selectedProject, setSelectedProject] = useState(null);
       const [viewingCarousel, setViewingCarousel] = useState(null);
       const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+      // Telemetria: rastreia abertura de projetos e carrosséis
+      useEffect(() => {
+        if (selectedProject && selectedProject.title) {
+          trackEvent('project_open', selectedProject.title, 1, { category: selectedProject.category || 'Geral' });
+        }
+      }, [selectedProject]);
+
+      useEffect(() => {
+        if (viewingCarousel && viewingCarousel.title) {
+          trackEvent('project_open', viewingCarousel.title, 1, { category: 'Carrosséis' });
+        }
+      }, [viewingCarousel]);
+
+      // Telemetria: rastreia tempo de permanência em cada seção e profundidade de rolagem
+      useEffect(() => {
+        if (typeof window === 'undefined') return;
+        if (activeTab !== 'home') return;
+
+        let activeSection = null;
+        let activeStart = 0;
+
+        const flushActive = () => {
+          if (activeSection && activeStart) {
+            const elapsed = Math.round((Date.now() - activeStart) / 1000);
+            if (elapsed >= 2) {
+              trackEvent('section_dwell', activeSection, elapsed);
+            }
+            activeStart = 0;
+            activeSection = null;
+          }
+        };
+
+        const switchSection = (newSection) => {
+          if (activeSection === newSection) return;
+          flushActive();
+          if (newSection) {
+            activeSection = newSection;
+            activeStart = Date.now();
+          }
+        };
+
+        let observer = null;
+        if (typeof IntersectionObserver !== 'undefined') {
+          observer = new IntersectionObserver((entries) => {
+            let best = null;
+            for (const entry of entries) {
+              if (entry.isIntersecting && (!best || entry.intersectionRatio > best.intersectionRatio)) {
+                best = entry;
+              }
+            }
+            if (best && best.target && best.target.dataset && best.target.dataset.sectionName) {
+              switchSection(best.target.dataset.sectionName);
+            }
+          }, { threshold: [0.15, 0.4, 0.7] });
+
+          const targets = [
+            { id: 'vante-track', name: 'Hero (3D Ribbon)' },
+            { id: 'sobre-mim-section', name: 'Sobre o Mago' },
+            { id: 'carrosseis-track', name: 'Carrosséis' },
+            { id: 'estaticos-track', name: 'Estáticos' },
+            { id: 'contato-section', name: 'Contato' },
+          ];
+
+          targets.forEach(t => {
+            const el = document.getElementById(t.id);
+            if (el) {
+              el.dataset.sectionName = t.name;
+              observer.observe(el);
+            }
+          });
+        }
+
+        // Profundidade de rolagem (25%, 50%, 75%, 100%)
+        const firedDepths = new Set();
+        const handleScrollDepth = () => {
+          const docH = document.documentElement.scrollHeight - window.innerHeight;
+          if (docH <= 0) return;
+          const progress = Math.min(100, Math.round((window.scrollY / docH) * 100));
+          [25, 50, 75, 100].forEach(milestone => {
+            if (progress >= milestone && !firedDepths.has(milestone)) {
+              firedDepths.add(milestone);
+              trackEvent('scroll_depth', `${milestone}%`, milestone);
+            }
+          });
+        };
+
+        window.addEventListener('scroll', handleScrollDepth, { passive: true });
+
+        const handleUnload = () => {
+          flushActive();
+        };
+        window.addEventListener('pagehide', handleUnload);
+        window.addEventListener('beforeunload', handleUnload);
+
+        return () => {
+          flushActive();
+          if (observer) observer.disconnect();
+          window.removeEventListener('scroll', handleScrollDepth);
+          window.removeEventListener('pagehide', handleUnload);
+          window.removeEventListener('beforeunload', handleUnload);
+        };
+      }, [activeTab]);
 
       // Separate projects by category
       const { carrosseis, estaticos, idVisual } = useMemo(() => {
@@ -893,7 +1698,7 @@
 
       // Manage body and html scroll depending on whether Home (Vante) is active
       useEffect(() => {
-        if (activeTab === 'home') {
+        if (activeTab === 'home' || activeTab === 'admin') {
           document.documentElement.style.overflowY = 'auto';
           document.documentElement.style.overflowX = 'clip';
           document.body.style.overflowY = 'visible'; // body não pode virar contêiner de rolagem (senão o sticky dos Estáticos não prende)
@@ -1436,6 +2241,7 @@
         if (idx === currentTarget) {
           setRibbonFitMode(defaultRibbonMode());
           setViewingCarousel(carrosseis[idx]);
+          trackEvent('project_open', carrosseis[idx].title, 1, { category: 'Carrosséis' });
         } else {
           if (activeTab === 'home' && carrosseisTrackRef.current && !isFreeMobile()) {
             const track = carrosseisTrackRef.current;
@@ -1967,6 +2773,7 @@
               <div className="flex flex-wrap items-center gap-3 mt-8 pt-2">
                 <a
                   href={whatsappHref('Olá Marcos! Vi a seção Sobre no seu portfólio e quero conversar sobre um projeto.')}
+                  onClick={() => trackEvent('click', 'whatsapp_sobre', 1)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3.5 rounded-full bg-[#f4f4f5] hover:bg-white text-zinc-950 text-xs sm:text-sm font-bold tracking-wide transition-colors flex items-center gap-2 cursor-pointer active:scale-[0.98]"
@@ -2178,6 +2985,7 @@
           </p>
           <a
             href={whatsappHref()}
+            onClick={() => trackEvent('click', 'whatsapp_contato', 1)}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 px-7 py-4 rounded-full bg-[#f4f4f5] hover:bg-white text-zinc-950 text-sm font-bold tracking-wide transition-colors flex items-center gap-2.5 active:scale-[0.98]"
@@ -2188,6 +2996,7 @@
           </a>
           <a
             href={PHOTO_PORTFOLIO_URL}
+            onClick={() => trackEvent('click', 'external_cliqueepoesia', 1)}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 hover:text-white text-xs sm:text-sm font-medium transition-colors flex items-center gap-2"
@@ -2199,6 +3008,18 @@
           <p className="mt-16 text-[11px] text-zinc-400 tracking-widest uppercase">
             Marcos Gabriel • Designer gráfico e fotógrafo • {new Date().getFullYear()}
           </p>
+          <a
+            href="#admin"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveTab('admin');
+              window.location.hash = 'admin';
+            }}
+            className="mt-3 text-[11px] text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1 cursor-pointer py-1 px-2"
+            title="Acessar painel de métricas administrativo"
+          >
+            <span>✦ Métricas</span>
+          </a>
         </section>
       );
 
@@ -2379,8 +3200,13 @@
                         onClick={() => {
                           setRibbonFitMode(defaultRibbonMode());
                           setViewingCarousel(carrosseis[currentFlowIndex]);
+                          trackEvent('project_open', carrosseis[currentFlowIndex].title, 1, { category: 'Carrosséis' });
                         }}
-                        {...pressable(() => { setRibbonFitMode(defaultRibbonMode()); setViewingCarousel(carrosseis[currentFlowIndex]); }, `Abrir carrossel: ${carrosseis[currentFlowIndex].title}`)}
+                        {...pressable(() => {
+                          setRibbonFitMode(defaultRibbonMode());
+                          setViewingCarousel(carrosseis[currentFlowIndex]);
+                          trackEvent('project_open', carrosseis[currentFlowIndex].title, 1, { category: 'Carrosséis' });
+                        }, `Abrir carrossel: ${carrosseis[currentFlowIndex].title}`)}
                         className="text-base sm:text-xl font-black text-white tracking-tight cursor-pointer hover:text-emerald-400 transition-colors"
                         title="Abrir o carrossel completo"
                       >
@@ -2525,8 +3351,13 @@
                           onClick={() => {
                             slideOverride.current = sIdx;
                             setSelectedProject(viewingCarousel);
+                            trackEvent('slide_expand', `${viewingCarousel.title} - Slide ${sIdx + 1}`, 1);
                           }}
-                          {...pressable(() => { slideOverride.current = sIdx; setSelectedProject(viewingCarousel); }, `Ampliar slide ${sIdx + 1} de ${viewingCarousel.slideCount}`)}
+                          {...pressable(() => {
+                            slideOverride.current = sIdx;
+                            setSelectedProject(viewingCarousel);
+                            trackEvent('slide_expand', `${viewingCarousel.title} - Slide ${sIdx + 1}`, 1);
+                          }, `Ampliar slide ${sIdx + 1} de ${viewingCarousel.slideCount}`)}
                           className="relative group cursor-pointer overflow-hidden transition-all min-w-[150px] sm:min-w-0"
                           style={ribbonFitMode === 'fit' ? {
                             flex: '1 1 0',
@@ -3011,6 +3842,10 @@
             </div>
           )}
 
+          {activeTab === 'admin' && (
+            <AdminDashboard onExit={() => { setActiveTab('home'); window.location.hash = ''; }} />
+          )}
+
           {/* Navegação flutuante: categorias + WhatsApp sempre à mão */}
           {activeTab === 'home' && !selectedProject && !viewingCarousel && (
             <nav
@@ -3029,7 +3864,10 @@
                 <button
                   key={item.key}
                   type="button"
-                  onClick={() => scrollToSection(item.key)}
+                  onClick={() => {
+                    trackEvent('click', `nav_${item.key}`, 1);
+                    scrollToSection(item.key);
+                  }}
                   className="px-2 sm:px-3.5 min-h-[44px] sm:min-h-[36px] rounded-full text-[11px] sm:text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
                 >
                   {item.label}
@@ -3037,6 +3875,7 @@
               ))}
               <a
                 href={whatsappHref()}
+                onClick={() => trackEvent('click', 'whatsapp_floating', 1)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chamar no WhatsApp"
@@ -3454,6 +4293,7 @@
                   )}
                   <a
                     href={getWhatsAppLink(selectedProject.title)}
+                    onClick={() => trackEvent('click', 'whatsapp_modal', 1, { project: selectedProject?.title })}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Conversar sobre este projeto no WhatsApp"
