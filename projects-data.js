@@ -325,30 +325,35 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
-    "id": "carrossel-carrossel-imunofosfo",
-    "folderName": "CARROSSEL IMUNOFOSFO",
-    "title": "Imunofosfo — Estresse e Suplementação",
-    "client": "America Nutrition",
-    "handle": "",
-    "type": "Carrossel de Produto",
+    "id": "carrossel-zenittal-carrossel-25-10",
+    "folderName": "ZENITTAL CARROSSEL 25-10",
+    "title": "Clique & Poesia — O Que É Foto Zenital?",
+    "client": "Clique & Poesia (projeto próprio)",
+    "handle": "@cliqueepoesia",
+    "type": "Carrossel Educativo",
     "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
+    "cover": "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_01.webp",
     "slides": [
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 4  Imunidade forte - 03-03.webp",
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 5  Tratamento oncológico-03-03.webp",
-      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 7 Uso do Imonofosfo -03-03.webp"
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_01.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_02.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_03.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_04.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_05.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_06.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_07.webp"
     ],
-    "slideCount": 4,
-    "software": "Photoshop • Illustrator",
+    "slideCount": 7,
+    "software": "Photoshop • Figma",
     "colors": [
-      "#FFFFFF",
-      "#EAEBEC",
-      "#676D6E",
-      "#ADB5B9"
+      "#1A181A",
+      "#BFCDAD",
+      "#0A0A0A",
+      "#5B4B34"
     ],
-    "description": "Carrossel sobre estresse e suplementação, com linguagem direta sobre o problema e o produto.",
-    "highlight": true
+    "description": "Carrossel panorâmico de fotografia gastronômica zenital: os pratos continuam de um slide para o outro.",
+    "highlight": true,
+    "externalUrl": "https://www.cliqueepoesia.com.br/#portfolio",
+    "externalLabel": "Ver o portfólio de fotografia da Clique & Poesia"
   },
   {
     "id": "carrossel-carrossel-dra-mari-05",
@@ -378,6 +383,32 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
+    "id": "carrossel-carrossel-imunofosfo",
+    "folderName": "CARROSSEL IMUNOFOSFO",
+    "title": "Imunofosfo — Estresse e Suplementação",
+    "client": "America Nutrition",
+    "handle": "",
+    "type": "Carrossel de Produto",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 3   Estresse - 03-03.webp",
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 4  Imunidade forte - 03-03.webp",
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 5  Tratamento oncológico-03-03.webp",
+      "Carrosséis/CARROSSEL IMUNOFOSFO/POST 7 Uso do Imonofosfo -03-03.webp"
+    ],
+    "slideCount": 4,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#FFFFFF",
+      "#EAEBEC",
+      "#676D6E",
+      "#ADB5B9"
+    ],
+    "description": "Carrossel sobre estresse e suplementação, com linguagem direta sobre o problema e o produto.",
+    "highlight": true
+  },
+  {
     "id": "carrossel-carrossel-seller-chat",
     "folderName": "CARROSSEL SELLER CHAT",
     "title": "Seller Chat — O Teto de Vidro do Atendimento",
@@ -402,34 +433,6 @@ window.PORTFOLIO_PROJECTS = [
       "#4D535C"
     ],
     "description": "Carrossel para vendedores do Mercado Livre sobre os limites do atendimento manual e a solução da Seller Chat.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-smart-grow-02",
-    "folderName": "CARROSSEL SMART GROW - 02",
-    "title": "Smart Grow Company — Seu SaaS Ainda Depende do Boca a Boca?",
-    "client": "Smart Grow Company",
-    "handle": "",
-    "type": "Carrossel de Captação",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_02.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_03.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_04.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_05.webp",
-      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_06.webp"
-    ],
-    "slideCount": 6,
-    "software": "Photoshop • Illustrator",
-    "colors": [
-      "#000716",
-      "#1B3C56",
-      "#00192F",
-      "#7E9BAE"
-    ],
-    "description": "Carrossel para empresas de software sobre depender só da indicação para crescer.",
     "highlight": true
   },
   {
@@ -463,6 +466,34 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
+    "id": "carrossel-carrossel-smart-grow-02",
+    "folderName": "CARROSSEL SMART GROW - 02",
+    "title": "Smart Grow Company — Seu SaaS Ainda Depende do Boca a Boca?",
+    "client": "Smart Grow Company",
+    "handle": "",
+    "type": "Carrossel de Captação",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
+    "slides": [
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_01.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_02.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_03.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_04.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_05.webp",
+      "Carrosséis/CARROSSEL SMART GROW - 02/CARROSSEL---SMART-GROW-COMPANY---21-08_06.webp"
+    ],
+    "slideCount": 6,
+    "software": "Photoshop • Illustrator",
+    "colors": [
+      "#000716",
+      "#1B3C56",
+      "#00192F",
+      "#7E9BAE"
+    ],
+    "description": "Carrossel para empresas de software sobre depender só da indicação para crescer.",
+    "highlight": true
+  },
+  {
     "id": "carrossel-carrossel-04-26-10",
     "folderName": "CARROSSEL 04 - 26-10",
     "title": "A IA Executa. Você Dirige",
@@ -488,33 +519,6 @@ window.PORTFOLIO_PROJECTS = [
       "#3D4A23"
     ],
     "description": "Carrossel sobre o papel do designer como diretor de criação na era da IA.",
-    "highlight": true
-  },
-  {
-    "id": "carrossel-carrossel-ingl-s-oque-",
-    "folderName": "CARROSSEL INGLÊS OQUE É",
-    "title": "Panda English — Focado em Melhorar o Seu Inglês?",
-    "client": "Panda English School",
-    "handle": "@pandaenglish",
-    "type": "Carrossel Institucional",
-    "category": "Carrosséis",
-    "cover": "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
-    "slides": [
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag2.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag3.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag4.webp",
-      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag5.webp"
-    ],
-    "slideCount": 5,
-    "software": "Photoshop • Figma",
-    "colors": [
-      "#5E6B5F",
-      "#F3EBDE",
-      "#1A2221",
-      "#1F3437"
-    ],
-    "description": "Carrossel sobre a importância do inglês como língua global e a proposta da escola.",
     "highlight": true
   },
   {
@@ -546,35 +550,31 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
-    "id": "carrossel-zenittal-carrossel-25-10",
-    "folderName": "ZENITTAL CARROSSEL 25-10",
-    "title": "Clique & Poesia — O Que É Foto Zenital?",
-    "client": "Clique & Poesia (projeto próprio)",
-    "handle": "@cliqueepoesia",
-    "type": "Carrossel Educativo",
+    "id": "carrossel-carrossel-ingl-s-oque-",
+    "folderName": "CARROSSEL INGLÊS OQUE É",
+    "title": "Panda English — Focado em Melhorar o Seu Inglês?",
+    "client": "Panda English School",
+    "handle": "@pandaenglish",
+    "type": "Carrossel Institucional",
     "category": "Carrosséis",
-    "cover": "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_01.webp",
+    "cover": "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
     "slides": [
-      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_01.webp",
-      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_02.webp",
-      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_03.webp",
-      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_04.webp",
-      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_05.webp",
-      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_06.webp",
-      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_07.webp"
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag1.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag2.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag3.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag4.webp",
+      "Carrosséis/CARROSSEL INGLÊS OQUE É/INGLES OQUE É final pag5.webp"
     ],
-    "slideCount": 7,
-    "software": "Photoshop • Lightroom",
+    "slideCount": 5,
+    "software": "Photoshop • Figma",
     "colors": [
-      "#1A181A",
-      "#BFCDAD",
-      "#0A0A0A",
-      "#5B4B34"
+      "#5E6B5F",
+      "#F3EBDE",
+      "#1A2221",
+      "#1F3437"
     ],
-    "description": "Carrossel panorâmico de fotografia gastronômica zenital: os pratos continuam de um slide para o outro.",
-    "highlight": true,
-    "externalUrl": "https://www.cliqueepoesia.com.br/#portfolio",
-    "externalLabel": "Ver o portfólio de fotografia da Clique & Poesia"
+    "description": "Carrossel sobre a importância do inglês como língua global e a proposta da escola.",
+    "highlight": true
   },
   {
     "id": "id-visual-id-visual-codigo-hop",
@@ -1233,31 +1233,6 @@ window.PORTFOLIO_PROJECTS = [
     "formatLabel": "Story • 9:16"
   },
   {
-    "id": "static-cor-de-ingrediente-27-10-feed-png",
-    "title": "Clique & Poesia — A Cor Também É um Ingrediente",
-    "client": "Clique & Poesia (projeto próprio)",
-    "handle": "@cliqueepoesia",
-    "type": "Direção de Arte Gastronômica",
-    "category": "Estáticos",
-    "cover": "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp",
-    "slides": [
-      "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Lightroom",
-    "colors": [
-      "#A19F9E",
-      "#282727",
-      "#101010",
-      "#DDC7C0"
-    ],
-    "description": "Composição com desaturação seletiva que usa a cor como ingrediente da foto.",
-    "highlight": true,
-    "format": "1080x1350",
-    "aspectRatio": "4/5",
-    "formatLabel": "Feed • 4:5"
-  },
-  {
     "id": "static-segundo-lote-disponivel-jpg",
     "title": "Forró Piro 23° — Segundo Lote Disponível",
     "client": "Forró Piro",
@@ -1502,6 +1477,31 @@ window.PORTFOLIO_PROJECTS = [
     ],
     "description": "Anúncio da IA que agenda pacientes enquanto a secretária da clínica dorme.",
     "highlight": false,
+    "format": "1080x1350",
+    "aspectRatio": "4/5",
+    "formatLabel": "Feed • 4:5"
+  },
+  {
+    "id": "static-cor-de-ingrediente-27-10-feed-png",
+    "title": "Clique & Poesia — A Cor Também É um Ingrediente",
+    "client": "Clique & Poesia (projeto próprio)",
+    "handle": "@cliqueepoesia",
+    "type": "Direção de Arte Gastronômica",
+    "category": "Estáticos",
+    "cover": "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp",
+    "slides": [
+      "Estáticos/COR DE INGREDIENTE - 27-10 - FEED.webp"
+    ],
+    "slideCount": 1,
+    "software": "Photoshop • Lightroom",
+    "colors": [
+      "#A19F9E",
+      "#282727",
+      "#101010",
+      "#DDC7C0"
+    ],
+    "description": "Composição com desaturação seletiva que usa a cor como ingrediente da foto.",
+    "highlight": true,
     "format": "1080x1350",
     "aspectRatio": "4/5",
     "formatLabel": "Feed • 4:5"

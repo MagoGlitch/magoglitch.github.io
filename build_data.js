@@ -133,45 +133,45 @@ const carrosseisMeta = {
   },
   'CARROSSEL 01': {
     title: 'Eu Passei Anos Tentando Escolher Uma Profissão',
-    client: 'Branding Autoral',
+    client: 'Umcaracaramelo',
     handle: '@marcos.designer',
-    type: 'Storytelling & Branding Pessoal',
+    type: 'Carrossel de Storytelling',
     software: 'Photoshop • Illustrator',
     colors: ['#FF6B00', '#7C3AED', '#0F0E17', '#FFF1E8'],
-    desc: 'Narrativa autoral de forte conexão emocional e quebra de crenças sobre a percepção de valor no mercado criativo.'
+    desc: 'Narrativa sobre a busca por uma profissão e a percepção de valor no mercado criativo.'
   },
   'CARROSSEL 02': {
     title: 'Desaprendendo a Ser Designer',
-    client: 'Branding Autoral',
+    client: 'Umcaracaramelo',
     handle: '@marcos.designer',
-    type: 'Carrossel Reflexivo & Autoral',
+    type: 'Carrossel de Conteúdo',
     software: 'Photoshop • Procreate',
     colors: ['#A855F7', '#6B21A8', '#0E0719', '#FAF5FF'],
-    desc: 'Reflexão estética e filosófica sobre como esquecer fórmulas pré-fabricadas para criar designs autênticos e expressivos.'
+    desc: 'Reflexão sobre largar fórmulas prontas para criar designs com mais autenticidade.'
   },
   'CARROSSEL 03': {
     title: 'Fazendo Coisas Que Eu Não Sei Fazer',
-    client: 'Branding Autoral',
+    client: 'Umcaracaramelo',
     handle: '@marcos.designer',
-    type: 'Storytelling & Ensaio Autoral',
+    type: 'Carrossel de Conteúdo',
     software: 'Photoshop • Lightroom',
     colors: ['#F59E0B', '#0284C7', '#081726', '#FEF3C7'],
     desc: 'Ensaio visual sobre ousadia criativa, experimentação de novas linguagens e superação de zonas de conforto.'
   },
   'CARROSSEL 04 - 26-10': {
     title: 'A IA Executa. Você Dirige',
-    client: 'Inteligência Artificial & Design',
+    client: 'Umcaracaramelo',
     handle: '@marcos.designer',
-    type: 'Tendências & Direção Criativa',
+    type: 'Carrossel de Conteúdo',
     software: 'Photoshop • Midjourney / AI Studio',
     colors: ['#10B981', '#F59E0B', '#091A14', '#ECFDF5'],
     desc: 'Análise estratégica sobre o papel do designer como diretor de criação na era da inteligência artificial generativa.'
   },
   'CARROSSEL 05 - 28-10': {
     title: 'Aprendendo Muito & Ficando Para Trás',
-    client: 'Carreira & Evolução',
+    client: 'Umcaracaramelo',
     handle: '@marcos.designer',
-    type: 'Carrossel de Conexão & Carreira',
+    type: 'Carrossel de Conteúdo',
     software: 'Photoshop • After Effects',
     colors: ['#EC4899', '#8B5CF6', '#110A1F', '#FDF4FF'],
     desc: 'Abordagem visceral sobre a ansiedade e velocidade do ecossistema criativo moderno com estética cyberpunk impactante.'

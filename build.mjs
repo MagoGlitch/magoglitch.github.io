@@ -23,9 +23,11 @@ execSync('npx tailwindcss -c tailwind.config.js -i src/tailwind.css -o styles.cs
 const hash = createHash('sha1')
   .update(readFileSync('app.js'))
   .update(readFileSync('styles.css'))
+  .update(readFileSync('projects-data.js'))
   .digest('hex')
   .slice(0, 8);
 const html = readFileSync('index.html', 'utf8')
+  .replace(/projects-data\.js(\?v=[\w_]+)?/, `projects-data.js?v=${hash}`)
   .replace(/app\.js\?v=[\w_]+/, `app.js?v=${hash}`)
   .replace(/styles\.css\?v=[\w_]+/, `styles.css?v=${hash}`);
 writeFileSync('index.html', html);
