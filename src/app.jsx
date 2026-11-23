@@ -2344,7 +2344,7 @@
                           {/* Center Card Click-to-Open Hint Overlay */}
                           {idx === currentFlowIndex && (
                             <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                              <span className="text-xs bg-black/90 text-white px-4 py-2 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium tracking-wide">
+                              <span className="text-xs sm:text-sm text-white font-medium tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
                                 <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">COMPLETO</span> ↗
                               </span>
                             </div>
@@ -2477,7 +2477,7 @@
                         <span className="sm:hidden">Voltar</span>
                       </button>
                       <span className="text-white/30 hidden sm:inline">|</span>
-                      <span className="hidden sm:inline text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full flex-shrink-0">
+                      <span className="hidden sm:inline text-xs font-medium text-zinc-400 flex-shrink-0">
                         {viewingCarousel.client}
                       </span>
                       <h3 className="text-sm sm:text-base font-bold text-white tracking-wide truncate max-w-[180px] sm:max-w-md">
@@ -2569,15 +2569,10 @@
                             decoding="async"
                           />
 
-                          {/* Slide Number Indicator */}
-                          <div className="absolute top-2.5 left-2.5 text-[9px] sm:text-[10px] bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-white/90 border border-white/10 opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center gap-0.5 shadow-lg">
-                            <span className="font-stretch font-bold text-emerald-400">{sIdx + 1}</span>
-                            <span className="font-light text-white/50">/{viewingCarousel.slideCount}</span>
-                          </div>
 
                           {/* Hover Zoom Overlay */}
                           <div className="absolute inset-0 bg-white/[0.05] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                            <span className="text-[10px] sm:text-[11px] bg-black/90 text-white px-3 py-1.5 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium tracking-wide">
+                            <span className="text-xs sm:text-sm text-white font-medium tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
                               <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">AMPLIAR</span> ↗
                             </span>
                           </div>
@@ -2685,8 +2680,6 @@
                       }}
                     >
                       {[0, 1].map(rep => colItems.map((project) => {
-                        const fmt = project.aspectRatio === '9/16' ? 'STORY' : project.aspectRatio === '1/1' ? 'POST' : 'FEED';
-                        const ratio = project.aspectRatio === '9/16' ? '9:16' : project.aspectRatio === '1/1' ? '1:1' : '4:5';
                         return (
                           <div
                             key={`${rep}-${project.id}`}
@@ -2703,11 +2696,6 @@
                               draggable="false"
                               className="w-full h-full object-cover block select-none pointer-events-none"
                             />
-                            <span className="absolute top-1.5 left-1.5 text-[8px] bg-black/80 px-1.5 py-0.5 rounded-full text-white border border-white/20 flex items-center gap-1 pointer-events-none">
-                              <span className="w-1 h-1 rounded-full bg-emerald-400" />
-                              <span className="font-stretch font-bold">{fmt}</span>
-                              <span className="text-white/70 font-mono">{ratio}</span>
-                            </span>
                           </div>
                         );
                       }))}
@@ -2812,32 +2800,10 @@
                                   decoding="async"
                                 />
 
-                                {/* Format Badge (Story 9:16 vs Feed 4:5 vs Post 1:1) */}
-                                <div className="absolute top-2.5 left-2.5 z-10 pointer-events-none">
-                                  {isStory ? (
-                                    <span className="text-[9px] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-full text-white/95 border border-white/20 font-medium flex items-center gap-1 shadow-lg">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                      <span className="font-stretch font-bold text-white">STORY</span>
-                                      <span className="text-white/60 text-[8px] font-mono">9:16</span>
-                                    </span>
-                                  ) : isSquare ? (
-                                    <span className="text-[9px] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-full text-white/95 border border-white/20 font-medium flex items-center gap-1 shadow-lg">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                      <span className="font-stretch font-bold text-white">POST</span>
-                                      <span className="text-white/60 text-[8px] font-mono">1:1</span>
-                                    </span>
-                                  ) : (
-                                    <span className="text-[9px] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-full text-white/95 border border-white/20 font-medium flex items-center gap-1 shadow-lg">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                      <span className="font-stretch font-bold text-white">FEED</span>
-                                      <span className="text-white/60 text-[8px] font-mono">4:5</span>
-                                    </span>
-                                  )}
-                                </div>
 
                                 {/* Subtle hover indicator */}
                                 <div className="absolute inset-0 bg-white/[0.04] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                                  <span className="text-[10px] bg-black/90 text-white px-3 py-1.5 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium tracking-wide">
+                                  <span className="text-xs sm:text-sm text-white font-medium tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
                                     <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">DETALHES</span> ↗
                                   </span>
                                 </div>
@@ -3183,7 +3149,7 @@
 
                         {/* Subtle center hover indicator */}
                         <div className="absolute inset-0 bg-white/[0.04] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                          <span className="text-[11px] bg-black/85 text-white px-3.5 py-1.5 rounded-full border border-white/20 shadow-2xl backdrop-blur-md font-medium">
+                          <span className="text-xs sm:text-sm text-white font-medium tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
                             <span className="font-light text-white/70">VER</span> <span className="font-stretch font-bold text-emerald-400 tracking-wider">COMPLETA</span> ↗
                           </span>
                         </div>
@@ -3251,7 +3217,7 @@
 
                   <div className="flex items-center gap-1.5 sm:gap-4 flex-shrink-0">
                     {/* Navigation between visual identities */}
-                    <div className="flex items-center gap-0.5 sm:gap-1.5 bg-white/5 border border-white/10 px-1 sm:px-2.5 py-0.5 sm:py-1 rounded-full">
+                    <div className="flex items-center gap-0.5 sm:gap-1.5">
                       <button
                         disabled={!prevIdProject}
                         onClick={() => {
