@@ -67,28 +67,35 @@
     const isExcludedVisitor = () => {
       if (typeof window === 'undefined') return true;
       try {
+        // Se estiver na rota #admin, nunca rastreia
+        if (window.location.hash === '#admin') return true;
+
+        // Se o modo de teste estiver ativado pelo administrador, permite testar este dispositivo
+        if (localStorage.getItem('mago_test_mode') === 'true') {
+          return false;
+        }
+
         // 1. Bloqueia desenvolvimento local, localhost, 127.0.0.1 ou protocolo file:
         const host = window.location.hostname;
         if (!host || host === 'localhost' || host === '127.0.0.1' || window.location.protocol === 'file:') {
           return true;
         }
 
-        // 2. Bloqueia navegadores automatizados e agentes de IA (puppeteer, playwright, etc.)
+        // 2. Bloqueia navegadores automatizados e robôs de busca (puppeteer, bots, etc.)
         if (navigator.webdriver) return true;
         const ua = (navigator.userAgent || '').toLowerCase();
-        if (ua.includes('bot') || ua.includes('crawler') || ua.includes('headless') || ua.includes('agent')) {
+        if (ua.includes('bot') || ua.includes('crawler') || ua.includes('spider') || ua.includes('headless')) {
           return true;
         }
 
-        // 3. Se estiver na rota #admin ou com parâmetro ?admin=true / ?optout=true
-        if (window.location.hash === '#admin') return true;
+        // 3. Se estiver com parâmetro ?admin=true / ?optout=true
         const params = new URLSearchParams(window.location.search);
         if (params.get('admin') === 'true' || params.get('optout') === 'true') {
           localStorage.setItem('mago_analytics_optout', 'true');
           return true;
         }
 
-        // 4. Bloqueia acessos do Marcos (se este navegador já fez login no admin ou optou por sair)
+        // 4. Bloqueia acessos do Marcos (dispositivos que fizeram login no admin ou optaram por sair)
         if (localStorage.getItem('mago_analytics_optout') === 'true' || localStorage.getItem('mago_admin_pin')) {
           return true;
         }
@@ -955,6 +962,24 @@
       const [pinMsg, setPinMsg] = useState('');
       const [pinLoading, setPinLoading] = useState(false);
 
+      // Modo de teste: permite ao próprio Marcos simular um visitante para ver métricas em tempo real
+      const [testMode, setTestMode] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        return localStorage.getItem('mago_test_mode') === 'true';
+      });
+
+      const toggleTestMode = () => {
+        if (testMode) {
+          localStorage.removeItem('mago_test_mode');
+          setTestMode(false);
+        } else {
+          localStorage.setItem('mago_test_mode', 'true');
+          sessionStorage.removeItem('mago_session_started');
+          sessionStorage.removeItem('mago_analytics_sid');
+          setTestMode(true);
+        }
+      };
+
       const loadData = async (pinToUse, daysToUse) => {
         setLoading(true);
         setError(null);
@@ -1196,14 +1221,24 @@
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              {/* Badge: Seu PC protegido */}
-              <div
-                className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium"
-                title="Seus acessos e cliques neste dispositivo nunca são contabilizados nas métricas"
+              {/* Badge interativo: Protegido vs Modo de Teste */}
+              <button
+                type="button"
+                onClick={toggleTestMode}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium border transition-all cursor-pointer ${
+                  testMode
+                    ? 'bg-amber-500/15 border-amber-500/40 text-amber-300 hover:bg-amber-500/25 shadow-lg shadow-amber-500/10'
+                    : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20'
+                }`}
+                title={
+                  testMode
+                    ? 'Modo Teste ATIVO: Este computador está sendo contabilizado para você poder testar o painel. Clique para reativar a proteção.'
+                    : 'Seu dispositivo está protegido do rastreio. Clique para alternar para o Modo Teste se quiser simular um visitante neste computador.'
+                }
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>Seu PC protegido do rastreio</span>
-              </div>
+                <span className={`w-1.5 h-1.5 rounded-full ${testMode ? 'bg-amber-400 animate-ping' : 'bg-emerald-400'}`} />
+                <span>{testMode ? '🧪 Modo Teste (Contabilizando este PC)' : '🛡️ Seu PC protegido do rastreio'}</span>
+              </button>
 
               {/* Filtro de Período */}
               <div className="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 text-xs">
@@ -1282,6 +1317,34 @@
 
           {/* CONTEÚDO PRINCIPAL */}
           <main className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 space-y-6">
+
+            {/* Banner explicativo quando o painel estiver zerado */}
+            {summary.total_sessions === 0 && !loading && (
+              <div className="bg-[#0e0e14] border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0 mt-0.5">
+                    💡
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-bold text-white">Por que o painel está zerado?</h2>
+                    <p className="text-xs text-zinc-400 mt-0.5 leading-relaxed">
+                      {testMode
+                        ? 'O Modo Teste está ATIVADO neste dispositivo! Clique em "← Portfólio" acima, navegue e clique nos projetos, depois volte aqui e clique em "↻ Atualizar" para ver seus cliques em tempo real.'
+                        : 'Como você fez login no painel, este computador foi automaticamente protegido para NÃO sujar suas métricas com seus próprios acessos. Para testar e ver seus cliques aqui, ative o Modo Teste ao lado.'}
+                    </p>
+                  </div>
+                </div>
+                {!testMode && (
+                  <button
+                    type="button"
+                    onClick={toggleTestMode}
+                    className="flex-shrink-0 px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs transition-colors cursor-pointer shadow-md shadow-emerald-500/20"
+                  >
+                    Ativar Modo Teste
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* 4 CARDS DE KPI */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
