@@ -546,6 +546,37 @@ window.PORTFOLIO_PROJECTS = [
     "highlight": true
   },
   {
+    "id": "carrossel-zenittal-carrossel-25-10",
+    "folderName": "ZENITTAL CARROSSEL 25-10",
+    "title": "Clique & Poesia — O Que É Foto Zenital?",
+    "client": "Clique & Poesia (projeto próprio)",
+    "handle": "@cliqueepoesia",
+    "type": "Carrossel Educativo",
+    "category": "Carrosséis",
+    "cover": "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_01.webp",
+    "slides": [
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_01.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_02.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_03.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_04.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_05.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_06.webp",
+      "Carrosséis/ZENITTAL CARROSSEL 25-10/PRATOS-ZENITAL_07.webp"
+    ],
+    "slideCount": 7,
+    "software": "Photoshop • Lightroom",
+    "colors": [
+      "#1A181A",
+      "#BFCDAD",
+      "#0A0A0A",
+      "#5B4B34"
+    ],
+    "description": "Carrossel panorâmico de fotografia gastronômica zenital: os pratos continuam de um slide para o outro.",
+    "highlight": true,
+    "externalUrl": "https://www.cliqueepoesia.com.br/#portfolio",
+    "externalLabel": "Ver o portfólio de fotografia da Clique & Poesia"
+  },
+  {
     "id": "id-visual-id-visual-codigo-hop",
     "folderName": "ID VISUAL CODIGO HOP",
     "title": "CÓDIGO HOP — PROF. ROGÉRIO GRECO E PROF. LEONARDO NOVO",
@@ -1521,31 +1552,6 @@ window.PORTFOLIO_PROJECTS = [
     ],
     "description": "Post sobre cuidar da saúde em todas as fases da vida.",
     "highlight": false,
-    "format": "1080x1350",
-    "aspectRatio": "4/5",
-    "formatLabel": "Feed • 4:5"
-  },
-  {
-    "id": "static-pratos-zenital-01-png",
-    "title": "Clique & Poesia — O Que É Foto Zenital?",
-    "client": "Clique & Poesia (projeto próprio)",
-    "handle": "@cliqueepoesia",
-    "type": "Post Educativo",
-    "category": "Estáticos",
-    "cover": "Estáticos/PRATOS-ZENITAL_01.webp",
-    "slides": [
-      "Estáticos/PRATOS-ZENITAL_01.webp"
-    ],
-    "slideCount": 1,
-    "software": "Photoshop • Lightroom",
-    "colors": [
-      "#1A181A",
-      "#BFCDAD",
-      "#0A0A0A",
-      "#5B4B34"
-    ],
-    "description": "Fotografia gastronômica em enquadramento zenital para explicar a técnica.",
-    "highlight": true,
     "format": "1080x1350",
     "aspectRatio": "4/5",
     "formatLabel": "Feed • 4:5"

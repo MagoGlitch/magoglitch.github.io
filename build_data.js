@@ -1002,6 +1002,21 @@ const staticFiles = staticFilesList.map(f => {
 
 // Dados conferidos peça a peça (títulos, clientes e cores reais). Prevalecem sobre os metadados acima.
 const VERIFIED_META = {
+  "ZENITTAL CARROSSEL 25-10": {
+    "title": "Clique & Poesia — O Que É Foto Zenital?",
+    "client": "Clique & Poesia (projeto próprio)",
+    "handle": "@cliqueepoesia",
+    "type": "Carrossel Educativo",
+    "desc": "Carrossel panorâmico de fotografia gastronômica zenital: os pratos continuam de um slide para o outro.",
+    "colors": [
+      "#1A181A",
+      "#BFCDAD",
+      "#0A0A0A",
+      "#5B4B34"
+    ],
+    "externalUrl": "https://www.cliqueepoesia.com.br/#portfolio",
+    "externalLabel": "Ver o portfólio de fotografia da Clique & Poesia"
+  },
   "CARROSSEL": {
     "title": "Imunofosfo — Mitos ou Verdade",
     "client": "America Nutrition",
@@ -1381,7 +1396,8 @@ const VERIFIED_META = {
 const applyVerified = (p) => {
   const v = VERIFIED_META[p.folderName];
   if (!v) return p;
-  return { ...p, title: v.title, client: v.client, handle: v.handle, type: v.type, description: v.desc, colors: v.colors };
+  const extra = v.externalUrl ? { externalUrl: v.externalUrl, externalLabel: v.externalLabel } : {};
+  return { ...p, title: v.title, client: v.client, handle: v.handle, type: v.type, description: v.desc, colors: v.colors, ...extra };
 };
 const fixNames = (p) => JSON.parse(JSON.stringify(p).replace(/Araujo/g, 'Araujo'));
 
