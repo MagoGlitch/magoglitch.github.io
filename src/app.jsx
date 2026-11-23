@@ -846,6 +846,14 @@
       // 3 Main Category Menus: 'carrosseis' | 'estaticos' | 'identidade-visual'
       const [activeTab, setActiveTab] = useState('home');
 
+      // Limpeza suave da URL: remove parâmetros de teste (?v=hero_v2) da barra sem recarregar
+      useEffect(() => {
+        if (typeof window !== 'undefined' && window.location.search) {
+          const cleanUrl = window.location.pathname + window.location.hash;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+      }, []);
+
       // Shared lightbox / details modal
       const [selectedProject, setSelectedProject] = useState(null);
       const [viewingCarousel, setViewingCarousel] = useState(null);
