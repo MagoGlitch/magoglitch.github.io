@@ -2489,28 +2489,6 @@
                     </div>
 
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      {/* Toggle: Ver Todos na Tela vs Modo Ampliado */}
-                      <button
-                        onClick={() => setRibbonFitMode(prev => prev === 'fit' ? 'scroll' : 'fit')}
-                        className={`text-xs px-3 py-1.5 rounded-full border transition-all cursor-pointer flex items-center gap-1.5 font-medium ${
-                          ribbonFitMode === 'fit'
-                            ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30'
-                            : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
-                        }`}
-                        title={ribbonFitMode === 'fit' ? 'Alternar para Modo Ampliado com rolagem lateral' : 'Ajustar todos os slides completos à tela'}
-                      >
-                        {ribbonFitMode === 'fit' ? (
-                          <>
-                            <span className="font-semibold">Todos na tela</span>
-                            <span className="text-emerald-400/60 hidden md:inline text-[10px]">• Ajustado</span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="font-semibold">Ampliado</span>
-                            <span className="text-white/50 hidden md:inline text-[10px]">• Rolagem</span>
-                          </>
-                        )}
-                      </button>
 
 
                       <button
@@ -2592,7 +2570,7 @@
                           </>
                         ) : (
                           <>
-                            {IS_TOUCH ? <>DESLIZE PARA O LADO PARA VER OS SLIDES • TOQUE PARA AMPLIAR</> : <>MODO AMPLIADO • ARRASTE NA HORIZONTAL OU USE A RODA DO MOUSE • CLIQUE EM <span className="font-bold text-emerald-400">TODOS NA TELA</span> PARA AJUSTAR</>}
+                            {IS_TOUCH ? <>DESLIZE PARA O LADO PARA VER OS SLIDES • TOQUE PARA AMPLIAR</> : <>ARRASTE NA HORIZONTAL OU USE A RODA DO MOUSE PARA VER OS SLIDES</>}
                           </>
                         )}
                       </span>
