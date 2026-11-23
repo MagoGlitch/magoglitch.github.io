@@ -63,9 +63,42 @@
       }
     };
 
+    // Filtro anti-rastreamento: ignora acessos do Marcos (PC/admin), do agente de IA e de robôs
+    const isExcludedVisitor = () => {
+      if (typeof window === 'undefined') return true;
+      try {
+        // 1. Bloqueia desenvolvimento local, localhost, 127.0.0.1 ou protocolo file:
+        const host = window.location.hostname;
+        if (!host || host === 'localhost' || host === '127.0.0.1' || window.location.protocol === 'file:') {
+          return true;
+        }
+
+        // 2. Bloqueia navegadores automatizados e agentes de IA (puppeteer, playwright, etc.)
+        if (navigator.webdriver) return true;
+        const ua = (navigator.userAgent || '').toLowerCase();
+        if (ua.includes('bot') || ua.includes('crawler') || ua.includes('headless') || ua.includes('agent')) {
+          return true;
+        }
+
+        // 3. Se estiver na rota #admin ou com parâmetro ?admin=true / ?optout=true
+        if (window.location.hash === '#admin') return true;
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('admin') === 'true' || params.get('optout') === 'true') {
+          localStorage.setItem('mago_analytics_optout', 'true');
+          return true;
+        }
+
+        // 4. Bloqueia acessos do Marcos (se este navegador já fez login no admin ou optou por sair)
+        if (localStorage.getItem('mago_analytics_optout') === 'true' || localStorage.getItem('mago_admin_pin')) {
+          return true;
+        }
+      } catch (_) {}
+      return false;
+    };
+
     const trackEvent = (eventType, target, value = 0, metadata = {}) => {
       if (typeof window === 'undefined') return;
-      if (window.location.hash === '#admin') return;
+      if (isExcludedVisitor()) return;
       try {
         const payload = {
           session_id: getSessionId(),
@@ -903,10 +936,12 @@
     function AdminDashboard({ onExit }) {
       const [pin, setPin] = useState('');
       const [savedPin, setSavedPin] = useState(() => {
-        return (typeof window !== 'undefined' && sessionStorage.getItem('mago_admin_pin')) || '';
+        if (typeof window === 'undefined') return '';
+        return localStorage.getItem('mago_admin_pin') || sessionStorage.getItem('mago_admin_pin') || '';
       });
       const [isAuthenticated, setIsAuthenticated] = useState(() => {
-        return !!(typeof window !== 'undefined' && sessionStorage.getItem('mago_admin_pin'));
+        if (typeof window === 'undefined') return false;
+        return !!(localStorage.getItem('mago_admin_pin') || sessionStorage.getItem('mago_admin_pin'));
       });
       const [days, setDays] = useState(30);
       const [data, setData] = useState(null);
@@ -940,7 +975,11 @@
           const json = await res.json();
           setData(json);
           setSavedPin(pinToUse);
-          sessionStorage.setItem('mago_admin_pin', pinToUse);
+          try {
+            sessionStorage.setItem('mago_admin_pin', pinToUse);
+            localStorage.setItem('mago_admin_pin', pinToUse);
+            localStorage.setItem('mago_analytics_optout', 'true');
+          } catch (_) {}
           setIsAuthenticated(true);
         } catch (e) {
           setError(e.message || 'Erro ao carregar métricas.');
@@ -963,11 +1002,36 @@
       };
 
       const handleLogout = () => {
-        sessionStorage.removeItem('mago_admin_pin');
+        try {
+          sessionStorage.removeItem('mago_admin_pin');
+          localStorage.removeItem('mago_admin_pin');
+        } catch (_) {}
         setSavedPin('');
         setIsAuthenticated(false);
         setData(null);
         setPin('');
+      };
+
+      const handleResetData = async () => {
+        if (!window.confirm('Deseja realmente zerar todas as métricas de teste? O contador começará do zero apenas com visitantes reais.')) return;
+        setLoading(true);
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/reset_analytics`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ p_pin: savedPin }),
+          });
+          if (!res.ok) throw new Error('Não foi possível zerar os dados.');
+          await loadData(savedPin, days);
+        } catch (e) {
+          alert(e.message || 'Erro ao zerar dados.');
+        } finally {
+          setLoading(false);
+        }
       };
 
       const handleUpdatePin = async (e) => {
@@ -1118,6 +1182,15 @@
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
+              {/* Badge: Seu PC protegido */}
+              <div
+                className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium"
+                title="Seus acessos e cliques neste dispositivo nunca são contabilizados nas métricas"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>Seu PC protegido do rastreio</span>
+              </div>
+
               {/* Filtro de Período */}
               <div className="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 text-xs">
                 {[
@@ -1159,6 +1232,17 @@
                 className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-zinc-300 hover:text-white transition-colors cursor-pointer"
               >
                 PIN
+              </button>
+
+              {/* Botão Zerar Métricas de Teste */}
+              <button
+                type="button"
+                onClick={handleResetData}
+                disabled={loading}
+                className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-rose-500/10 border border-white/10 hover:border-rose-500/30 text-xs text-zinc-400 hover:text-rose-300 transition-colors cursor-pointer"
+                title="Zerar métricas de teste do banco"
+              >
+                Zerar
               </button>
 
               {/* Botão Sair / Logout */}
