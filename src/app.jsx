@@ -103,10 +103,76 @@
       return false;
     };
 
+    // Cache de geolocalização por IP (sem pedir permissão invasiva ao visitante)
+    const getStoredGeo = () => {
+      if (typeof window === 'undefined') return {};
+      try {
+        const raw = sessionStorage.getItem('mago_geo');
+        if (raw) return JSON.parse(raw);
+      } catch (_) {}
+      return {};
+    };
+
+    let geoFetching = false;
+    const fetchGeoLocation = (callback) => {
+      if (typeof window === 'undefined') return;
+      if (isExcludedVisitor()) return;
+      const cached = getStoredGeo();
+      if (cached && cached.city) {
+        if (callback) callback(cached);
+        return;
+      }
+      if (geoFetching) return;
+      geoFetching = true;
+
+      const saveGeo = (geo) => {
+        if (geo && geo.city) {
+          try {
+            sessionStorage.setItem('mago_geo', JSON.stringify(geo));
+          } catch (_) {}
+          if (callback) callback(geo);
+        }
+      };
+
+      // 1ª tentativa: ipwho.is (rápido, CORS aberto, SSL)
+      fetch('https://ipwho.is/')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.success !== false && data.city) {
+            saveGeo({
+              city: data.city,
+              region: data.region || data.region_code || '',
+              country: data.country_code || data.country || 'BR'
+            });
+          } else {
+            throw new Error('Fallback necessário');
+          }
+        })
+        .catch(() => {
+          // 2ª tentativa: freeipapi.com (fallback robusto)
+          fetch('https://freeipapi.com/api/json')
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.cityName) {
+                saveGeo({
+                  city: data.cityName,
+                  region: data.regionName || '',
+                  country: data.countryCode || 'BR'
+                });
+              }
+            })
+            .catch(() => {});
+        })
+        .finally(() => {
+          geoFetching = false;
+        });
+    };
+
     const trackEvent = (eventType, target, value = 0, metadata = {}) => {
       if (typeof window === 'undefined') return;
       if (isExcludedVisitor()) return;
       try {
+        const geo = getStoredGeo();
         const payload = {
           session_id: getSessionId(),
           event_type: eventType,
@@ -115,6 +181,7 @@
           metadata: {
             is_touch: !!IS_TOUCH,
             screen_w: typeof window !== 'undefined' ? window.innerWidth : 0,
+            ...(geo.city ? { city: geo.city, region: geo.region, country: geo.country } : {}),
             ...metadata,
           },
         };
@@ -1194,6 +1261,7 @@
       const projects = data?.projects || [];
       const clicks = data?.clicks || [];
       const scroll = data?.scroll || [];
+      const locations = data?.locations || [];
       const daily = data?.daily || [];
       const recentSessions = data?.recent_sessions || [];
 
@@ -1203,6 +1271,25 @@
 
       const maxSectionTime = Math.max(...sections.map(s => Number(s.total_seconds) || 1), 1);
       const maxDailySessions = Math.max(...daily.map(d => Number(d.sessions) || 1), 1);
+      const maxLocationVisitors = Math.max(...locations.map(l => Number(l.visitors) || 1), 1);
+
+      const formatLocation = (city, region, country) => {
+        if (!city || city === 'Desconhecida') return 'Desconhecida';
+        const brStates = {
+          'Acre': 'AC', 'Alagoas': 'AL', 'Amapá': 'AP', 'Amazonas': 'AM', 'Bahia': 'BA',
+          'Ceará': 'CE', 'Distrito Federal': 'DF', 'Espírito Santo': 'ES', 'Goiás': 'GO',
+          'Maranhão': 'MA', 'Mato Grosso': 'MT', 'Mato Grosso do Sul': 'MS', 'Minas Gerais': 'MG',
+          'Pará': 'PA', 'Paraíba': 'PB', 'Paraná': 'PR', 'Pernambuco': 'PE', 'Piauí': 'PI',
+          'Rio de Janeiro': 'RJ', 'Rio Grande do Norte': 'RN', 'Rio Grande do Sul': 'RS',
+          'Rondônia': 'RO', 'Roraima': 'RR', 'Santa Catarina': 'SC', 'São Paulo': 'SP',
+          'Sergipe': 'SE', 'Tocantins': 'TO'
+        };
+        const regShort = brStates[region] || (region && region.length === 2 ? region : region) || '';
+        if (country && country !== 'BR') {
+          return `${city}, ${country}`;
+        }
+        return regShort ? `${city}, ${regShort}` : city;
+      };
 
       return (
         <div className="min-h-screen bg-[#08080a] text-zinc-100 flex flex-col font-sans select-none relative pb-16">
@@ -1572,49 +1659,106 @@
               </div>
             </div>
 
-            {/* GRÁFICO DIÁRIO DE ATIVIDADE */}
-            {daily.length > 0 && (
-              <div className="bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">
-                      Atividade Diária Recente
-                    </h2>
-                    <p className="text-xs text-zinc-400">Volume de visitantes e conversões por dia</p>
-                  </div>
-                  <div className="flex items-center gap-3 text-xs">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-sm bg-zinc-600" />
-                      <span className="text-zinc-400 text-[11px]">Visitas</span>
+            {/* ORIGEM GEOGRÁFICA & ATIVIDADE DIÁRIA */}
+            {(daily.length > 0 || locations.length > 0) && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* ATIVIDADE DIÁRIA RECENTE (7 cols) */}
+                <div className="lg:col-span-7 bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md flex flex-col justify-between">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                        Atividade Diária Recente
+                      </h2>
+                      <p className="text-xs text-zinc-400">Volume de visitantes e conversões por dia</p>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500" />
-                      <span className="text-emerald-400 text-[11px]">WhatsApp</span>
+                    <div className="flex items-center gap-3 text-xs">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-sm bg-zinc-600" />
+                        <span className="text-zinc-400 text-[11px]">Visitas</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500" />
+                        <span className="text-emerald-400 text-[11px]">WhatsApp</span>
+                      </div>
                     </div>
                   </div>
+
+                  {daily.length === 0 ? (
+                    <div className="py-10 text-center text-zinc-500 text-xs">
+                      Nenhuma atividade registrada no período.
+                    </div>
+                  ) : (
+                    <div className="h-36 flex items-end gap-2 pt-4 overflow-x-auto no-scrollbar">
+                      {daily.map((d, idx) => {
+                        const sessHeight = Math.max(10, Math.round((Number(d.sessions) / maxDailySessions) * 100));
+                        const hasLead = Number(d.whatsapp_clicks) > 0;
+                        return (
+                          <div key={idx} className="flex-1 min-w-[28px] max-w-[48px] flex flex-col items-center gap-1.5 h-full justify-end group">
+                            <div className="text-[10px] text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity font-mono">
+                              {d.sessions}
+                            </div>
+                            <div
+                              className={`w-full rounded-t transition-all ${
+                                hasLead ? 'bg-emerald-500 shadow-lg shadow-emerald-500/20' : 'bg-zinc-700 hover:bg-zinc-600'
+                              }`}
+                              style={{ height: `${sessHeight}%` }}
+                            />
+                            <div className="text-[9px] text-zinc-500 font-mono truncate">
+                              {d.day.slice(5)}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
-                <div className="h-32 flex items-end gap-2 pt-4 overflow-x-auto no-scrollbar">
-                  {daily.map((d, idx) => {
-                    const sessHeight = Math.max(10, Math.round((Number(d.sessions) / maxDailySessions) * 100));
-                    const hasLead = Number(d.whatsapp_clicks) > 0;
-                    return (
-                      <div key={idx} className="flex-1 min-w-[28px] max-w-[48px] flex flex-col items-center gap-1.5 h-full justify-end group">
-                        <div className="text-[10px] text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity font-mono">
-                          {d.sessions}
-                        </div>
-                        <div
-                          className={`w-full rounded-t transition-all ${
-                            hasLead ? 'bg-emerald-500 shadow-lg shadow-emerald-500/20' : 'bg-zinc-700 hover:bg-zinc-600'
-                          }`}
-                          style={{ height: `${sessHeight}%` }}
-                        />
-                        <div className="text-[9px] text-zinc-500 font-mono truncate">
-                          {d.day.slice(5)}
-                        </div>
-                      </div>
-                    );
-                  })}
+                {/* ORIGEM GEOGRÁFICA / CIDADES (5 cols) */}
+                <div className="lg:col-span-5 bg-[#0e0e12]/80 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md flex flex-col">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 className="text-sm sm:text-base font-bold text-white tracking-wide flex items-center gap-1.5">
+                        <span>Cidades dos Visitantes</span>
+                        <span className="text-xs">🌎</span>
+                      </h2>
+                      <p className="text-xs text-zinc-400">Origem geográfica dos acessos</p>
+                    </div>
+                    <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                      {locations.length} {locations.length === 1 ? 'cidade' : 'cidades'}
+                    </span>
+                  </div>
+
+                  {locations.length === 0 ? (
+                    <div className="py-8 text-center text-zinc-500 text-xs my-auto">
+                      Nenhuma localização identificada ainda.
+                    </div>
+                  ) : (
+                    <div className="space-y-3 my-auto max-h-[160px] overflow-y-auto no-scrollbar pr-1">
+                      {locations.map((loc, idx) => {
+                        const locName = formatLocation(loc.city, loc.region, loc.country);
+                        const pct = Math.min(100, Math.round((Number(loc.visitors) / maxLocationVisitors) * 100));
+                        return (
+                          <div key={idx} className="space-y-1">
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="font-medium text-zinc-200 flex items-center gap-1.5 truncate pr-2">
+                                <span className="text-[10px] text-emerald-400 flex-shrink-0">📍</span>
+                                <span className="truncate">{locName}</span>
+                              </span>
+                              <span className="text-emerald-400 font-mono font-bold text-[11px] flex-shrink-0">
+                                {loc.visitors} {Number(loc.visitors) === 1 ? 'visita' : 'visitas'}
+                              </span>
+                            </div>
+                            <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+                              <div
+                                className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -1643,6 +1787,7 @@
                     <thead>
                       <tr className="border-b border-white/10 text-zinc-400 text-[11px] font-medium">
                         <th className="py-2.5 px-3">Horário de Entrada</th>
+                        <th className="py-2.5 px-3">Localização</th>
                         <th className="py-2.5 px-3">Dispositivo</th>
                         <th className="py-2.5 px-3">Origem</th>
                         <th className="py-2.5 px-3">Tempo no Site</th>
@@ -1654,10 +1799,21 @@
                       {recentSessions.map((s, idx) => {
                         const isMobile = s.is_touch === 'true';
                         const timeStr = formatEntryTime(s.entry_time);
+                        const locStr = formatLocation(s.city, s.region, s.country);
                         return (
                           <tr key={idx} className="hover:bg-white/[0.02] transition-colors">
                             <td className="py-3 px-3 text-zinc-200 whitespace-nowrap">
                               <span className="text-emerald-400 font-bold">{timeStr}</span>
+                            </td>
+                            <td className="py-3 px-3 text-zinc-300 font-sans whitespace-nowrap">
+                              {s.city && s.city !== 'Desconhecida' ? (
+                                <span className="inline-flex items-center gap-1.5 text-xs">
+                                  <span className="text-[10px] text-emerald-400">📍</span>
+                                  <span className="text-zinc-200 font-medium">{locStr}</span>
+                                </span>
+                              ) : (
+                                <span className="text-zinc-500 font-sans text-[11px]">—</span>
+                              )}
                             </td>
                             <td className="py-3 px-3 text-zinc-300 font-sans whitespace-nowrap">
                               <span className="inline-flex items-center gap-1.5 text-xs">
@@ -1811,7 +1967,7 @@
         }
       }, []);
 
-      // Telemetria: registra o momento exato de entrada do visitante no site
+      // Telemetria: registra o momento exato de entrada do visitante no site e sua localização
       useEffect(() => {
         if (typeof window === 'undefined') return;
         if (isExcludedVisitor()) return;
@@ -1828,6 +1984,16 @@
               }
             }
             trackEvent('session_start', 'Entrada no site', 0, { referrer: ref });
+
+            // Identifica localização aproximada por IP e associa à sessão
+            fetchGeoLocation((geo) => {
+              if (geo && geo.city) {
+                trackEvent('geo_location', `${geo.city}, ${geo.region || geo.country}`, 0, {
+                  referrer: ref,
+                  ...geo
+                });
+              }
+            });
           }
         } catch (_) {}
       }, []);
@@ -1857,17 +2023,48 @@
 
         let activeSection = null;
         let activeStart = 0;
+        let lastInteraction = Date.now();
+        let isIdle = false;
+        let idleTimeoutId = null;
 
-        // Envia o tempo acumulado na seção atual e zera o cronômetro.
+        // Se o visitante ficar 30s sem mexer o mouse, rolar a página ou tocar na tela,
+        // consideramos ausente (idle/AFK) e pausamos o cronômetro para não inflar as métricas.
+        const IDLE_LIMIT_MS = 30000;
+
+        // Envia o tempo acumulado na seção atual e zera o cronômetro ativo.
         const sendElapsed = () => {
-          if (activeSection && activeStart) {
-            const elapsed = Math.round((Date.now() - activeStart) / 1000);
-            if (elapsed >= 1) {
-              trackEvent('section_dwell', activeSection, elapsed);
+          if (activeSection && activeStart && !isIdle) {
+            const now = Date.now();
+            const endTime = Math.min(now, lastInteraction + IDLE_LIMIT_MS);
+            const elapsed = Math.round((endTime - activeStart) / 1000);
+            // Teto de segurança: nenhum envio único ultrapassa 45 segundos
+            const capped = Math.min(Math.max(0, elapsed), 45);
+            if (capped >= 1) {
+              trackEvent('section_dwell', activeSection, capped);
             }
           }
           activeStart = 0;
         };
+
+        const markActive = () => {
+          lastInteraction = Date.now();
+          if (isIdle) {
+            isIdle = false;
+            if (activeSection && !document.hidden) {
+              activeStart = Date.now();
+            }
+          }
+          if (idleTimeoutId) clearTimeout(idleTimeoutId);
+          idleTimeoutId = setTimeout(() => {
+            if (!isIdle) {
+              sendElapsed();
+              isIdle = true;
+            }
+          }, IDLE_LIMIT_MS);
+        };
+
+        // Inicia o detector de atividade inicial
+        markActive();
 
         const flushActive = () => {
           sendElapsed();
@@ -1879,22 +2076,45 @@
           flushActive();
           if (newSection) {
             activeSection = newSection;
-            // Com a aba escondida o cronômetro fica parado até ela voltar
-            activeStart = document.hidden ? 0 : Date.now();
+            if (!document.hidden && !isIdle) {
+              activeStart = Date.now();
+            }
           }
         };
 
-        // Aba escondida (troca de aba, volta para o app no celular, minimiza):
-        // envia o tempo na hora, porque pagehide/beforeunload muitas vezes nunca disparam
-        // no celular, e pausa para não contar tempo em segundo plano.
-        const handleVisibility = () => {
-          if (document.hidden) {
+        // Pausa imediata quando a aba fica oculta ou perde o foco para outro programa/janela
+        const pauseTracking = () => {
+          if (!isIdle) {
             sendElapsed();
-          } else if (activeSection && !activeStart) {
-            activeStart = Date.now();
+            isIdle = true;
           }
         };
+
+        const resumeTracking = () => {
+          if (!document.hidden) {
+            markActive();
+          }
+        };
+
+        const handleVisibility = () => {
+          if (document.hidden) pauseTracking();
+          else resumeTracking();
+        };
+
         document.addEventListener('visibilitychange', handleVisibility);
+        window.addEventListener('blur', pauseTracking);
+        window.addEventListener('focus', resumeTracking);
+
+        const activityEvents = ['mousemove', 'mousedown', 'scroll', 'keydown', 'touchstart', 'pointerdown'];
+        let lastActivityTrigger = 0;
+        const handleUserActivity = () => {
+          const now = Date.now();
+          if (now - lastActivityTrigger > 1000) {
+            lastActivityTrigger = now;
+            markActive();
+          }
+        };
+        activityEvents.forEach(evt => window.addEventListener(evt, handleUserActivity, { passive: true }));
 
         let observer = null;
         if (typeof IntersectionObserver !== 'undefined') {
@@ -1961,7 +2181,11 @@
 
         return () => {
           flushActive();
+          if (idleTimeoutId) clearTimeout(idleTimeoutId);
           document.removeEventListener('visibilitychange', handleVisibility);
+          window.removeEventListener('blur', pauseTracking);
+          window.removeEventListener('focus', resumeTracking);
+          activityEvents.forEach(evt => window.removeEventListener(evt, handleUserActivity));
           if (observer) observer.disconnect();
           window.__handleScrollDepth = null;
           window.removeEventListener('scroll', handleScrollDepth);
