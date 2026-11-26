@@ -2004,8 +2004,19 @@
       const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
       // Telemetria: rastreia abertura de projetos e carrosséis
+      // - project_open: só a primeira abertura (vindo de fora do visualizador)
+      // - project_view: navegar para outra peça/marca com o visualizador já aberto (setas, deslize)
+      // - slide ampliado dentro de um carrossel já é registrado como slide_expand (não conta como projeto aberto)
+      const prevSelectedRef = useRef(null);
       useEffect(() => {
-        if (selectedProject && selectedProject.title) {
+        const prev = prevSelectedRef.current;
+        prevSelectedRef.current = selectedProject;
+        if (!selectedProject || !selectedProject.title) return;
+        if (viewingCarousel && selectedProject.id === viewingCarousel.id) return;
+        if (prev && prev.id === selectedProject.id) return;
+        if (prev) {
+          trackEvent('project_view', selectedProject.title, 1, { category: selectedProject.category || 'Geral', via: 'navegacao' });
+        } else {
           trackEvent('project_open', selectedProject.title, 1, { category: selectedProject.category || 'Geral' });
         }
       }, [selectedProject]);
@@ -2763,7 +2774,6 @@
         if (idx === currentTarget) {
           setRibbonFitMode(defaultRibbonMode());
           setViewingCarousel(carrosseis[idx]);
-          trackEvent('project_open', carrosseis[idx].title, 1, { category: 'Carrosséis' });
         } else {
           if (activeTab === 'home' && carrosseisTrackRef.current && !isFreeMobile()) {
             const track = carrosseisTrackRef.current;
@@ -3787,12 +3797,10 @@
                         onClick={() => {
                           setRibbonFitMode(defaultRibbonMode());
                           setViewingCarousel(carrosseis[currentFlowIndex]);
-                          trackEvent('project_open', carrosseis[currentFlowIndex].title, 1, { category: 'Carrosséis' });
                         }}
                         {...pressable(() => {
                           setRibbonFitMode(defaultRibbonMode());
                           setViewingCarousel(carrosseis[currentFlowIndex]);
-                          trackEvent('project_open', carrosseis[currentFlowIndex].title, 1, { category: 'Carrosséis' });
                         }, `Abrir carrossel: ${carrosseis[currentFlowIndex].title}`)}
                         className="text-base sm:text-xl font-black text-white tracking-tight cursor-pointer hover:text-emerald-400 transition-colors"
                         title="Abrir o carrossel completo"
